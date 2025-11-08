@@ -4,12 +4,26 @@
   <img src="./docs/modelo_mcrs_planes_recetas.png" alt="Modelo de dominio" width="600"/>
 </p>
 
-## Descripción
+## Description
 
 El siguiente proyecto tiene por objetivo la gestion de los planes alimentarios, que podran ser asignados a los pacientes
 
-## Funcionalidades principales
+## Main features
 
 - **Registro de ingredientes:** listado y registro de ingredientes.  
 - **Gestion de recetas:** permite crear, editar y eliminar una receta.
 - **Gestion de planes:** permite registrar, editar y eliminar una plan alimentario.
+
+# Running with Docker
+
+## Image and Container
+```shell script
+docker image build --tag mealplans-api:1.0.0 .
+docker container run -p 8080:8080 -d  --name mealplans-api mealplans-api:1.0.0
+```
+
+## Publish Tag DockerHub
+```shell script
+docker tag mealplans-api:1.0.0 davidmeneces/mealplans-api:1.0.0
+docker push davidmeneces/mealplans-api:1.0.0
+```
