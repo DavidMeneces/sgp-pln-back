@@ -1,0 +1,43 @@
+services:
+  postgres:
+    image: postgres:15-alpine
+    container_name: mealplans-postgres
+    environment:
+      POSTGRES_DB: sgppln
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: admin
+    ports:
+      - "5444:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./init-scripts:/docker-entrypoint-initdb.d
+    networks:
+      - mealplans-network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  mealplans-api:
+    image: davidmeneces/nurtricenter-mealplans-api:1.0.0
+    container_name: mealplans-api
+    environment:
+      DATASOURCE_URL: jdbc:postgresql://postgres:5432/sgppln
+      DATASOURCE_USERNAME: postgres
+      DATASOURCE_PASSWORD: admin
+    ports:
+      - "39001:8080"
+    depends_on:
+      postgres:
+        condition: service_healthy
+    networks:
+      - mealplans-network
+    restart: unless-stopped
+
+volumes:
+  postgres_data:
+
+networks:
+  mealplans-network:
+    driver: bridge

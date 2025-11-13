@@ -18,12 +18,17 @@ El siguiente proyecto tiene por objetivo la gestion de los planes alimentarios, 
 
 ## Image and Container
 ```shell script
-docker image build --tag mealplans-api:1.0.0 .
-docker container run -p 8080:8080 -d  --name mealplans-api mealplans-api:1.0.0
+docker image build --tag nurtricenter-nurtricenter-mealplans-api:1.0.0 .
+docker container run -p 8080:8080 -d  --name nurtricenter-mealplans-api nurtricenter-mealplans-api:1.0.0
 ```
 
 ## Publish Tag DockerHub
 ```shell script
-docker tag mealplans-api:1.0.0 davidmeneces/mealplans-api:1.0.0
-docker push davidmeneces/mealplans-api:1.0.0
+docker tag nurtricenter-mealplans-api:1.0.0 davidmeneces/nurtricenter-mealplans-api:1.0.0
+docker push davidmeneces/nurtricenter-mealplans-api:1.0.0
+```
+
+## Running with Docker-Compose
+```shell script
+docker compose up -d
 ```
