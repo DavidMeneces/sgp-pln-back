@@ -17,10 +17,10 @@ import an.awesome.pipelinr.Pipelinr;
 @SpringBootApplication(scanBasePackages = "edu.nur.nurtricenter.mealplans")
 @EntityScan({"edu.nur.nurtricenter.mealplans.infraestructure.persistence.persistenceModel"})
 @EnableJpaRepositories(basePackages = {"edu.nur.nurtricenter.mealplans.infraestructure.persistence.repositories"})
-public class SpringBootMainApplication {
+public class SpringApp {
 
     public static void main(String[] args) {
-        SpringApplication.run(SpringBootMainApplication.class, args);
+        SpringApplication.run(SpringApp.class, args);
     }
 
     @Bean

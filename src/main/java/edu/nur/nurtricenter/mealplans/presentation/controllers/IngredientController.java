@@ -1,4 +1,4 @@
-package edu.nur.nurtricenter.mealplans.webapi.controllers;
+package edu.nur.nurtricenter.mealplans.presentation.controllers;
 
 import an.awesome.pipelinr.Pipeline;
 import edu.nur.nurtricenter.mealplans.application.ingredient.CreateIngredientCommand;
