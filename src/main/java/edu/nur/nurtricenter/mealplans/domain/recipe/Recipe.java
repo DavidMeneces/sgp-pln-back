@@ -36,6 +36,9 @@ public class Recipe extends AggregateRoot {
         if (description == null || description.isEmpty()) {
             throw new IllegalArgumentException("description cannot be null or empty");
         }
+        if (instructions == null || instructions.isEmpty()) {
+            throw new IllegalArgumentException("instructions cannot be null or empty");
+        }
         if (totalCalories == null || totalCalories.compareTo(BigDecimal.ZERO) <= 0) {
             throw new IllegalArgumentException("totalCalories cannot be null or minor than or equal zero");
         }

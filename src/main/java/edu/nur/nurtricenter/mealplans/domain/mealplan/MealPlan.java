@@ -62,7 +62,7 @@ public class MealPlan extends AggregateRoot {
             throw new IllegalArgumentException("difDays value must be 15 or 30");
         }
         if (mealPlanDays == null || mealPlanDays.size() != totalDays) {
-            throw new IllegalArgumentException("planAlimentarioDias cannot be null and must be same size to totalDays");
+            throw new IllegalArgumentException("mealPlanDays cannot be null and must be same size to totalDays");
         }
         return new MealPlan(id, idNutricionist, idPatient, totalDays, starDate, endDate, totalCalories, mealPlanDays);
     }
