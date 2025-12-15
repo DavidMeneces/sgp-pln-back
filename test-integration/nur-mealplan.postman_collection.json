@@ -19,7 +19,14 @@
 									"listen": "prerequest",
 									"script": {
 										"exec": [
-											""
+											"const list = JSON.parse(pm.collectionVariables.get(\"ingredient_list\"));\r",
+											"let index = parseInt(pm.collectionVariables.get(\"ingredient_index\"));\r",
+											"const item = list[index];\r",
+											"console.log(\"item\", item);\r",
+											"pm.collectionVariables.set(\"ingredient_name\", item.name);\r",
+											"pm.collectionVariables.set(\"ingredient_description\", item.description);\r",
+											"pm.collectionVariables.set(\"ingredient_unit_measure\", item.unitMeasure);\r",
+											"pm.collectionVariables.set(\"ingredient_calories_per_gram\", item.caloriesPerGram);"
 										],
 										"type": "text/javascript",
 										"packages": {},
@@ -30,12 +37,19 @@
 									"listen": "test",
 									"script": {
 										"exec": [
-											"const body = JSON.parse(pm.request.body);\r",
+											"pm.test(\"Status Success\", () => {\r",
+											"    pm.expect(pm.response.json()).to.have.property('value')\r",
+											"    pm.expect(pm.response.json().value).to.be.a('string')\r",
+											"    pm.collectionVariables.set('id_ingredient', pm.response.json().value)\r",
+											"});\r",
 											"pm.test(\"Create ingredient\", () => {\r",
 											"    pm.expect(pm.response.json()).to.have.property('value')\r",
 											"    pm.expect(pm.response.json().value).to.be.a('string')\r",
 											"    pm.collectionVariables.set('id_ingredient', pm.response.json().value)\r",
-											"});"
+											"});\r",
+											"//update index\r",
+											"let index = parseInt(pm.collectionVariables.get(\"ingredient_index\"));\r",
+											"pm.collectionVariables.set(\"ingredient_index\", index + 1);"
 										],
 										"type": "text/javascript",
 										"packages": {},
@@ -48,7 +62,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n    \"name\": \"Almendras\",\r\n    \"description\": \"\",\r\n    \"unitMeasure\": \"GRAM\",\r\n    \"caloriesPerGram\": 15\r\n}",
+									"raw": "{\r\n    \"name\": \"{{ingredient_name}}\",\r\n    \"description\": \"{{ingredient_description}}\",\r\n    \"unitMeasure\": \"{{ingredient_unit_measure}}\",\r\n    \"caloriesPerGram\": {{ingredient_calories_per_gram}}\r\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -97,7 +111,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n    \"name\": \"Smoothie Proteico Verde\",\r\n    \"description\": \"Smoothie Proteico Verde\",\r\n    \"instructions\": \"instrucciones\",\r\n    \"totalCalories\": 285,\r\n    \"ingredients\": [\r\n        {\r\n            \"idIngredient\": \"1bff4a6e-e91c-4b81-88b1-b1e7b617aa1f\",\r\n            \"quantity\": 1\r\n        },\r\n        {\r\n            \"idIngredient\": \"3f5cc23e-6eb1-409a-b95d-da48f3ca8393\",\r\n            \"quantity\": 2\r\n        },\r\n        {\r\n            \"idIngredient\": \"d987a73b-8f4f-4b6a-95d4-63a202a8ad8d\",\r\n            \"quantity\": 1\r\n        }\r\n    ]\r\n}",
+									"raw": "{\r\n    \"name\": \"{{recipe_name}}\",\r\n    \"description\": \"{{recipe_description}}\",\r\n    \"instructions\": \"{{recipe_instructions}}\",\r\n    \"totalCalories\": {{recipe_total_calories}},\r\n    \"ingredients\": [\r\n        {\r\n            \"idIngredient\": \"{{id_ingredient}}\",\r\n            \"quantity\": {{quantity_ingredient}}\r\n        }\r\n    ]\r\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -146,7 +160,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n    \"idNutricionist\": \"1bff4a6e-e91c-4b81-88b1-b1e7b617aa1f\",\r\n    \"idPatient\": \"eaa4f3fb-4009-410f-9512-df0275bf741f\",\r\n    \"totalDays\": 15,\r\n    \"starDate\":\"2025-10-01\",\r\n    \"endDate\":\"2025-10-15\",\r\n    \"totalCalories\": 500,\r\n    \"mealPlanDays\": [\r\n        {\r\n            \"day\": 1,\r\n            \"timeFoods\": [\r\n                {\r\n                    \"type\": \"BREAKFAST\",\r\n                    \"order\": 1,\r\n                    \"recipes\": [\r\n                        {\r\n                            \"idRecipe\": \"a56c10a5-e2d8-4e9f-b0de-a76db770483e\",\r\n                            \"portion\": 1\r\n                        }\r\n                    ]\r\n                }\r\n            ]\r\n        },\r\n        {\r\n            \"day\": 2,\r\n            \"timeFoods\": [\r\n                {\r\n                    \"type\": \"BREAKFAST\",\r\n                    \"order\": 1,\r\n                    \"recipes\": [\r\n                        {\r\n                            \"idRecipe\": \"a56c10a5-e2d8-4e9f-b0de-a76db770483e\",\r\n                            \"portion\": 1\r\n                        }\r\n                    ]\r\n                }\r\n            ]\r\n        },\r\n        {\r\n            \"day\": 3,\r\n            \"timeFoods\": [\r\n                {\r\n                    \"type\": \"BREAKFAST\",\r\n                    \"order\": 1,\r\n                    \"recipes\": [\r\n                        {\r\n                            \"idRecipe\": \"a56c10a5-e2d8-4e9f-b0de-a76db770483e\",\r\n                            \"portion\": 1\r\n                        }\r\n                    ]\r\n                }\r\n            ]\r\n        },\r\n        {\r\n            \"day\": 4,\r\n            \"timeFoods\": [\r\n                {\r\n                    \"type\": \"BREAKFAST\",\r\n                    \"order\": 1,\r\n                    \"recipes\": [\r\n                        {\r\n                            \"idRecipe\": \"a56c10a5-e2d8-4e9f-b0de-a76db770483e\",\r\n                            \"portion\": 1\r\n                        }\r\n                    ]\r\n                }\r\n            ]\r\n        },\r\n        {\r\n            \"day\": 5,\r\n            \"timeFoods\": [\r\n                {\r\n                    \"type\": \"BREAKFAST\",\r\n                    \"order\": 1,\r\n                    \"recipes\": [\r\n                        {\r\n                            \"idRecipe\": \"a56c10a5-e2d8-4e9f-b0de-a76db770483e\",\r\n                            \"portion\": 1\r\n                        }\r\n                    ]\r\n                }\r\n            ]\r\n        },\r\n        {\r\n            \"day\": 6,\r\n            \"timeFoods\": [\r\n                {\r\n                    \"type\": \"BREAKFAST\",\r\n                    \"order\": 1,\r\n                    \"recipes\": [\r\n                        {\r\n                            \"idRecipe\": \"a56c10a5-e2d8-4e9f-b0de-a76db770483e\",\r\n                            \"portion\": 1\r\n                        }\r\n                    ]\r\n                }\r\n            ]\r\n        },\r\n        {\r\n            \"day\": 7,\r\n            \"timeFoods\": [\r\n                {\r\n                    \"type\": \"BREAKFAST\",\r\n                    \"order\": 1,\r\n                    \"recipes\": [\r\n                        {\r\n                            \"idRecipe\": \"a56c10a5-e2d8-4e9f-b0de-a76db770483e\",\r\n                            \"portion\": 1\r\n                        }\r\n                    ]\r\n                }\r\n            ]\r\n        },\r\n        {\r\n            \"day\": 8,\r\n            \"timeFoods\": [\r\n                {\r\n                    \"type\": \"BREAKFAST\",\r\n                    \"order\": 1,\r\n                    \"recipes\": [\r\n                        {\r\n                            \"idRecipe\": \"a56c10a5-e2d8-4e9f-b0de-a76db770483e\",\r\n                            \"portion\": 1\r\n                        }\r\n                    ]\r\n                }\r\n            ]\r\n        },\r\n        {\r\n            \"day\": 9,\r\n            \"timeFoods\": [\r\n                {\r\n                    \"type\": \"BREAKFAST\",\r\n                    \"order\": 1,\r\n                    \"recipes\": [\r\n                        {\r\n                            \"idRecipe\": \"a56c10a5-e2d8-4e9f-b0de-a76db770483e\",\r\n                            \"portion\": 1\r\n                        }\r\n                    ]\r\n                }\r\n            ]\r\n        },\r\n        {\r\n            \"day\": 10,\r\n            \"timeFoods\": [\r\n                {\r\n                    \"type\": \"BREAKFAST\",\r\n                    \"order\": 1,\r\n                    \"recipes\": [\r\n                        {\r\n                            \"idRecipe\": \"a56c10a5-e2d8-4e9f-b0de-a76db770483e\",\r\n                            \"portion\": 1\r\n                        }\r\n                    ]\r\n                }\r\n            ]\r\n        },\r\n        {\r\n            \"day\": 11,\r\n            \"timeFoods\": [\r\n                {\r\n                    \"type\": \"BREAKFAST\",\r\n                    \"order\": 1,\r\n                    \"recipes\": [\r\n                        {\r\n                            \"idRecipe\": \"a56c10a5-e2d8-4e9f-b0de-a76db770483e\",\r\n                            \"portion\": 1\r\n                        }\r\n                    ]\r\n                }\r\n            ]\r\n        },\r\n        {\r\n            \"day\": 12,\r\n            \"timeFoods\": [\r\n                {\r\n                    \"type\": \"BREAKFAST\",\r\n                    \"order\": 1,\r\n                    \"recipes\": [\r\n                        {\r\n                            \"idRecipe\": \"a56c10a5-e2d8-4e9f-b0de-a76db770483e\",\r\n                            \"portion\": 1\r\n                        }\r\n                    ]\r\n                }\r\n            ]\r\n        },\r\n        {\r\n            \"day\": 13,\r\n            \"timeFoods\": [\r\n                {\r\n                    \"type\": \"BREAKFAST\",\r\n                    \"order\": 1,\r\n                    \"recipes\": [\r\n                        {\r\n                            \"idRecipe\": \"a56c10a5-e2d8-4e9f-b0de-a76db770483e\",\r\n                            \"portion\": 1\r\n                        }\r\n                    ]\r\n                }\r\n            ]\r\n        },\r\n        {\r\n            \"day\": 14,\r\n            \"timeFoods\": [\r\n                {\r\n                    \"type\": \"BREAKFAST\",\r\n                    \"order\": 1,\r\n                    \"recipes\": [\r\n                        {\r\n                            \"idRecipe\": \"a56c10a5-e2d8-4e9f-b0de-a76db770483e\",\r\n                            \"portion\": 1\r\n                        }\r\n                    ]\r\n                }\r\n            ]\r\n        },\r\n        {\r\n            \"day\": 15,\r\n            \"timeFoods\": [\r\n                {\r\n                    \"type\": \"BREAKFAST\",\r\n                    \"order\": 1,\r\n                    \"recipes\": [\r\n                        {\r\n                            \"idRecipe\": \"a56c10a5-e2d8-4e9f-b0de-a76db770483e\",\r\n                            \"portion\": 1\r\n                        }\r\n                    ]\r\n                }\r\n            ]\r\n        }\r\n    ]\r\n}",
+									"raw": "{\r\n    \"idNutricionist\": \"{{id_nutricionist}}\",\r\n    \"idPatient\": \"{{id_patient}}\",\r\n    \"totalDays\": {{total_days}},\r\n    \"starDate\":\"{{star_date}}\",\r\n    \"endDate\":\"{{end_date}}\",\r\n    \"totalCalories\": {{total_calories}},\r\n    \"mealPlanDays\": [\r\n        {\r\n            \"day\": 1,\r\n            \"timeFoods\": [\r\n                {\r\n                    \"type\": \"{{time_food_type}}\",\r\n                    \"order\": {{time_food_order}},\r\n                    \"recipes\": [\r\n                        {\r\n                            \"idRecipe\": \"{{id_recipe}}\",\r\n                            \"portion\": {{portion_recipe}}\r\n                        }\r\n                    ]\r\n                }\r\n            ]\r\n        },\r\n        {\r\n            \"day\": 2,\r\n            \"timeFoods\": [\r\n                {\r\n                    \"type\": \"{{time_food_type}}\",\r\n                    \"order\": {{time_food_order}},\r\n                    \"recipes\": [\r\n                        {\r\n                            \"idRecipe\": \"{{id_recipe}}\",\r\n                            \"portion\": {{portion_recipe}}\r\n                        }\r\n                    ]\r\n                }\r\n            ]\r\n        },\r\n        {\r\n            \"day\": 3,\r\n            \"timeFoods\": [\r\n                {\r\n                    \"type\": \"{{time_food_type}}\",\r\n                    \"order\": {{time_food_order}},\r\n                    \"recipes\": [\r\n                        {\r\n                            \"idRecipe\": \"{{id_recipe}}\",\r\n                            \"portion\": {{portion_recipe}}\r\n                        }\r\n                    ]\r\n                }\r\n            ]\r\n        },\r\n        {\r\n            \"day\": 4,\r\n            \"timeFoods\": [\r\n                {\r\n                    \"type\": \"{{time_food_type}}\",\r\n                    \"order\": {{time_food_order}},\r\n                    \"recipes\": [\r\n                        {\r\n                            \"idRecipe\": \"{{id_recipe}}\",\r\n                            \"portion\": {{portion_recipe}}\r\n                        }\r\n                    ]\r\n                }\r\n            ]\r\n        },\r\n        {\r\n            \"day\": 5,\r\n            \"timeFoods\": [\r\n                {\r\n                    \"type\": \"{{time_food_type}}\",\r\n                    \"order\": {{time_food_order}},\r\n                    \"recipes\": [\r\n                        {\r\n                            \"idRecipe\": \"{{id_recipe}}\",\r\n                            \"portion\": {{portion_recipe}}\r\n                        }\r\n                    ]\r\n                }\r\n            ]\r\n        },\r\n        {\r\n            \"day\": 6,\r\n            \"timeFoods\": [\r\n                {\r\n                    \"type\": \"{{time_food_type}}\",\r\n                    \"order\": {{time_food_order}},\r\n                    \"recipes\": [\r\n                        {\r\n                            \"idRecipe\": \"{{id_recipe}}\",\r\n                            \"portion\": {{portion_recipe}}\r\n                        }\r\n                    ]\r\n                }\r\n            ]\r\n        },\r\n        {\r\n            \"day\": 7,\r\n            \"timeFoods\": [\r\n                {\r\n                    \"type\": \"{{time_food_type}}\",\r\n                    \"order\": {{time_food_order}},\r\n                    \"recipes\": [\r\n                        {\r\n                            \"idRecipe\": \"{{id_recipe}}\",\r\n                            \"portion\": {{portion_recipe}}\r\n                        }\r\n                    ]\r\n                }\r\n            ]\r\n        },\r\n        {\r\n            \"day\": 8,\r\n            \"timeFoods\": [\r\n                {\r\n                    \"type\": \"{{time_food_type}}\",\r\n                    \"order\": {{time_food_order}},\r\n                    \"recipes\": [\r\n                        {\r\n                            \"idRecipe\": \"{{id_recipe}}\",\r\n                            \"portion\": {{portion_recipe}}\r\n                        }\r\n                    ]\r\n                }\r\n            ]\r\n        },\r\n        {\r\n            \"day\": 9,\r\n            \"timeFoods\": [\r\n                {\r\n                    \"type\": \"{{time_food_type}}\",\r\n                    \"order\": {{time_food_order}},\r\n                    \"recipes\": [\r\n                        {\r\n                            \"idRecipe\": \"{{id_recipe}}\",\r\n                            \"portion\": {{portion_recipe}}\r\n                        }\r\n                    ]\r\n                }\r\n            ]\r\n        },\r\n        {\r\n            \"day\": 10,\r\n            \"timeFoods\": [\r\n                {\r\n                    \"type\": \"{{time_food_type}}\",\r\n                    \"order\": {{time_food_order}},\r\n                    \"recipes\": [\r\n                        {\r\n                            \"idRecipe\": \"{{id_recipe}}\",\r\n                            \"portion\": {{portion_recipe}}\r\n                        }\r\n                    ]\r\n                }\r\n            ]\r\n        },\r\n        {\r\n            \"day\": 11,\r\n            \"timeFoods\": [\r\n                {\r\n                    \"type\": \"{{time_food_type}}\",\r\n                    \"order\": {{time_food_order}},\r\n                    \"recipes\": [\r\n                        {\r\n                            \"idRecipe\": \"{{id_recipe}}\",\r\n                            \"portion\": {{portion_recipe}}\r\n                        }\r\n                    ]\r\n                }\r\n            ]\r\n        },\r\n        {\r\n            \"day\": 12,\r\n            \"timeFoods\": [\r\n                {\r\n                    \"type\": \"{{time_food_type}}\",\r\n                    \"order\": {{time_food_order}},\r\n                    \"recipes\": [\r\n                        {\r\n                            \"idRecipe\": \"{{id_recipe}}\",\r\n                            \"portion\": {{portion_recipe}}\r\n                        }\r\n                    ]\r\n                }\r\n            ]\r\n        },\r\n        {\r\n            \"day\": 13,\r\n            \"timeFoods\": [\r\n                {\r\n                    \"type\": \"{{time_food_type}}\",\r\n                    \"order\": {{time_food_order}},\r\n                    \"recipes\": [\r\n                        {\r\n                            \"idRecipe\": \"{{id_recipe}}\",\r\n                            \"portion\": {{portion_recipe}}\r\n                        }\r\n                    ]\r\n                }\r\n            ]\r\n        },\r\n        {\r\n            \"day\": 14,\r\n            \"timeFoods\": [\r\n                {\r\n                    \"type\": \"{{time_food_type}}\",\r\n                    \"order\": {{time_food_order}},\r\n                    \"recipes\": [\r\n                        {\r\n                            \"idRecipe\": \"{{id_recipe}}\",\r\n                            \"portion\": {{portion_recipe}}\r\n                        }\r\n                    ]\r\n                }\r\n            ]\r\n        },\r\n        {\r\n            \"day\": 15,\r\n            \"timeFoods\": [\r\n                {\r\n                    \"type\": \"{{time_food_type}}\",\r\n                    \"order\": {{time_food_order}},\r\n                    \"recipes\": [\r\n                        {\r\n                            \"idRecipe\": \"{{id_recipe}}\",\r\n                            \"portion\": {{portion_recipe}}\r\n                        }\r\n                    ]\r\n                }\r\n            ]\r\n        }\r\n    ]\r\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -175,6 +189,7 @@
 			"listen": "prerequest",
 			"script": {
 				"type": "text/javascript",
+				"requests": {},
 				"exec": [
 					""
 				]
@@ -184,6 +199,7 @@
 			"listen": "test",
 			"script": {
 				"type": "text/javascript",
+				"requests": {},
 				"exec": [
 					""
 				]
@@ -197,6 +213,30 @@
 		},
 		{
 			"key": "id_ingredient",
+			"value": ""
+		},
+		{
+			"key": "ingredient_list",
+			"value": ""
+		},
+		{
+			"key": "ingredient_index",
+			"value": ""
+		},
+		{
+			"key": "ingredient_name",
+			"value": ""
+		},
+		{
+			"key": "ingredient_description",
+			"value": ""
+		},
+		{
+			"key": "ingredient_unit_measure",
+			"value": ""
+		},
+		{
+			"key": "ingredient_calories_per_gram",
 			"value": ""
 		}
 	]
