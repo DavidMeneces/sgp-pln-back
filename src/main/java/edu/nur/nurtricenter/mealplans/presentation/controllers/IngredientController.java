@@ -20,15 +20,14 @@ public class IngredientController {
         this.pipeline = pipeline;
     }
 
-    @GetMapping("/{id}")
-    public ResultWithValue<IngredientDto> get(@PathVariable UUID id) {
-        GetIngredientCommand command = new GetIngredientCommand(id);
-        return command.execute(pipeline);
-    }
-
     @PostMapping("")
     public ResultWithValue<UUID> create(@RequestBody CreateIngredientCommand command) {
         return command.execute(pipeline);
     }
 
+    @GetMapping("/{id}")
+    public ResultWithValue<IngredientDto> getById(@PathVariable UUID id) {
+        GetIngredientCommand command = new GetIngredientCommand(id);
+        return command.execute(pipeline);
+    }
 }

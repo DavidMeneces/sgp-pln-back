@@ -5,7 +5,7 @@ import lombok.Getter;
 @Getter
 public enum TransaccionEstadoModel {
 
-    CREAR("CREADO"), ELIMINAR("ELIMINADO");
+    CREAR("CREADO"), CANCELAR("CANCELADO"), ELIMINAR("ELIMINADO");
     private final String estado;
 
     TransaccionEstadoModel(String estado) {

@@ -2,6 +2,7 @@ package edu.nur.nurtricenter.mealplans.infraestructure.persistence.repositories;
 
 import edu.nur.nurtricenter.mealplans.domain.mealplan.*;
 import edu.nur.nurtricenter.mealplans.domain.shared.TimeFoodEnum;
+import edu.nur.nurtricenter.mealplans.infraestructure.persistence.domainModel.TransaccionEstadoModel;
 import edu.nur.nurtricenter.mealplans.infraestructure.persistence.persistenceModel.MealPlanDayModel;
 import edu.nur.nurtricenter.mealplans.infraestructure.persistence.persistenceModel.MealPlanModel;
 import edu.nur.nurtricenter.mealplans.infraestructure.persistence.persistenceModel.TimeFoodModel;
@@ -9,6 +10,7 @@ import edu.nur.nurtricenter.mealplans.infraestructure.persistence.persistenceMod
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
@@ -61,6 +63,22 @@ public class MealPlanRepository implements IMealPlanRepository {
     @Override
     public boolean existById(UUID id) {
         return repository.existsById(id);
+    }
+
+    @Override
+    public boolean existById(UUID id, String status) {
+        return repository.existById(id, status);
+    }
+
+    @Override
+    public void cancelById(UUID id) {
+        MealPlanModel model = repository.findById(id).get();
+        TransaccionEstadoModel transaccion = TransaccionEstadoModel.CANCELAR;
+        model.setTransaccion(transaccion.name());
+        model.setEstado(transaccion.getEstado());
+        model.setUsuarioModificacion("sgp-pln");
+        model.setFechaModificacion(LocalDateTime.now());
+        repository.save(model);
     }
 
     @Override

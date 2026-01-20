@@ -26,7 +26,7 @@ public class RecipeController {
     }
 
     @GetMapping("/{id}")
-    public ResultWithValue<RecipeDto> get(@PathVariable UUID id) {
+    public ResultWithValue<RecipeDto> getById(@PathVariable UUID id) {
         GetRecipeCommand command = new GetRecipeCommand(id);
         return command.execute(pipeline);
     }
