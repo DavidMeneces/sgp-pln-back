@@ -27,7 +27,7 @@ public class MealPlanController {
     }
 
     @PostMapping("")
-    public ResultWithValue<UUID> add(@RequestBody CreateMealPlanCommand command) {
+    public ResultWithValue<UUID> create(@RequestBody CreateMealPlanCommand command) {
         return command.execute(pipeline);
     }
 

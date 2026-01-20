@@ -21,7 +21,7 @@ public class RecipeController {
     }
 
     @PostMapping("")
-    public ResultWithValue<UUID> add(@RequestBody CreateRecipeCommand command) {
+    public ResultWithValue<UUID> create(@RequestBody CreateRecipeCommand command) {
         return command.execute(pipeline);
     }
 
