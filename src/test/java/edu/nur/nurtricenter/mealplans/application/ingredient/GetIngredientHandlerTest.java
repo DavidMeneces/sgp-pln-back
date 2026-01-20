@@ -8,24 +8,24 @@ import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.math.BigDecimal;
+import java.util.UUID;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
-class CreateIngredientHandlerTest {
+class GetIngredientHandlerTest {
 
     private final Pipeline pipeline;
 
     @Inject
-    public CreateIngredientHandlerTest(Pipeline pipeline) {
+    public GetIngredientHandlerTest(Pipeline pipeline) {
         this.pipeline = pipeline;
     }
 
     @Test
     void handle() {
-        String name = "i1";
-        String description = "di1";
-        UnitMeasureEnum unitMeasure = UnitMeasureEnum.GRAM;
-        BigDecimal caloriesPerGram = BigDecimal.valueOf(150L);
-        var request = new CreateIngredientCommand(name, description, unitMeasure, caloriesPerGram);
+        var id = UUID.fromString("c8aa1d9b-ba79-477c-87bd-df96e00579f6");
+        var request = new GetIngredientCommand(id);
         var response = request.execute(pipeline);
         Assertions.assertNotNull(response.getValue());
     }
