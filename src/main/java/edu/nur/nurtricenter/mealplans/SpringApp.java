@@ -1,5 +1,7 @@
 package edu.nur.nurtricenter.mealplans;
 
+import io.swagger.v3.oas.annotations.OpenAPIDefinition;
+import io.swagger.v3.oas.annotations.servers.Server;
 import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -17,6 +19,7 @@ import an.awesome.pipelinr.Pipelinr;
 @SpringBootApplication(scanBasePackages = "edu.nur.nurtricenter.mealplans")
 @EntityScan({"edu.nur.nurtricenter.mealplans.infraestructure.persistence.persistenceModel"})
 @EnableJpaRepositories(basePackages = {"edu.nur.nurtricenter.mealplans.infraestructure.persistence.repositories"})
+@OpenAPIDefinition(servers = {@Server(url = "${springdoc.swagger.path-location}")})
 public class SpringApp {
 
     public static void main(String[] args) {
