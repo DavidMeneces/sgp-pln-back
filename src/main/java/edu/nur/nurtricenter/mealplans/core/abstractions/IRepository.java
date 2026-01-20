@@ -6,5 +6,7 @@ public interface IRepository<T extends AggregateRoot> {
 
     T getById(UUID id, boolean readOnly);
 
+    boolean existById(UUID id);
+
     UUID add(T entity);
 }

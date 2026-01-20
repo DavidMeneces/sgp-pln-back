@@ -13,7 +13,7 @@ public class MealPlanDay extends Entity {
         super();
     }
 
-    private MealPlanDay(UUID id, Integer day, List<TimeFood> timeFoods) {
+    public MealPlanDay(UUID id, Integer day, List<TimeFood> timeFoods) {
         super(id);
         this.day = day;
         this.timeFoods = timeFoods;

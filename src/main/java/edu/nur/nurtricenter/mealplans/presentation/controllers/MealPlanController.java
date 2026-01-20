@@ -1,6 +1,8 @@
 package edu.nur.nurtricenter.mealplans.presentation.controllers;
 
 import an.awesome.pipelinr.Pipeline;
+import edu.nur.nurtricenter.mealplans.application.mealplan.GetMealPlanCommand;
+import edu.nur.nurtricenter.mealplans.application.mealplan.MealPlanDto;
 import edu.nur.nurtricenter.mealplans.application.recipe.GetRecipeCommand;
 import edu.nur.nurtricenter.mealplans.application.recipe.RecipeDto;
 import edu.nur.nurtricenter.mealplans.core.results.ResultWithValue;
@@ -21,8 +23,8 @@ public class MealPlanController {
     }
 
     @GetMapping("/{id}")
-    public ResultWithValue<RecipeDto> get(@PathVariable UUID id) {
-        GetRecipeCommand command = new GetRecipeCommand(id);
+    public ResultWithValue<MealPlanDto> get(@PathVariable UUID id) {
+        GetMealPlanCommand command = new GetMealPlanCommand(id);
         return command.execute(pipeline);
     }
 

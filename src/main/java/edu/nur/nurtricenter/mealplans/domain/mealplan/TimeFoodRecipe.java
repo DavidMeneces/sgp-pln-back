@@ -5,16 +5,16 @@ import edu.nur.nurtricenter.mealplans.core.abstractions.Entity;
 import java.util.UUID;
 
 public class TimeFoodRecipe extends Entity {
-    private UUID idReceta;
+    private UUID idRecipe;
     private Integer portion;
 
     public TimeFoodRecipe() {
         super();
     }
 
-    private TimeFoodRecipe(UUID id, UUID idReceta, Integer portion) {
+    public TimeFoodRecipe(UUID id, UUID idRecipe, Integer portion) {
         super(id);
-        this.idReceta = idReceta;
+        this.idRecipe = idRecipe;
         this.portion = portion;
     }
 
@@ -31,8 +31,8 @@ public class TimeFoodRecipe extends Entity {
         return new TimeFoodRecipe(id, idRecipe, portion);
     }
 
-    public UUID getIdReceta() {
-        return idReceta;
+    public UUID getIdRecipe() {
+        return idRecipe;
     }
 
     public Integer getPortion() {

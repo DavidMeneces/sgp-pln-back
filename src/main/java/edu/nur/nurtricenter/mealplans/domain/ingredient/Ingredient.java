@@ -17,7 +17,7 @@ public class Ingredient extends AggregateRoot {
         super(UUID.randomUUID());
     }
 
-    private Ingredient(UUID id, String nombre, String descripcion, UnitMeasureEnum unitMeasure, BigDecimal caloriesPerGram) {
+    public Ingredient(UUID id, String nombre, String descripcion, UnitMeasureEnum unitMeasure, BigDecimal caloriesPerGram) {
         super(id);
         this.name = nombre;
         this.description = descripcion;

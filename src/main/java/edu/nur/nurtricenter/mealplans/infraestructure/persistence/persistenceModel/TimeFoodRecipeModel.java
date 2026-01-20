@@ -50,7 +50,7 @@ public class TimeFoodRecipeModel {
         return TimeFoodRecipeModel.builder()
                 .id(entity.getId())
                 .idTimeFood(idTiempoComida)
-                .idRecipe(entity.getIdReceta())
+                .idRecipe(entity.getIdRecipe())
                 .portion(entity.getPortion())
                 .transaccion(transaccion.name())
                 .estado(transaccion.getEstado())

@@ -13,11 +13,9 @@ import org.springframework.stereotype.Component;
 public class GetRecipeHandler implements Command.Handler<GetRecipeCommand, ResultWithValue<RecipeDto>> {
 
     private IRecipeRepository repository;
-    private final UnitOfWork unitOfWork;
 
-    public GetRecipeHandler(IRecipeRepository repository, UnitOfWork unitOfWork) {
+    public GetRecipeHandler(IRecipeRepository repository) {
         this.repository = repository;
-        this.unitOfWork = unitOfWork;
     }
 
     @Override

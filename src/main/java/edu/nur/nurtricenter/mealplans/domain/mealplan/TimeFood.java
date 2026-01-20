@@ -15,7 +15,7 @@ public class TimeFood extends Entity {
         super();
     }
 
-    private TimeFood(UUID id, TimeFoodEnum type, Integer order, List<TimeFoodRecipe> recipes) {
+    public TimeFood(UUID id, TimeFoodEnum type, Integer order, List<TimeFoodRecipe> recipes) {
         super(id);
         this.type = type;
         this.order = order;

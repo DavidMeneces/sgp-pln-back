@@ -2,8 +2,8 @@ package edu.nur.nurtricenter.mealplans.presentation.controllers;
 
 import an.awesome.pipelinr.Pipeline;
 import edu.nur.nurtricenter.mealplans.application.ingredient.CreateIngredientCommand;
-import edu.nur.nurtricenter.mealplans.application.recipe.GetRecipeCommand;
-import edu.nur.nurtricenter.mealplans.application.recipe.RecipeDto;
+import edu.nur.nurtricenter.mealplans.application.ingredient.GetIngredientCommand;
+import edu.nur.nurtricenter.mealplans.application.ingredient.IngredientDto;
 import edu.nur.nurtricenter.mealplans.core.results.ResultWithValue;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,6 +18,12 @@ public class IngredientController {
 
     public IngredientController(Pipeline pipeline) {
         this.pipeline = pipeline;
+    }
+
+    @GetMapping("/{id}")
+    public ResultWithValue<IngredientDto> get(@PathVariable UUID id) {
+        GetIngredientCommand command = new GetIngredientCommand(id);
+        return command.execute(pipeline);
     }
 
     @PostMapping("")

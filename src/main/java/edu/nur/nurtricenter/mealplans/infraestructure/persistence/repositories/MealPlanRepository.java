@@ -1,6 +1,7 @@
 package edu.nur.nurtricenter.mealplans.infraestructure.persistence.repositories;
 
 import edu.nur.nurtricenter.mealplans.domain.mealplan.*;
+import edu.nur.nurtricenter.mealplans.domain.shared.TimeFoodEnum;
 import edu.nur.nurtricenter.mealplans.infraestructure.persistence.persistenceModel.MealPlanDayModel;
 import edu.nur.nurtricenter.mealplans.infraestructure.persistence.persistenceModel.MealPlanModel;
 import edu.nur.nurtricenter.mealplans.infraestructure.persistence.persistenceModel.TimeFoodModel;
@@ -9,7 +10,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Repository
 public class MealPlanRepository implements IMealPlanRepository {
@@ -25,7 +28,39 @@ public class MealPlanRepository implements IMealPlanRepository {
 
     @Override
     public MealPlan getById(UUID id, boolean readOnly) {
-        return null;
+        MealPlanModel mealPlanModel = repository.findById(id).get();
+        List<MealPlanDayModel> mealPlanDayModels = mealPlanDayModelRepository.findAllByIdMealPlan(id);
+        List<TimeFoodModel> timeFoodModels = timeFoodModelRepository.findAllByIdMealPlanDay(mealPlanDayModels.stream().map(MealPlanDayModel::getId).toList());
+        List<TimeFoodRecipeModel> timeFoodRecipeModels = timeFoodRecipeModelRepository.findAllByIdTimeFood(timeFoodModels.stream().map(TimeFoodModel::getId).toList());
+        //Mapper By IdMealPlanDay
+        Map<UUID, List<TimeFoodModel>> timeFoodModelMap = timeFoodModels.stream()
+                .collect(Collectors.groupingBy(TimeFoodModel::getIdMealPlanDay));
+        //Mapper By IdTimeFood
+        Map<UUID, List<TimeFoodRecipeModel>> timeFoodRecipeModelMap = timeFoodRecipeModels.stream()
+                .collect(Collectors.groupingBy(TimeFoodRecipeModel::getIdTimeFood));
+        //Builder MealPlanDays
+        List<MealPlanDay> mealPlanDays = mealPlanDayModels.stream()
+                .map(model -> new MealPlanDay(model.getId(), model.getDay(), toTimeFood(timeFoodModelMap.get(model.getId()), timeFoodRecipeModelMap)))
+                .toList();
+        return new MealPlan(mealPlanModel.getId(), mealPlanModel.getIdNutricionist(), mealPlanModel.getIdPatient(), mealPlanModel.getTotalDays(), mealPlanModel.getStarDate(), mealPlanModel.getEndDate(), null,
+                mealPlanDays);
+    }
+
+    private List<TimeFood> toTimeFood(List<TimeFoodModel> timeFoodModels, Map<UUID, List<TimeFoodRecipeModel>> timeFoodRecipeModelMap) {
+        return timeFoodModels != null ? timeFoodModels.stream()
+                .map(model -> new TimeFood(model.getId(), TimeFoodEnum.valueOf(model.getType()), model.getOrder(),
+                        toTimeFoodRecipe(timeFoodRecipeModelMap.get(model.getId())))
+                ).toList() : null;
+    }
+
+    private List<TimeFoodRecipe> toTimeFoodRecipe(List<TimeFoodRecipeModel> timeFoodRecipeModels) {
+        return timeFoodRecipeModels != null ? timeFoodRecipeModels.stream()
+                .map(model -> new TimeFoodRecipe(model.getId(), model.getIdRecipe(), model.getPortion())).toList() : null;
+    }
+
+    @Override
+    public boolean existById(UUID id) {
+        return repository.existsById(id);
     }
 
     @Override

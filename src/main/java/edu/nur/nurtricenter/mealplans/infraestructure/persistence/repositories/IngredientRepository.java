@@ -2,6 +2,7 @@ package edu.nur.nurtricenter.mealplans.infraestructure.persistence.repositories;
 
 import edu.nur.nurtricenter.mealplans.domain.ingredient.IIngredientRepository;
 import edu.nur.nurtricenter.mealplans.domain.ingredient.Ingredient;
+import edu.nur.nurtricenter.mealplans.domain.shared.UnitMeasureEnum;
 import edu.nur.nurtricenter.mealplans.infraestructure.persistence.persistenceModel.IngredientModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -16,7 +17,14 @@ public class IngredientRepository implements IIngredientRepository {
 
     @Override
     public Ingredient getById(UUID id, boolean readOnly) {
-        return null;
+        IngredientModel model = repository.findById(id).get();
+        return new Ingredient(model.getId(), model.getName(), model.getDescription(), UnitMeasureEnum.valueOf(model.getUnitMeasure()),
+                model.getCaloriesPerGram());
+    }
+
+    @Override
+    public boolean existById(UUID id) {
+        return repository.existsById(id);
     }
 
     @Override

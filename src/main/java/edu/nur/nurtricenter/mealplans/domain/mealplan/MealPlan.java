@@ -17,14 +17,13 @@ public class MealPlan extends AggregateRoot {
     private LocalDate starDate;
     private LocalDate endDate;
     private BigDecimal totalCalories;
-
     private List<MealPlanDay> mealPlanDays;
 
     public MealPlan() {
         super(UUID.randomUUID());
     }
 
-    private MealPlan(UUID id, UUID idNutricionist, UUID idPatient, Integer totalDays, LocalDate starDate, LocalDate endDate, BigDecimal totalCalories, List<MealPlanDay> mealPlanDays) {
+    public MealPlan(UUID id, UUID idNutricionist, UUID idPatient, Integer totalDays, LocalDate starDate, LocalDate endDate, BigDecimal totalCalories, List<MealPlanDay> mealPlanDays) {
         super(id);
         this.idNutricionist = idNutricionist;
         this.idPatient = idPatient;
