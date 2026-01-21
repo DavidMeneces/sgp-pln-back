@@ -15,6 +15,7 @@ import org.springframework.stereotype.Component;
 public class GetMealPlanHandler implements Command.Handler<GetMealPlanCommand, ResultWithValue<MealPlanDto>> {
 
     private IMealPlanRepository repository;
+
     public GetMealPlanHandler(IMealPlanRepository repository) {
         this.repository = repository;
     }
@@ -22,7 +23,7 @@ public class GetMealPlanHandler implements Command.Handler<GetMealPlanCommand, R
     @Override
     public ResultWithValue<MealPlanDto> handle(GetMealPlanCommand command) {
         if (!repository.existById(command.id())) {
-            return ResultWithValue.validationFailure(Error.notFound("NotFound", "Not found recipe", command.id().toString()));
+            return ResultWithValue.validationFailure(Error.notFound("NotFound", "Not found meal plan", command.id().toString()));
         }
         MealPlan mealPlan = repository.getById(command.id(), true);
         return ResultWithValue.success(MealPlanDtoMapper.mapper(mealPlan));

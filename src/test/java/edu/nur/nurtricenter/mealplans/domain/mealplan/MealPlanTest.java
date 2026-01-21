@@ -228,7 +228,7 @@ class MealPlanTest {
         UUID idPatient = UUID.randomUUID();
         Integer totalDays = 15;
         LocalDate starDate = null;
-        LocalDate endDate = null;
+        LocalDate endDate = LocalDate.parse("2025-01-15");
         BigDecimal totalCalories = BigDecimal.valueOf(100L);
         List<MealPlanDay> mealPlanDays = Arrays.asList(
                 MealPlanDay.create(UUID.randomUUID(), 1, Arrays.asList(
@@ -244,6 +244,84 @@ class MealPlanTest {
         );
         //Assert
         Assertions.assertEquals("starDate cannot be null", exception.getMessage());
+    }
+
+    @Test
+    void createMealPlanExceptionEndDate() {
+        //Arrange
+        UUID id = UUID.randomUUID();
+        UUID idNutricionist = UUID.randomUUID();
+        UUID idPatient = UUID.randomUUID();
+        Integer totalDays = 15;
+        LocalDate starDate = LocalDate.parse("2025-01-01");
+        LocalDate endDate = null;
+        BigDecimal totalCalories = BigDecimal.valueOf(100L);
+        List<MealPlanDay> mealPlanDays = Arrays.asList(
+                MealPlanDay.create(UUID.randomUUID(), 1, Arrays.asList(
+                        TimeFood.create(UUID.randomUUID(), TimeFoodEnum.BREAKFAST, 1, Arrays.asList(
+                                TimeFoodRecipe.create(UUID.randomUUID(), UUID.randomUUID(), 1)
+                        ))
+                ))
+        );
+        //Act
+        IllegalArgumentException exception = Assertions.assertThrows(
+                IllegalArgumentException.class,
+                () -> MealPlan.create(id, idNutricionist, idPatient, totalDays, starDate, endDate, totalCalories, mealPlanDays)
+        );
+        //Assert
+        Assertions.assertEquals("endDate cannot be null", exception.getMessage());
+    }
+
+    @Test
+    void createMealPlanExceptionStarDateEarlierEndDate() {
+        //Arrange
+        UUID id = UUID.randomUUID();
+        UUID idNutricionist = UUID.randomUUID();
+        UUID idPatient = UUID.randomUUID();
+        Integer totalDays = 15;
+        LocalDate starDate = LocalDate.parse("2025-01-01");
+        LocalDate endDate = LocalDate.parse("2024-01-01");
+        BigDecimal totalCalories = BigDecimal.valueOf(100L);
+        List<MealPlanDay> mealPlanDays = Arrays.asList(
+                MealPlanDay.create(UUID.randomUUID(), 1, Arrays.asList(
+                        TimeFood.create(UUID.randomUUID(), TimeFoodEnum.BREAKFAST, 1, Arrays.asList(
+                                TimeFoodRecipe.create(UUID.randomUUID(), UUID.randomUUID(), 1)
+                        ))
+                ))
+        );
+        //Act
+        IllegalArgumentException exception = Assertions.assertThrows(
+                IllegalArgumentException.class,
+                () -> MealPlan.create(id, idNutricionist, idPatient, totalDays, starDate, endDate, totalCalories, mealPlanDays)
+        );
+        //Assert
+        Assertions.assertEquals("The start date must be earlier than the end date", exception.getMessage());
+    }
+
+    @Test
+    void createMealPlanExceptionDiffDates() {
+        //Arrange
+        UUID id = UUID.randomUUID();
+        UUID idNutricionist = UUID.randomUUID();
+        UUID idPatient = UUID.randomUUID();
+        Integer totalDays = 15;
+        LocalDate starDate = LocalDate.parse("2025-01-01");
+        LocalDate endDate = LocalDate.parse("2025-01-02");
+        BigDecimal totalCalories = BigDecimal.valueOf(100L);
+        List<MealPlanDay> mealPlanDays = Arrays.asList(
+                MealPlanDay.create(UUID.randomUUID(), 1, Arrays.asList(
+                        TimeFood.create(UUID.randomUUID(), TimeFoodEnum.BREAKFAST, 1, Arrays.asList(
+                                TimeFoodRecipe.create(UUID.randomUUID(), UUID.randomUUID(), 1)
+                        ))
+                ))
+        );
+        //Act
+        IllegalArgumentException exception = Assertions.assertThrows(
+                IllegalArgumentException.class,
+                () -> MealPlan.create(id, idNutricionist, idPatient, totalDays, starDate, endDate, totalCalories, mealPlanDays)
+        );
+        //Assert
+        Assertions.assertEquals("difDays value must be 15 or 30", exception.getMessage());
     }
 
     @Test

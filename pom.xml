@@ -15,6 +15,24 @@
 
     <properties>
         <java.version>17</java.version>
+        <jacoco.version>0.8.11</jacoco.version>
+        <sonar.java.coveragePlugin>jacoco</sonar.java.coveragePlugin>
+        <sonar.dynamicAnalysis>reuseReports</sonar.dynamicAnalysis>
+        <sonar.jacoco.reportPath>${project.build.directory}/jacoco.exec</sonar.jacoco.reportPath>
+        <sonar.language>java</sonar.language>
+        <sonar.exclusions>
+            **/edu/nur/nurtricenter/mealplans/infraestructure/**,
+            **/edu/nur/nurtricenter/mealplans/core/results/**,
+            **/edu/nur/nurtricenter/mealplans/application/mealplan/mapper/**,
+            **/edu/nur/nurtricenter/mealplans/presentation/controllers/**,
+            **/edu/nur/nurtricenter/mealplans/core/abstractions/**,
+            **/config/**,
+            **/model/**,
+            **/entity/**,
+            **/dto/**,
+            **/*Application.java,
+            **/exception/**
+        </sonar.exclusions>
     </properties>
 
     <dependencies>
@@ -63,6 +81,102 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+            <!-- Plugin Jacoco CONFIGURADO CORRECTAMENTE -->
+            <plugin>
+                <groupId>org.jacoco</groupId>
+                <artifactId>jacoco-maven-plugin</artifactId>
+                <version>${jacoco.version}</version>
+
+                <!-- CONFIGURACIÓN PRINCIPAL (aquí van las exclusiones reales) -->
+                <configuration>
+                    <excludes>
+                        <!-- TUS PAQUETES A EXCLUIR -->
+                        <exclude>edu/nur/nurtricenter/mealplans/infraestructure/**/*</exclude>
+                        <exclude>edu/nur/nurtricenter/mealplans/core/results/**/*</exclude>
+                        <exclude>edu/nur/nurtricenter/mealplans/application/mealplan/mapper/**/*</exclude>
+                        <exclude>edu/nur/nurtricenter/mealplans/presentation/controllers/**/*</exclude>
+                        <exclude>edu/nur/nurtricenter/mealplans/core/abstractions/**/*</exclude>
+
+                        <!-- EXCLUSIONES GENERALES -->
+                        <exclude>**/config/**/*</exclude>
+                        <exclude>**/model/**/*</exclude>
+                        <exclude>**/entity/**/*</exclude>
+                        <exclude>**/dto/**/*</exclude>
+                        <exclude>**/*Application.class</exclude>
+                        <exclude>**/exception/**/*</exclude>
+                        <exclude>**/test/**/*</exclude>
+                        <exclude>**/*Test.class</exclude>
+                        <exclude>**/*Tests.class</exclude>
+                    </excludes>
+                </configuration>
+
+                <executions>
+                    <execution>
+                        <id>pre-unit-test</id>
+                        <goals>
+                            <goal>prepare-agent</goal>
+                        </goals>
+                        <configuration>
+                            <destFile>${project.build.directory}/jacoco.exec</destFile>
+                            <propertyName>surefireArgLine</propertyName>
+                        </configuration>
+                    </execution>
+
+                    <execution>
+                        <id>post-unit-test</id>
+                        <phase>test</phase>
+                        <goals>
+                            <goal>report</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>${project.reporting.outputDirectory}/jacoco</outputDirectory>
+                            <title>${project.name} - Test Coverage</title>
+                            <footer>Generated with JaCoCo ${jacoco.version}</footer>
+                        </configuration>
+                    </execution>
+
+                    <execution>
+                        <id>check-coverage</id>
+                        <phase>verify</phase>
+                        <goals>
+                            <goal>check</goal>
+                        </goals>
+                        <configuration>
+                            <rules>
+                                <rule>
+                                    <element>BUNDLE</element>
+                                    <limits>
+                                        <limit>
+                                            <counter>INSTRUCTION</counter>
+                                            <value>COVEREDRATIO</value>
+                                            <minimum>0.80</minimum>
+                                        </limit>
+                                        <limit>
+                                            <counter>BRANCH</counter>
+                                            <value>COVEREDRATIO</value>
+                                            <minimum>0.70</minimum>
+                                        </limit>
+                                    </limits>
+                                </rule>
+                            </rules>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <!-- Configurar Surefire -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>3.2.5</version>
+                <configuration>
+                    <argLine>${surefireArgLine}</argLine>
+                    <includes>
+                        <include>**/*Test.java</include>
+                        <include>**/*Tests.java</include>
+                    </includes>
+                </configuration>
             </plugin>
         </plugins>
     </build>
