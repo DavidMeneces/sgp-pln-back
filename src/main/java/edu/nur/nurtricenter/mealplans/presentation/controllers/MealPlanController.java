@@ -11,7 +11,7 @@ import java.util.UUID;
 
 
 @RestController
-@RequestMapping("/meal-plan")
+@RequestMapping("/meal-plans")
 public class MealPlanController {
 
     private final Pipeline pipeline;
