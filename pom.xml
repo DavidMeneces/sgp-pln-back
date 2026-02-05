@@ -66,7 +66,7 @@
         <dependency>
             <groupId>org.springdoc</groupId>
             <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
-            <version>2.1.0</version>
+            <version>2.7.0</version>
         </dependency>
         <!--Another Dependencies-->
         <dependency>
@@ -82,23 +82,17 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
-            <!-- Plugin Jacoco CONFIGURADO CORRECTAMENTE -->
             <plugin>
                 <groupId>org.jacoco</groupId>
                 <artifactId>jacoco-maven-plugin</artifactId>
                 <version>${jacoco.version}</version>
-
-                <!-- CONFIGURACIÓN PRINCIPAL (aquí van las exclusiones reales) -->
                 <configuration>
                     <excludes>
-                        <!-- TUS PAQUETES A EXCLUIR -->
                         <exclude>edu/nur/nurtricenter/mealplans/infraestructure/**/*</exclude>
                         <exclude>edu/nur/nurtricenter/mealplans/core/results/**/*</exclude>
                         <exclude>edu/nur/nurtricenter/mealplans/application/mealplan/mapper/**/*</exclude>
                         <exclude>edu/nur/nurtricenter/mealplans/presentation/controllers/**/*</exclude>
                         <exclude>edu/nur/nurtricenter/mealplans/core/abstractions/**/*</exclude>
-
-                        <!-- EXCLUSIONES GENERALES -->
                         <exclude>**/config/**/*</exclude>
                         <exclude>**/model/**/*</exclude>
                         <exclude>**/entity/**/*</exclude>
@@ -110,7 +104,6 @@
                         <exclude>**/*Tests.class</exclude>
                     </excludes>
                 </configuration>
-
                 <executions>
                     <execution>
                         <id>pre-unit-test</id>
@@ -122,7 +115,6 @@
                             <propertyName>surefireArgLine</propertyName>
                         </configuration>
                     </execution>
-
                     <execution>
                         <id>post-unit-test</id>
                         <phase>test</phase>
@@ -135,7 +127,6 @@
                             <footer>Generated with JaCoCo ${jacoco.version}</footer>
                         </configuration>
                     </execution>
-
                     <execution>
                         <id>check-coverage</id>
                         <phase>verify</phase>
@@ -164,8 +155,6 @@
                     </execution>
                 </executions>
             </plugin>
-
-            <!-- Configurar Surefire -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>

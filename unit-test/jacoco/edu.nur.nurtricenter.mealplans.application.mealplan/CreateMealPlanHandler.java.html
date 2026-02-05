@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>CreateMealPlanHandler.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">mealplans-api</a> &gt; <a href="index.source.html" class="el_package">edu.nur.nurtricenter.mealplans.application.mealplan</a> &gt; <span class="el_source">CreateMealPlanHandler.java</span></div><h1>CreateMealPlanHandler.java</h1><pre class="source lang-java linenums">package edu.nur.nurtricenter.mealplans.application.mealplan;
+
+import an.awesome.pipelinr.Command;
+import edu.nur.nurtricenter.mealplans.core.results.DomainException;
+import edu.nur.nurtricenter.mealplans.core.results.Error;
+import edu.nur.nurtricenter.mealplans.core.results.ResultWithValue;
+import edu.nur.nurtricenter.mealplans.domain.mealplan.*;
+import edu.nur.nurtricenter.mealplans.domain.recipe.IRecipeRepository;
+import edu.nur.nurtricenter.mealplans.infraestructure.UnitOfWork;
+import edu.nur.nurtricenter.mealplans.infraestructure.persistence.repositories.NutricionistModelRepository;
+import edu.nur.nurtricenter.mealplans.infraestructure.persistence.repositories.PatientModelRepository;
+import org.springframework.stereotype.Component;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
+
+@Component
+public class CreateMealPlanHandler implements Command.Handler&lt;CreateMealPlanCommand, ResultWithValue&lt;UUID&gt;&gt; {
+
+    private final IMealPlanRepository repository;
+    private final IRecipeRepository recipeRepository;
+    private final PatientModelRepository patientModelRepository;
+    private final NutricionistModelRepository nutricionistModelRepository;
+    private final UnitOfWork unitOfWork;
+
+    public CreateMealPlanHandler(IMealPlanRepository repository, IRecipeRepository recipeRepository, PatientModelRepository patientModelRepository,
+<span class="fc" id="L28">                                 NutricionistModelRepository nutricionistModelRepository, UnitOfWork unitOfWork) {</span>
+<span class="fc" id="L29">        this.repository = repository;</span>
+<span class="fc" id="L30">        this.recipeRepository = recipeRepository;</span>
+<span class="fc" id="L31">        this.patientModelRepository = patientModelRepository;</span>
+<span class="fc" id="L32">        this.nutricionistModelRepository = nutricionistModelRepository;</span>
+<span class="fc" id="L33">        this.unitOfWork = unitOfWork;</span>
+<span class="fc" id="L34">    }</span>
+
+    @Override
+    public ResultWithValue&lt;UUID&gt; handle(CreateMealPlanCommand command) {
+        MealPlan mealPlan;
+        try {
+<span class="pc bpc" id="L40" title="1 of 2 branches missed.">            if (!nutricionistModelRepository.existsById(command.idNutricionist())) {</span>
+<span class="nc" id="L41">                return ResultWithValue.validationFailure(Error.notFound(&quot;NotFound&quot;, &quot;Not found nutricionist&quot;, command.idNutricionist().toString()));</span>
+            }
+<span class="pc bpc" id="L43" title="1 of 2 branches missed.">            if (!patientModelRepository.existsById(command.idPatient())) {</span>
+<span class="nc" id="L44">                return ResultWithValue.validationFailure(Error.notFound(&quot;NotFound&quot;, &quot;Not found patient&quot;, command.idPatient().toString()));</span>
+            }
+<span class="fc" id="L46">            List&lt;MealPlanDay&gt; mealPlanDayList = buildMealPlanDay(command.mealPlanDays());</span>
+<span class="fc" id="L47">            mealPlan = MealPlan.create(UUID.randomUUID(), command.idNutricionist(), command.idPatient(), command.totalDays(),</span>
+<span class="fc" id="L48">                    command.starDate(), command.endDate(), command.totalCalories(), mealPlanDayList);</span>
+<span class="nc" id="L49">        } catch (DomainException ex) {</span>
+<span class="nc" id="L50">            return ResultWithValue.validationFailure(ex.getError());</span>
+<span class="fc" id="L51">        }</span>
+<span class="fc" id="L52">        repository.add(mealPlan);</span>
+<span class="fc" id="L53">        this.unitOfWork.commitAsync();</span>
+<span class="fc" id="L54">        return ResultWithValue.success(mealPlan.getId());</span>
+    }
+
+    private List&lt;MealPlanDay&gt; buildMealPlanDay(List&lt;CreateMealPlanCommand.MealPlanDayCommad&gt; requestList) {
+<span class="pc bpc" id="L58" title="1 of 2 branches missed.">        return (requestList != null) ? requestList.stream()</span>
+<span class="fc" id="L59">                .map(request -&gt; MealPlanDay.create(UUID.randomUUID(), request.day(), buildTimeFood(request.timeFoods())))</span>
+<span class="pc" id="L60">                .toList() : new ArrayList&lt;&gt;();</span>
+    }
+
+    private List&lt;TimeFood&gt; buildTimeFood(List&lt;CreateMealPlanCommand.TimeFoodCommad&gt; requestList) {
+<span class="pc bpc" id="L64" title="1 of 2 branches missed.">        return (requestList != null) ? requestList.stream()</span>
+<span class="fc" id="L65">                .map(request -&gt; TimeFood.create(UUID.randomUUID(), request.type(), request.order(),</span>
+<span class="fc" id="L66">                        buildTimeFoodRecipe(request.recipes())))</span>
+<span class="pc" id="L67">                .toList() : new ArrayList&lt;&gt;();</span>
+    }
+
+    private List&lt;TimeFoodRecipe&gt; buildTimeFoodRecipe(List&lt;CreateMealPlanCommand.TimeFoodRecipeCommand&gt; requestList) {
+<span class="pc bpc" id="L71" title="1 of 2 branches missed.">        return (requestList != null) ? requestList.stream()</span>
+<span class="fc" id="L72">                .map(request -&gt; {</span>
+<span class="pc bpc" id="L73" title="1 of 2 branches missed.">                    if (!recipeRepository.existById(request.idRecipe())) {</span>
+<span class="nc" id="L74">                        throw new DomainException(Error.notFound(&quot;NotFound&quot;, &quot;Not found recipe&quot;, request.idRecipe().toString()));</span>
+                    }
+<span class="fc" id="L76">                    return TimeFoodRecipe.create(UUID.randomUUID(), request.idRecipe(), request.portion());</span>
+                })
+<span class="pc" id="L78">                .toList() : new ArrayList&lt;&gt;();</span>
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>

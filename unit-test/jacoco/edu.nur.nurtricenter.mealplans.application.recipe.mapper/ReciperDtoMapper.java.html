@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ReciperDtoMapper.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">mealplans-api</a> &gt; <a href="index.source.html" class="el_package">edu.nur.nurtricenter.mealplans.application.recipe.mapper</a> &gt; <span class="el_source">ReciperDtoMapper.java</span></div><h1>ReciperDtoMapper.java</h1><pre class="source lang-java linenums">package edu.nur.nurtricenter.mealplans.application.recipe.mapper;
+
+import edu.nur.nurtricenter.mealplans.application.recipe.RecipeDto;
+import edu.nur.nurtricenter.mealplans.application.recipe.RecipeIngredientDto;
+import edu.nur.nurtricenter.mealplans.domain.recipe.Recipe;
+import edu.nur.nurtricenter.mealplans.domain.recipe.RecipeIngredient;
+
+import java.util.List;
+
+<span class="nc" id="L10">public final class ReciperDtoMapper {</span>
+
+    public static RecipeDto mapper(Recipe recipe) {
+<span class="fc" id="L13">        return RecipeDto.builder()</span>
+<span class="fc" id="L14">                .id(recipe.getId())</span>
+<span class="fc" id="L15">                .name(recipe.getName())</span>
+<span class="fc" id="L16">                .description(recipe.getDescription())</span>
+<span class="fc" id="L17">                .instructions(recipe.getInstructions())</span>
+<span class="fc" id="L18">                .totalCalories(recipe.getTotalCalories())</span>
+<span class="fc" id="L19">                .ingredients(mapperIngredients(recipe.getIngredients()))</span>
+<span class="fc" id="L20">                .build();</span>
+    }
+
+    public static List&lt;RecipeIngredientDto&gt; mapperIngredients(List&lt;RecipeIngredient&gt; ingredientes) {
+<span class="fc" id="L24">        return ingredientes.stream().map(ingredient -&gt; RecipeIngredientDto.builder()</span>
+<span class="fc" id="L25">                .idIngredient(ingredient.getIdIngredient())</span>
+<span class="fc" id="L26">                .quantity(ingredient.getQuantity())</span>
+<span class="fc" id="L27">                .build()).toList();</span>
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>

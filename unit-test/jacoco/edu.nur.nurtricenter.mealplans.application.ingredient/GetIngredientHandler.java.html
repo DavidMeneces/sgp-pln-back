@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>GetIngredientHandler.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">mealplans-api</a> &gt; <a href="index.source.html" class="el_package">edu.nur.nurtricenter.mealplans.application.ingredient</a> &gt; <span class="el_source">GetIngredientHandler.java</span></div><h1>GetIngredientHandler.java</h1><pre class="source lang-java linenums">package edu.nur.nurtricenter.mealplans.application.ingredient;
+
+import an.awesome.pipelinr.Command;
+import edu.nur.nurtricenter.mealplans.application.ingredient.mapper.IngredientDtoMapper;
+import edu.nur.nurtricenter.mealplans.core.results.Error;
+import edu.nur.nurtricenter.mealplans.core.results.ResultWithValue;
+import edu.nur.nurtricenter.mealplans.domain.ingredient.IIngredientRepository;
+import edu.nur.nurtricenter.mealplans.domain.ingredient.Ingredient;
+import org.springframework.stereotype.Component;
+
+import java.util.UUID;
+
+@Component
+public class GetIngredientHandler implements Command.Handler&lt;GetIngredientCommand, ResultWithValue&lt;IngredientDto&gt;&gt; {
+
+    private final IIngredientRepository repository;
+
+<span class="fc" id="L18">    public GetIngredientHandler(IIngredientRepository repository) {</span>
+<span class="fc" id="L19">        this.repository = repository;</span>
+<span class="fc" id="L20">    }</span>
+
+    @Override
+    public ResultWithValue&lt;IngredientDto&gt; handle(GetIngredientCommand command) {
+<span class="pc bpc" id="L24" title="1 of 2 branches missed.">        if (!repository.existById(command.id())) {</span>
+<span class="nc" id="L25">            return ResultWithValue.validationFailure(Error.notFound(&quot;NotFound&quot;, &quot;Not found ingredient&quot;, command.id().toString()));</span>
+        }
+<span class="fc" id="L27">        Ingredient ingredient = repository.getById(command.id(), true);</span>
+<span class="fc" id="L28">        return ResultWithValue.success(IngredientDtoMapper.mapper(ingredient));</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>

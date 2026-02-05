@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>MealPlan.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">mealplans-api</a> &gt; <a href="index.source.html" class="el_package">edu.nur.nurtricenter.mealplans.domain.mealplan</a> &gt; <span class="el_source">MealPlan.java</span></div><h1>MealPlan.java</h1><pre class="source lang-java linenums">package edu.nur.nurtricenter.mealplans.domain.mealplan;
+
+
+import edu.nur.nurtricenter.mealplans.core.abstractions.AggregateRoot;
+
+import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
+import java.util.List;
+import java.util.UUID;
+
+public class MealPlan extends AggregateRoot {
+
+    private UUID idNutricionist;
+    private UUID idPatient;
+    private Integer totalDays;
+    private LocalDate starDate;
+    private LocalDate endDate;
+    private BigDecimal totalCalories;
+    private List&lt;MealPlanDay&gt; mealPlanDays;
+
+    public MealPlan() {
+<span class="nc" id="L23">        super(UUID.randomUUID());</span>
+<span class="nc" id="L24">    }</span>
+
+    public MealPlan(UUID id, UUID idNutricionist, UUID idPatient, Integer totalDays, LocalDate starDate, LocalDate endDate, BigDecimal totalCalories, List&lt;MealPlanDay&gt; mealPlanDays) {
+<span class="fc" id="L27">        super(id);</span>
+<span class="fc" id="L28">        this.idNutricionist = idNutricionist;</span>
+<span class="fc" id="L29">        this.idPatient = idPatient;</span>
+<span class="fc" id="L30">        this.totalDays = totalDays;</span>
+<span class="fc" id="L31">        this.starDate = starDate;</span>
+<span class="fc" id="L32">        this.endDate = endDate;</span>
+<span class="fc" id="L33">        this.totalCalories = totalCalories;</span>
+<span class="fc" id="L34">        this.mealPlanDays = mealPlanDays;</span>
+<span class="fc" id="L35">    }</span>
+
+    public static MealPlan create(UUID id, UUID idNutricionist, UUID idPatient, Integer totalDays, LocalDate starDate, LocalDate endDate, BigDecimal totalCalories, List&lt;MealPlanDay&gt; mealPlanDays) {
+<span class="fc bfc" id="L38" title="All 2 branches covered.">        if (id == null) {</span>
+<span class="fc" id="L39">            throw new IllegalArgumentException(&quot;id cannot be null&quot;);</span>
+        }
+<span class="fc bfc" id="L41" title="All 2 branches covered.">        if (idNutricionist == null) {</span>
+<span class="fc" id="L42">            throw new IllegalArgumentException(&quot;idNutricionist cannot be null&quot;);</span>
+        }
+<span class="fc bfc" id="L44" title="All 2 branches covered.">        if (idPatient == null) {</span>
+<span class="fc" id="L45">            throw new IllegalArgumentException(&quot;idPatient cannot be null&quot;);</span>
+        }
+<span class="pc bpc" id="L47" title="2 of 6 branches missed.">        if (totalDays == null || !(totalDays == 15 || totalDays == 30)) {</span>
+<span class="fc" id="L48">            throw new IllegalArgumentException(&quot;totalDays value must not be zero and must be 15 or 30&quot;);</span>
+        }
+<span class="fc bfc" id="L50" title="All 2 branches covered.">        if (starDate == null) {</span>
+<span class="fc" id="L51">            throw new IllegalArgumentException(&quot;starDate cannot be null&quot;);</span>
+        }
+<span class="fc bfc" id="L53" title="All 2 branches covered.">        if (endDate == null) {</span>
+<span class="fc" id="L54">            throw new IllegalArgumentException(&quot;endDate cannot be null&quot;);</span>
+        }
+<span class="fc bfc" id="L56" title="All 2 branches covered.">        if (starDate.compareTo(endDate) &gt;= 0) {</span>
+<span class="fc" id="L57">            throw new IllegalArgumentException(&quot;The start date must be earlier than the end date&quot;);</span>
+        }
+<span class="fc" id="L59">        long difDays = ChronoUnit.DAYS.between(starDate, endDate) + 1;</span>
+<span class="pc bpc" id="L60" title="1 of 4 branches missed.">        if (!(difDays == 15 || difDays == 30)) {</span>
+<span class="fc" id="L61">            throw new IllegalArgumentException(&quot;difDays value must be 15 or 30&quot;);</span>
+        }
+<span class="pc bpc" id="L63" title="1 of 4 branches missed.">        if (mealPlanDays == null || mealPlanDays.size() != totalDays) {</span>
+<span class="fc" id="L64">            throw new IllegalArgumentException(&quot;mealPlanDays cannot be null and must be same size to totalDays&quot;);</span>
+        }
+<span class="fc" id="L66">        return new MealPlan(id, idNutricionist, idPatient, totalDays, starDate, endDate, totalCalories, mealPlanDays);</span>
+    }
+
+    public UUID getIdNutricionist() {
+<span class="fc" id="L70">        return idNutricionist;</span>
+    }
+
+    public UUID getIdPatient() {
+<span class="fc" id="L74">        return idPatient;</span>
+    }
+
+    public Integer getTotalDays() {
+<span class="fc" id="L78">        return totalDays;</span>
+    }
+
+    public List&lt;MealPlanDay&gt; getMealPlanDays() {
+<span class="fc" id="L82">        return mealPlanDays;</span>
+    }
+
+    public LocalDate getStarDate() {
+<span class="fc" id="L86">        return starDate;</span>
+    }
+
+    public LocalDate getEndDate() {
+<span class="fc" id="L90">        return endDate;</span>
+    }
+
+    public BigDecimal getTotalCalories() {
+<span class="fc" id="L94">        return totalCalories;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>
