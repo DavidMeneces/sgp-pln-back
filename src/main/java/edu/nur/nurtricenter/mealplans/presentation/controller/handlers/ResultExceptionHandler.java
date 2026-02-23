@@ -1,4 +1,4 @@
-package edu.nur.nurtricenter.mealplans.presentation.controllers.handlers;
+package edu.nur.nurtricenter.mealplans.presentation.controller.handlers;
 
 import edu.nur.nurtricenter.mealplans.core.results.Error;
 import edu.nur.nurtricenter.mealplans.core.results.ResultWithValue;

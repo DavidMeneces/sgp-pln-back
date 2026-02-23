@@ -1,0 +1,17 @@
+services:
+  rabbitmq:
+    image: rabbitmq:management
+    container_name: rabbitmq
+    hostname: rabbitmq-node1 # Important for data consistency
+    ports:
+      - "5672:5672"          # AMQP protocol port for applications
+      - "15672:15672"        # HTTP management UI port
+    environment:
+      - RABBITMQ_DEFAULT_USER=admin      # Your custom username
+      - RABBITMQ_DEFAULT_PASS=admin123   # Your custom password
+    volumes:
+      - rabbitmq_data:/var/lib/rabbitmq  # Persists data
+    restart: unless-stopped
+
+volumes:
+  rabbitmq_data:
