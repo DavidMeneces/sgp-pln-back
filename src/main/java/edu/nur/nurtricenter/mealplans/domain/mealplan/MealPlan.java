@@ -13,6 +13,8 @@ public class MealPlan extends AggregateRoot {
 
     private UUID idNutricionist;
     private UUID idPatient;
+    private UUID idAppointment;
+    private UUID idSubscription;
     private Integer totalDays;
     private LocalDate starDate;
     private LocalDate endDate;
@@ -23,10 +25,12 @@ public class MealPlan extends AggregateRoot {
         super(UUID.randomUUID());
     }
 
-    public MealPlan(UUID id, UUID idNutricionist, UUID idPatient, Integer totalDays, LocalDate starDate, LocalDate endDate, BigDecimal totalCalories, List<MealPlanDay> mealPlanDays) {
+    public MealPlan(UUID id, UUID idNutricionist, UUID idPatient, UUID idAppointment, UUID idSubscription, Integer totalDays, LocalDate starDate, LocalDate endDate, BigDecimal totalCalories, List<MealPlanDay> mealPlanDays) {
         super(id);
         this.idNutricionist = idNutricionist;
         this.idPatient = idPatient;
+        this.idAppointment = idAppointment;
+        this.idSubscription = idSubscription;
         this.totalDays = totalDays;
         this.starDate = starDate;
         this.endDate = endDate;
@@ -34,7 +38,7 @@ public class MealPlan extends AggregateRoot {
         this.mealPlanDays = mealPlanDays;
     }
 
-    public static MealPlan create(UUID id, UUID idNutricionist, UUID idPatient, Integer totalDays, LocalDate starDate, LocalDate endDate, BigDecimal totalCalories, List<MealPlanDay> mealPlanDays) {
+    public static MealPlan create(UUID id, UUID idNutricionist, UUID idPatient, UUID idAppointment, UUID idSubscription, Integer totalDays, LocalDate starDate, LocalDate endDate, BigDecimal totalCalories, List<MealPlanDay> mealPlanDays) {
         if (id == null) {
             throw new IllegalArgumentException("id cannot be null");
         }
@@ -43,6 +47,12 @@ public class MealPlan extends AggregateRoot {
         }
         if (idPatient == null) {
             throw new IllegalArgumentException("idPatient cannot be null");
+        }
+        if (idAppointment == null) {
+            throw new IllegalArgumentException("idAppointment cannot be null");
+        }
+        if (idSubscription == null) {
+            throw new IllegalArgumentException("idSubscription cannot be null");
         }
         if (totalDays == null || !(totalDays == 15 || totalDays == 30)) {
             throw new IllegalArgumentException("totalDays value must not be zero and must be 15 or 30");
@@ -63,7 +73,7 @@ public class MealPlan extends AggregateRoot {
         if (mealPlanDays == null || mealPlanDays.size() != totalDays) {
             throw new IllegalArgumentException("mealPlanDays cannot be null and must be same size to totalDays");
         }
-        return new MealPlan(id, idNutricionist, idPatient, totalDays, starDate, endDate, totalCalories, mealPlanDays);
+        return new MealPlan(id, idNutricionist, idPatient, idAppointment, idSubscription, totalDays, starDate, endDate, totalCalories, mealPlanDays);
     }
 
     public UUID getIdNutricionist() {
@@ -72,6 +82,14 @@ public class MealPlan extends AggregateRoot {
 
     public UUID getIdPatient() {
         return idPatient;
+    }
+
+    public UUID getIdAppointment() {
+        return idAppointment;
+    }
+
+    public UUID getIdSubscription() {
+        return idSubscription;
     }
 
     public Integer getTotalDays() {

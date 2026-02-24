@@ -9,7 +9,8 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
 
-public record CreateMealPlanCommand(UUID idNutricionist, UUID idPatient, Integer totalDays, LocalDate starDate, LocalDate endDate, BigDecimal totalCalories,
+public record CreateMealPlanCommand(UUID idNutricionist, UUID idPatient, UUID idAppointment, UUID idSubscription,
+                                    Integer totalDays, LocalDate starDate, LocalDate endDate, BigDecimal totalCalories,
                                     List<MealPlanDayCommad> mealPlanDays) implements Command<ResultWithValue<UUID>> {
     public record MealPlanDayCommad(Integer day, List<TimeFoodCommad> timeFoods) {
     }

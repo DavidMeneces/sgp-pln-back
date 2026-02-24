@@ -44,7 +44,9 @@ public class MealPlanRepository implements IMealPlanRepository {
         List<MealPlanDay> mealPlanDays = mealPlanDayModels.stream()
                 .map(model -> new MealPlanDay(model.getId(), model.getDay(), toTimeFood(timeFoodModelMap.get(model.getId()), timeFoodRecipeModelMap)))
                 .toList();
-        return new MealPlan(mealPlanModel.getId(), mealPlanModel.getIdNutricionist(), mealPlanModel.getIdPatient(), mealPlanModel.getTotalDays(), mealPlanModel.getStarDate(), mealPlanModel.getEndDate(), null,
+        return new MealPlan(mealPlanModel.getId(), mealPlanModel.getIdNutricionist(), mealPlanModel.getIdPatient(),
+                mealPlanModel.getIdAppointment(), mealPlanModel.getIdSubscription(), mealPlanModel.getTotalDays(),
+                mealPlanModel.getStarDate(), mealPlanModel.getEndDate(), mealPlanModel.getTotalCalories(),
                 mealPlanDays);
     }
 

@@ -30,7 +30,9 @@ CREATE TABLE public.meal_plan (
 	id uuid NOT NULL,
 	id_nutricionist uuid NULL,
 	id_patient uuid NULL,
-	id_cita uuid NULL,
+	id_appointment uuid NULL,
+    id_subscription uuid NULL,
+    total_calories numeric NULL,
 	end_date timestamp NULL,
 	star_date timestamp NULL,
 	total_days int4 NULL,
@@ -88,6 +90,28 @@ CREATE TABLE public.patient (
 	"name" varchar(255) NULL,
 	phone varchar(255) NULL,
 	CONSTRAINT patient_pkey PRIMARY KEY (id)
+);
+
+-- public.subscription_type definition
+
+-- Drop table
+
+-- DROP TABLE public.subscription_type;
+
+CREATE TABLE public.subscription_type (
+    id UUID PRIMARY KEY,
+    name VARCHAR(255)
+);
+
+-- public.appointment definition
+
+-- Drop table
+
+-- DROP TABLE public.appointment;
+
+CREATE TABLE public.appointment (
+    id UUID PRIMARY KEY,
+    status VARCHAR(255)
 );
 
 

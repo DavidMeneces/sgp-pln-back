@@ -7,8 +7,10 @@ import edu.nur.nurtricenter.mealplans.core.results.ResultWithValue;
 import edu.nur.nurtricenter.mealplans.domain.mealplan.*;
 import edu.nur.nurtricenter.mealplans.domain.recipe.IRecipeRepository;
 import edu.nur.nurtricenter.mealplans.infraestructure.UnitOfWork;
+import edu.nur.nurtricenter.mealplans.infraestructure.persistence.repositories.AppointmentModelRepository;
 import edu.nur.nurtricenter.mealplans.infraestructure.persistence.repositories.NutricionistModelRepository;
 import edu.nur.nurtricenter.mealplans.infraestructure.persistence.repositories.PatientModelRepository;
+import edu.nur.nurtricenter.mealplans.infraestructure.persistence.repositories.SuscriptionTypeModelRepository;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -22,14 +24,19 @@ public class CreateMealPlanHandler implements Command.Handler<CreateMealPlanComm
     private final IRecipeRepository recipeRepository;
     private final PatientModelRepository patientModelRepository;
     private final NutricionistModelRepository nutricionistModelRepository;
+    private final SuscriptionTypeModelRepository suscriptionTypeModelRepository;
+    private final AppointmentModelRepository appointmentModelRepository;
     private final UnitOfWork unitOfWork;
 
     public CreateMealPlanHandler(IMealPlanRepository repository, IRecipeRepository recipeRepository, PatientModelRepository patientModelRepository,
-                                 NutricionistModelRepository nutricionistModelRepository, UnitOfWork unitOfWork) {
+                                 NutricionistModelRepository nutricionistModelRepository, SuscriptionTypeModelRepository suscriptionTypeModelRepository,
+                                 AppointmentModelRepository appointmentModelRepository, UnitOfWork unitOfWork) {
         this.repository = repository;
         this.recipeRepository = recipeRepository;
         this.patientModelRepository = patientModelRepository;
         this.nutricionistModelRepository = nutricionistModelRepository;
+        this.suscriptionTypeModelRepository = suscriptionTypeModelRepository;
+        this.appointmentModelRepository = appointmentModelRepository;
         this.unitOfWork = unitOfWork;
     }
 
@@ -43,9 +50,16 @@ public class CreateMealPlanHandler implements Command.Handler<CreateMealPlanComm
             if (!patientModelRepository.existsById(command.idPatient())) {
                 return ResultWithValue.validationFailure(Error.notFound("NotFound", "Not found patient", command.idPatient().toString()));
             }
+            if (!appointmentModelRepository.existsById(command.idAppointment())) {
+                return ResultWithValue.validationFailure(Error.notFound("NotFound", "Not found appoitment", command.idPatient().toString()));
+            }
+            if (!suscriptionTypeModelRepository.existsById(command.idSubscription())) {
+                return ResultWithValue.validationFailure(Error.notFound("NotFound", "Not found suscription type", command.idPatient().toString()));
+            }
             List<MealPlanDay> mealPlanDayList = buildMealPlanDay(command.mealPlanDays());
-            mealPlan = MealPlan.create(UUID.randomUUID(), command.idNutricionist(), command.idPatient(), command.totalDays(),
-                    command.starDate(), command.endDate(), command.totalCalories(), mealPlanDayList);
+            mealPlan = MealPlan.create(UUID.randomUUID(), command.idNutricionist(), command.idPatient(),
+                    command.idAppointment(), command.idSubscription(), command.totalDays(), command.starDate(),
+                    command.endDate(), command.totalCalories(), mealPlanDayList);
         } catch (DomainException ex) {
             return ResultWithValue.validationFailure(ex.getError());
         }

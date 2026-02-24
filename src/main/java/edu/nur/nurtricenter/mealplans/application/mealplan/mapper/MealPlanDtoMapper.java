@@ -18,6 +18,8 @@ public final class MealPlanDtoMapper {
                 .id(mealPlan.getId())
                 .idNutricionist(mealPlan.getIdNutricionist())
                 .idPatient(mealPlan.getIdPatient())
+                .idAppointment(mealPlan.getIdAppointment())
+                .idSubscription(mealPlan.getIdSubscription())
                 .totalDays(mealPlan.getTotalDays())
                 .starDate(mealPlan.getStarDate())
                 .endDate(mealPlan.getEndDate())

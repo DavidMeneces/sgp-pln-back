@@ -11,6 +11,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.UUID;
@@ -29,6 +30,12 @@ public class MealPlanModel {
     private UUID idNutricionist;
     @Column(name = "id_patient")
     private UUID idPatient;
+    @Column(name = "id_subscription")
+    private UUID idSubscription;
+    @Column(name = "id_appointment")
+    private UUID idAppointment;
+    @Column(name = "total_calories", columnDefinition = "numeric")
+    private BigDecimal totalCalories;
     @Column(name = "total_days")
     private Integer totalDays;
     @Column(name = "star_date", columnDefinition = "timestamp")
@@ -55,6 +62,9 @@ public class MealPlanModel {
                 .id(entity.getId())
                 .idNutricionist(entity.getIdNutricionist())
                 .idPatient(entity.getIdPatient())
+                .idAppointment(entity.getIdAppointment())
+                .idSubscription(entity.getIdSubscription())
+                .totalCalories(entity.getTotalCalories())
                 .totalDays(entity.getTotalDays())
                 .transaccion(transaccion.name())
                 .estado(transaccion.getEstado())

@@ -20,6 +20,8 @@ public class MealPlanDto {
     private UUID id;
     private UUID idNutricionist;
     private UUID idPatient;
+    private UUID idAppointment;
+    private UUID idSubscription;
     private Integer totalDays;
     private LocalDate starDate;
     private LocalDate endDate;
