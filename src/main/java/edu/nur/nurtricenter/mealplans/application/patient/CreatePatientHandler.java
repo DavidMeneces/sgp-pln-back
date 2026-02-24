@@ -5,6 +5,9 @@ import edu.nur.nurtricenter.mealplans.application.recipe.CreateRecipeCommand;
 import edu.nur.nurtricenter.mealplans.core.results.ResultWithValue;
 import edu.nur.nurtricenter.mealplans.domain.recipe.IRecipeRepository;
 import edu.nur.nurtricenter.mealplans.infraestructure.UnitOfWork;
+import edu.nur.nurtricenter.mealplans.infraestructure.persistence.persistenceModel.PatientModel;
+import edu.nur.nurtricenter.mealplans.infraestructure.persistence.repositories.PatientModelRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Component;
 
 import java.util.UUID;
@@ -12,16 +15,20 @@ import java.util.UUID;
 @Component
 public class CreatePatientHandler implements Command.Handler<CreatePatientCommand, ResultWithValue<Boolean>> {
 
-    private IRecipeRepository repository;
-    private final UnitOfWork unitOfWork;
+    private PatientModelRepository repository;
 
-    public CreatePatientHandler(IRecipeRepository repository, UnitOfWork unitOfWork) {
+    public CreatePatientHandler(PatientModelRepository repository) {
         this.repository = repository;
-        this.unitOfWork = unitOfWork;
     }
 
     @Override
+    @Transactional
     public ResultWithValue<Boolean> handle(CreatePatientCommand command) {
+        PatientModel model = PatientModel.builder()
+                .id(command.id())
+                .name(command.name())
+                .build();
+        repository.save(model);
         return ResultWithValue.success(Boolean.TRUE);
     }
 }

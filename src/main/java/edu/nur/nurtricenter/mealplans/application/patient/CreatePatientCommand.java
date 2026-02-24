@@ -5,5 +5,5 @@ import edu.nur.nurtricenter.mealplans.core.results.ResultWithValue;
 
 import java.util.UUID;
 
-public record CreatePatientCommand(UUID patientId, String nombre) implements Command<ResultWithValue<Boolean>> {
+public record CreatePatientCommand(UUID id, String name) implements Command<ResultWithValue<Boolean>> {
 }
