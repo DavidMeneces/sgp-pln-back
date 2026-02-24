@@ -20,21 +20,13 @@ import jakarta.transaction.Transactional;
 @Component
 public class UnitOfWork implements IUnitOfWork {
     private final EntityManager em;
-    private final Pipeline pipeline;
-    private final Set<Entity> registeredEntities = new HashSet<>();
-
     private final OutboxEventRepository outboxRepository;
     private final OutboxEventMapper mapper;
 
-    public UnitOfWork(EntityManager em, Pipeline pipeline, OutboxEventRepository outboxRepository, ObjectMapper objectMapper) {
+    public UnitOfWork(EntityManager em, OutboxEventRepository outboxRepository, ObjectMapper objectMapper) {
         this.em = em;
-        this.pipeline = pipeline;
         this.outboxRepository = outboxRepository;
         this.mapper = new OutboxEventMapper(objectMapper);
-    }
-
-    public void register(Entity entity) {
-        registeredEntities.add(entity);
     }
 
     @Override
@@ -56,7 +48,6 @@ public class UnitOfWork implements IUnitOfWork {
                     .toList();
             outboxRepository.saveAll(outboxEventEntities);
         }
-        registeredEntities.clear();
         return CompletableFuture.completedFuture(null);
     }
 }

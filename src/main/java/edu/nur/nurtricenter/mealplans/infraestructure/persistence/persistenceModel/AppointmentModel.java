@@ -21,6 +21,8 @@ public class AppointmentModel {
     @Id
     @Column(name = "id")
     private UUID id;
+    @Column(name = "id_patient")
+    private UUID idPatient;
     @Column(name = "status")
     private String status;
 }

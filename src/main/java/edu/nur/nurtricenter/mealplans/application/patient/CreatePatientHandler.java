@@ -1,16 +1,11 @@
-package edu.nur.nurtricenter.mealplans.application.patients;
+package edu.nur.nurtricenter.mealplans.application.patient;
 
 import an.awesome.pipelinr.Command;
-import edu.nur.nurtricenter.mealplans.application.recipe.CreateRecipeCommand;
 import edu.nur.nurtricenter.mealplans.core.results.ResultWithValue;
-import edu.nur.nurtricenter.mealplans.domain.recipe.IRecipeRepository;
-import edu.nur.nurtricenter.mealplans.infraestructure.UnitOfWork;
 import edu.nur.nurtricenter.mealplans.infraestructure.persistence.persistenceModel.PatientModel;
 import edu.nur.nurtricenter.mealplans.infraestructure.persistence.repositories.PatientModelRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Component;
-
-import java.util.UUID;
 
 @Component
 public class CreatePatientHandler implements Command.Handler<CreatePatientCommand, ResultWithValue<Boolean>> {

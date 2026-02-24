@@ -2,6 +2,7 @@ package edu.nur.nurtricenter.mealplans.infraestructure.inbound;
 
 import an.awesome.pipelinr.Pipeline;
 import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import edu.nur.nurtricenter.mealplans.core.results.ErrorType;
 import edu.nur.nurtricenter.mealplans.core.results.Result;
@@ -36,7 +37,7 @@ public class SubscriptionInboundListener {
             InboundEventMetrics metrics
     ) {
         this.pipeline = pipeline;
-        this.objectMapper = objectMapper;
+        this.objectMapper = objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
         this.props = props;
         this.metrics = metrics;
     }
@@ -67,6 +68,7 @@ public class SubscriptionInboundListener {
             metrics.incrementReceived(eventName);
             try (MDC.MDCCloseable ignoredCorrelation = putMdc("correlation_id", correlationId != null ? correlationId.toString() : null);
                  MDC.MDCCloseable ignoredEventId = putMdc("event_id", eventId != null ? eventId.toString() : null)) {
+                InboundEventCommand.findByEventName(eventName);
                 /*Result result = new ProcessSubscriptionEventCommand(
                         eventName,
                         payload,
