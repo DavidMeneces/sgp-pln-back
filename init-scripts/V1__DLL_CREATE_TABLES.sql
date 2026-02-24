@@ -198,3 +198,54 @@ CREATE TABLE public.time_food_recipe (
 	usuario_modificacion varchar(255) NULL,
 	CONSTRAINT time_food_recipe_pkey PRIMARY KEY (id)
 );
+
+-- public.outbox_events definition
+
+-- Drop table
+
+-- DROP TABLE public.outbox_events;
+
+CREATE TABLE public.outbox_events (
+	id uuid NOT NULL,
+	event_id uuid NOT NULL,
+	aggregate_type varchar(255) NOT NULL,
+	aggregate_id varchar(255) NOT NULL,
+	event_type varchar(255) NOT NULL,
+	event_name varchar(255) NOT NULL,
+	routing_key varchar(255) NULL,
+	schema_version int4 NULL,
+	correlation_id uuid NULL,
+	payload text NULL,
+	occurred_on timestamp NOT NULL,
+	processed_on timestamp NULL,
+	attempts int4 NULL DEFAULT 0,
+	next_attempt_at timestamp NULL,
+	last_error text NULL,
+	created_at timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+	CONSTRAINT outbox_events_pkey PRIMARY KEY (id)
+);
+
+-- public.inbound_events definition
+
+-- Drop table
+
+-- DROP TABLE public.inbound_events;
+
+CREATE TABLE public.inbound_events (
+	id uuid NOT NULL,
+	event_id uuid NOT NULL,
+	event_name varchar(255) NULL,
+	routing_key varchar(255) NULL,
+	correlation_id uuid NULL,
+	schema_version int4 NULL,
+	status varchar(50) NOT NULL,
+	occurred_on timestamp NULL,
+	received_on timestamp NOT NULL,
+	processed_on timestamp NULL,
+	updated_on timestamp NULL,
+	payload text NULL,
+	last_error text NULL,
+	created_at timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+	CONSTRAINT inbound_events_event_id_key UNIQUE (event_id),
+	CONSTRAINT inbound_events_pkey PRIMARY KEY (id)
+);
