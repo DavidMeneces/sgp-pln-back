@@ -15,11 +15,19 @@ import an.awesome.pipelinr.Notification;
 import an.awesome.pipelinr.NotificationHandlers;
 import an.awesome.pipelinr.Pipeline;
 import an.awesome.pipelinr.Pipelinr;
+import org.springframework.scheduling.annotation.EnableAsync;
+import org.springframework.scheduling.annotation.EnableScheduling;
 
 @SpringBootApplication(scanBasePackages = "edu.nur.nurtricenter.mealplans")
-@EntityScan({"edu.nur.nurtricenter.mealplans.infraestructure.persistence.persistenceModel"})
-@EnableJpaRepositories(basePackages = {"edu.nur.nurtricenter.mealplans.infraestructure.persistence.repositories"})
+@EntityScan({"edu.nur.nurtricenter.mealplans.infraestructure.persistence.persistenceModel",
+        "edu.nur.nurtricenter.mealplans.infraestructure.outbox",
+        "edu.nur.nurtricenter.mealplans.infraestructure.inbound"})
+@EnableJpaRepositories(basePackages = {"edu.nur.nurtricenter.mealplans.infraestructure.persistence.repositories",
+        "edu.nur.nurtricenter.mealplans.infraestructure.outbox",
+        "edu.nur.nurtricenter.mealplans.infraestructure.inbound"})
 @OpenAPIDefinition(servers = {@Server(url = "${springdoc.swagger.path-location}")})
+@EnableAsync
+@EnableScheduling
 public class SpringApp {
 
     public static void main(String[] args) {

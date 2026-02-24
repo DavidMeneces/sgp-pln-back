@@ -5,6 +5,7 @@ import edu.nur.nurtricenter.mealplans.core.results.ResultWithValue;
 import edu.nur.nurtricenter.mealplans.domain.recipe.IRecipeRepository;
 import edu.nur.nurtricenter.mealplans.domain.recipe.Recipe;
 import edu.nur.nurtricenter.mealplans.domain.recipe.RecipeIngredient;
+import edu.nur.nurtricenter.mealplans.domain.recipe.event.RecipeCreatedEvent;
 import edu.nur.nurtricenter.mealplans.infraestructure.UnitOfWork;
 import org.springframework.stereotype.Component;
 
@@ -29,7 +30,13 @@ public class CreateRecipeHandler implements Command.Handler<CreateRecipeCommand,
         var recipe = Recipe.create(UUID.randomUUID(),
                 command.name(), command.description(), command.instructions(), command.totalCalories(), ingredients);
         repository.add(recipe);
-        this.unitOfWork.commitAsync();
+        recipe.addDomainEvent(new RecipeCreatedEvent(recipe.getId(),
+                recipe.getName(),
+                recipe.getDescription(),
+                recipe.getInstructions(),
+                recipe.getTotalCalories(),
+                recipe.getIngredients()));
+        this.unitOfWork.commitAsync(recipe);
         return ResultWithValue.success(recipe.getId());
     }
 
