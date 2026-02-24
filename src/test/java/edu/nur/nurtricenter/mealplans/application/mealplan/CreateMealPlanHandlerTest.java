@@ -31,6 +31,8 @@ class CreateMealPlanHandlerTest {
     void handle() {
         var idNutricionist = UUID.fromString("0063b8fd-4e81-464c-be6a-8c4fcac2c6bd");
         var idPatient = UUID.fromString("a172809f-4259-4d8f-82ed-5f2eea93f828");
+        var idAppointment = UUID.fromString("a172809f-4259-4d8f-82ed-5f2eea93f828");
+        var idSubscription = UUID.fromString("a172809f-4259-4d8f-82ed-5f2eea93f828");
         var totalDays = 15;
         var starDate = LocalDate.parse("2025-01-01");
         var endDate = LocalDate.parse("2025-01-15");
@@ -112,7 +114,7 @@ class CreateMealPlanHandlerTest {
                         ))
                 ))
         );
-        var request = new CreateMealPlanCommand(idNutricionist, idPatient, totalDays, starDate, endDate, totalCalories, mealPlanDays);
+        var request = new CreateMealPlanCommand(idNutricionist, idPatient, idAppointment, idSubscription, totalDays, starDate, endDate, totalCalories, mealPlanDays);
         var response = request.execute(pipeline);
         Assertions.assertNotNull(response.getValue());
     }

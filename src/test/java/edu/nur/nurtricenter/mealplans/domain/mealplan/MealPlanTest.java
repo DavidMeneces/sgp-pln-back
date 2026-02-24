@@ -148,6 +148,8 @@ class MealPlanTest {
         UUID id = UUID.randomUUID();
         UUID idNutricionist = null;
         UUID idPatient = UUID.randomUUID();
+        UUID idAppointment = UUID.randomUUID();
+        UUID idSubscription = UUID.randomUUID();
         Integer totalDays = 15;
         LocalDate starDate = LocalDate.parse("2025-01-01");
         LocalDate endDate = LocalDate.parse("2025-01-15");
@@ -162,7 +164,7 @@ class MealPlanTest {
         //Act
         IllegalArgumentException exception = Assertions.assertThrows(
                 IllegalArgumentException.class,
-                () -> MealPlan.create(id, idNutricionist, idPatient, totalDays, starDate, endDate, totalCalories, mealPlanDays)
+                () -> MealPlan.create(id, idNutricionist, idPatient, idAppointment, idSubscription, totalDays, starDate, endDate, totalCalories, mealPlanDays)
         );
         //Assert
         Assertions.assertEquals("idNutricionist cannot be null", exception.getMessage());
@@ -174,6 +176,8 @@ class MealPlanTest {
         UUID id = UUID.randomUUID();
         UUID idNutricionist = UUID.randomUUID();
         UUID idPatient = null;
+        UUID idAppointment = UUID.randomUUID();
+        UUID idSubscription = UUID.randomUUID();
         Integer totalDays = 15;
         LocalDate starDate = LocalDate.parse("2025-01-01");
         LocalDate endDate = LocalDate.parse("2025-01-15");
@@ -188,7 +192,7 @@ class MealPlanTest {
         //Act
         IllegalArgumentException exception = Assertions.assertThrows(
                 IllegalArgumentException.class,
-                () -> MealPlan.create(id, idNutricionist, idPatient, totalDays, starDate, endDate, totalCalories, mealPlanDays)
+                () -> MealPlan.create(id, idNutricionist, idPatient, idAppointment, idSubscription, totalDays, starDate, endDate, totalCalories, mealPlanDays)
         );
         //Assert
         Assertions.assertEquals("idPatient cannot be null", exception.getMessage());
@@ -200,6 +204,8 @@ class MealPlanTest {
         UUID id = UUID.randomUUID();
         UUID idNutricionist = UUID.randomUUID();
         UUID idPatient = UUID.randomUUID();
+        UUID idAppointment = UUID.randomUUID();
+        UUID idSubscription = UUID.randomUUID();
         Integer totalDays = 0;
         LocalDate starDate = LocalDate.parse("2025-01-01");
         LocalDate endDate = LocalDate.parse("2025-01-15");
@@ -214,7 +220,7 @@ class MealPlanTest {
         //Act
         IllegalArgumentException exception = Assertions.assertThrows(
                 IllegalArgumentException.class,
-                () -> MealPlan.create(id, idNutricionist, idPatient, totalDays, starDate, endDate, totalCalories, mealPlanDays)
+                () -> MealPlan.create(id, idNutricionist, idPatient, idAppointment, idSubscription, totalDays, starDate, endDate, totalCalories, mealPlanDays)
         );
         //Assert
         Assertions.assertEquals("totalDays value must not be zero and must be 15 or 30", exception.getMessage());
@@ -226,6 +232,8 @@ class MealPlanTest {
         UUID id = UUID.randomUUID();
         UUID idNutricionist = UUID.randomUUID();
         UUID idPatient = UUID.randomUUID();
+        UUID idAppointment = UUID.randomUUID();
+        UUID idSubscription = UUID.randomUUID();
         Integer totalDays = 15;
         LocalDate starDate = null;
         LocalDate endDate = LocalDate.parse("2025-01-15");
@@ -240,7 +248,7 @@ class MealPlanTest {
         //Act
         IllegalArgumentException exception = Assertions.assertThrows(
                 IllegalArgumentException.class,
-                () -> MealPlan.create(id, idNutricionist, idPatient, totalDays, starDate, endDate, totalCalories, mealPlanDays)
+                () -> MealPlan.create(id, idNutricionist, idPatient, idAppointment, idSubscription, totalDays, starDate, endDate, totalCalories, mealPlanDays)
         );
         //Assert
         Assertions.assertEquals("starDate cannot be null", exception.getMessage());
@@ -252,6 +260,8 @@ class MealPlanTest {
         UUID id = UUID.randomUUID();
         UUID idNutricionist = UUID.randomUUID();
         UUID idPatient = UUID.randomUUID();
+        UUID idAppointment = UUID.randomUUID();
+        UUID idSubscription = UUID.randomUUID();
         Integer totalDays = 15;
         LocalDate starDate = LocalDate.parse("2025-01-01");
         LocalDate endDate = null;
@@ -266,7 +276,7 @@ class MealPlanTest {
         //Act
         IllegalArgumentException exception = Assertions.assertThrows(
                 IllegalArgumentException.class,
-                () -> MealPlan.create(id, idNutricionist, idPatient, totalDays, starDate, endDate, totalCalories, mealPlanDays)
+                () -> MealPlan.create(id, idNutricionist, idPatient, idAppointment, idSubscription, totalDays, starDate, endDate, totalCalories, mealPlanDays)
         );
         //Assert
         Assertions.assertEquals("endDate cannot be null", exception.getMessage());
@@ -278,6 +288,8 @@ class MealPlanTest {
         UUID id = UUID.randomUUID();
         UUID idNutricionist = UUID.randomUUID();
         UUID idPatient = UUID.randomUUID();
+        UUID idAppointment = UUID.randomUUID();
+        UUID idSubscription = UUID.randomUUID();
         Integer totalDays = 15;
         LocalDate starDate = LocalDate.parse("2025-01-01");
         LocalDate endDate = LocalDate.parse("2024-01-01");
@@ -292,7 +304,7 @@ class MealPlanTest {
         //Act
         IllegalArgumentException exception = Assertions.assertThrows(
                 IllegalArgumentException.class,
-                () -> MealPlan.create(id, idNutricionist, idPatient, totalDays, starDate, endDate, totalCalories, mealPlanDays)
+                () -> MealPlan.create(id, idNutricionist, idPatient, idAppointment, idSubscription, totalDays, starDate, endDate, totalCalories, mealPlanDays)
         );
         //Assert
         Assertions.assertEquals("The start date must be earlier than the end date", exception.getMessage());
@@ -304,6 +316,8 @@ class MealPlanTest {
         UUID id = UUID.randomUUID();
         UUID idNutricionist = UUID.randomUUID();
         UUID idPatient = UUID.randomUUID();
+        UUID idAppointment = UUID.randomUUID();
+        UUID idSubscription = UUID.randomUUID();
         Integer totalDays = 15;
         LocalDate starDate = LocalDate.parse("2025-01-01");
         LocalDate endDate = LocalDate.parse("2025-01-02");
@@ -318,7 +332,7 @@ class MealPlanTest {
         //Act
         IllegalArgumentException exception = Assertions.assertThrows(
                 IllegalArgumentException.class,
-                () -> MealPlan.create(id, idNutricionist, idPatient, totalDays, starDate, endDate, totalCalories, mealPlanDays)
+                () -> MealPlan.create(id, idNutricionist, idPatient, idAppointment, idSubscription, totalDays, starDate, endDate, totalCalories, mealPlanDays)
         );
         //Assert
         Assertions.assertEquals("difDays value must be 15 or 30", exception.getMessage());
@@ -330,6 +344,8 @@ class MealPlanTest {
         UUID id = UUID.randomUUID();
         UUID idNutricionist = UUID.randomUUID();
         UUID idPatient = UUID.randomUUID();
+        UUID idAppointment = UUID.randomUUID();
+        UUID idSubscription = UUID.randomUUID();
         Integer totalDays = 15;
         LocalDate starDate = LocalDate.parse("2025-01-01");
         LocalDate endDate = LocalDate.parse("2025-01-15");
@@ -338,7 +354,7 @@ class MealPlanTest {
         //Act
         IllegalArgumentException exception = Assertions.assertThrows(
                 IllegalArgumentException.class,
-                () -> MealPlan.create(id, idNutricionist, idPatient, totalDays, starDate, endDate, totalCalories, mealPlanDays)
+                () -> MealPlan.create(id, idNutricionist, idPatient, idAppointment, idSubscription, totalDays, starDate, endDate, totalCalories, mealPlanDays)
         );
         //Assert
         Assertions.assertEquals("mealPlanDays cannot be null and must be same size to totalDays", exception.getMessage());
