@@ -41,11 +41,9 @@ public class SubscriptionInboundListener {
         this.metrics = metrics;
     }
 
-    @RabbitListener(
-            queues = "${inbound.rabbitmq.queue:pacientes.inbound}",
-            autoStartup = "#{@inboundConsumerToggle.enabled}"
-    )
+    @RabbitListener(queues = "${inbound.rabbitmq.queue:planes.inbound}")
     public void onMessage(Message message) {
+        log.info("Mensaje recibido en cola: {}", message.getMessageProperties().getConsumerQueue());
         try {
             String body = new String(message.getBody(), StandardCharsets.UTF_8);
             Map<String, Object> parsed = objectMapper.readValue(body, new TypeReference<Map<String, Object>>() {
@@ -67,7 +65,6 @@ public class SubscriptionInboundListener {
             String occurredOn = readRequiredString(parsed, "occurred_on", "occurredOn");
             validateOccurredOn(occurredOn);
             metrics.incrementReceived(eventName);
-
             try (MDC.MDCCloseable ignoredCorrelation = putMdc("correlation_id", correlationId != null ? correlationId.toString() : null);
                  MDC.MDCCloseable ignoredEventId = putMdc("event_id", eventId != null ? eventId.toString() : null)) {
                 /*Result result = new ProcessSubscriptionEventCommand(

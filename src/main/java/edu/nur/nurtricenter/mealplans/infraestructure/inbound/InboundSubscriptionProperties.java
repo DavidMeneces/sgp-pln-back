@@ -11,7 +11,7 @@ public class InboundSubscriptionProperties {
     private String exchange = "outbox.events";
     private String exchangeType = "fanout";
     private boolean exchangeDurable = true;
-    private String queue = "pacientes.inbound";
+    private String queue = "planes.inbound";
     private boolean queueDurable = true;
     private boolean queueExclusive = false;
     private boolean queueAutoDelete = false;

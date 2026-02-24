@@ -8,6 +8,7 @@ import java.util.UUID;
 @Entity
 @Table(
         name = "inbound_events",
+        schema = "public",
         indexes = {
                 @Index(name = "idx_inbound_events_event_id", columnList = "event_id"),
                 @Index(name = "idx_inbound_events_status", columnList = "status"),
