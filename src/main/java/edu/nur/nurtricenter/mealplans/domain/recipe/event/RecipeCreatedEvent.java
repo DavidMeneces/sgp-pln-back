@@ -62,7 +62,7 @@ public class RecipeCreatedEvent extends DomainEvent {
 
     @Override
     public String getEventName() {
-        return "planes.receta-creada";
+        return "planes.receta.creado";
     }
 
     @Override

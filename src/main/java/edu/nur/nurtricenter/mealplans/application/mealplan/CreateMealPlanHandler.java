@@ -5,7 +5,9 @@ import edu.nur.nurtricenter.mealplans.core.results.DomainException;
 import edu.nur.nurtricenter.mealplans.core.results.Error;
 import edu.nur.nurtricenter.mealplans.core.results.ResultWithValue;
 import edu.nur.nurtricenter.mealplans.domain.mealplan.*;
+import edu.nur.nurtricenter.mealplans.domain.mealplan.event.MealPlanCreatedEvent;
 import edu.nur.nurtricenter.mealplans.domain.recipe.IRecipeRepository;
+import edu.nur.nurtricenter.mealplans.domain.recipe.event.RecipeCreatedEvent;
 import edu.nur.nurtricenter.mealplans.infraestructure.UnitOfWork;
 import edu.nur.nurtricenter.mealplans.infraestructure.persistence.repositories.AppointmentModelRepository;
 import edu.nur.nurtricenter.mealplans.infraestructure.persistence.repositories.NutricionistModelRepository;
@@ -64,7 +66,17 @@ public class CreateMealPlanHandler implements Command.Handler<CreateMealPlanComm
             return ResultWithValue.validationFailure(ex.getError());
         }
         repository.add(mealPlan);
-        this.unitOfWork.commitAsync();
+        mealPlan.addDomainEvent(new MealPlanCreatedEvent(mealPlan.getId(),
+                mealPlan.getIdNutricionist(),
+                mealPlan.getIdPatient(),
+                mealPlan.getIdAppointment(),
+                mealPlan.getIdSubscription(),
+                mealPlan.getTotalDays(),
+                mealPlan.getStarDate(),
+                mealPlan.getEndDate(),
+                mealPlan.getTotalCalories(),
+                mealPlan.getMealPlanDays()));
+        this.unitOfWork.commitAsync(mealPlan);
         return ResultWithValue.success(mealPlan.getId());
     }
 
