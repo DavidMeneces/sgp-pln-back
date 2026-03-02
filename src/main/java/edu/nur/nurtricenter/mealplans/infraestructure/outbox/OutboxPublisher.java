@@ -3,6 +3,8 @@ package edu.nur.nurtricenter.mealplans.infraestructure.outbox;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -16,6 +18,8 @@ import java.util.UUID;
 
 @Component
 public class OutboxPublisher {
+
+    private static final Logger log = LoggerFactory.getLogger(OutboxPublisher.class);
     private final OutboxEventRepository repository;
     private final RabbitTemplate rabbitTemplate;
     private final OutboxPublisherProperties props;
@@ -48,6 +52,7 @@ public class OutboxPublisher {
             event.setProcessedOn(LocalDateTime.now());
             event.setLastError(null);
             repository.save(event);
+            log.info("Event sended {}", event);
         } catch (Exception ex) {
             int attempts = event.getAttempts() != null ? event.getAttempts() + 1 : 1;
             event.setAttempts(attempts);

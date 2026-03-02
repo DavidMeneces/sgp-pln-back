@@ -1,11 +1,13 @@
 package edu.nur.nurtricenter.mealplans.infraestructure.inbound;
 
+import an.awesome.pipelinr.Command;
 import an.awesome.pipelinr.Pipeline;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import edu.nur.nurtricenter.mealplans.core.results.ErrorType;
 import edu.nur.nurtricenter.mealplans.core.results.Result;
+import edu.nur.nurtricenter.mealplans.core.results.ResultWithValue;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.slf4j.MDC;
@@ -44,49 +46,49 @@ public class SubscriptionInboundListener {
 
     @RabbitListener(queues = "${inbound.rabbitmq.queue:planes.inbound}")
     public void onMessage(Message message) {
-        log.info("Mensaje recibido en cola: {}", message.getMessageProperties().getConsumerQueue());
+        log.info("Message received: {}", message);
         try {
             String body = new String(message.getBody(), StandardCharsets.UTF_8);
-            Map<String, Object> parsed = objectMapper.readValue(body, new TypeReference<Map<String, Object>>() {
+            Map<String, Object> bodyMessage = objectMapper.readValue(body, new TypeReference<Map<String, Object>>() {
             });
+            log.info("Body message received {}", bodyMessage);
 
             String routingKey = message.getMessageProperties() != null
                     ? message.getMessageProperties().getReceivedRoutingKey()
                     : null;
+            log.info("Routing key received {}", routingKey);
 
-            String eventName = readString(parsed, "event", "event_name", "eventName");
+            String eventName = readString(bodyMessage, "event", "event_name", "eventName");
             if (eventName == null || eventName.isBlank()) {
                 throw new AmqpRejectAndDontRequeueException("Missing event field");
             }
-            Map<String, Object> payload = extractPayloadRequired(parsed);
-            UUID eventId = readRequiredUuid(parsed, "event_id", "eventId");
-            UUID correlationId = readRequiredUuid(parsed, "correlation_id", "correlationId");
-            Integer schemaVersion = readRequiredInt(parsed, "schema_version", "schemaVersion");
+
+            Map<String, Object> payload = extractPayloadRequired(bodyMessage);
+            log.info("Payload received: {}", payload);
+
+            UUID eventId = readRequiredUuid(bodyMessage, "event_id", "eventId");
+            UUID correlationId = readRequiredUuid(bodyMessage, "correlation_id", "correlationId");
+            Integer schemaVersion = readRequiredInt(bodyMessage, "schema_version", "schemaVersion");
             validateSchemaVersion(schemaVersion);
-            String occurredOn = readRequiredString(parsed, "occurred_on", "occurredOn");
+            String occurredOn = readRequiredString(bodyMessage, "occurred_on", "occurredOn");
             validateOccurredOn(occurredOn);
             metrics.incrementReceived(eventName);
             try (MDC.MDCCloseable ignoredCorrelation = putMdc("correlation_id", correlationId != null ? correlationId.toString() : null);
                  MDC.MDCCloseable ignoredEventId = putMdc("event_id", eventId != null ? eventId.toString() : null)) {
-                InboundEventCommand.findByEventName(eventName);
-                /*Result result = new ProcessSubscriptionEventCommand(
-                        eventName,
-                        payload,
-                        routingKey,
-                        eventId,
-                        correlationId,
-                        schemaVersion,
-                        occurredOn,
-                        body
-                ).execute(pipeline);
-                if (result.isFailure()) {
-                    log.warn("Inbound subscription event failed: event={} routingKey={} error={}", eventName, routingKey, result.getError().getDescription());
-                    if (result.getError().getType() == ErrorType.VALIDATION || result.getError().getType() == ErrorType.CONFLICT || result.getError().getType() == ErrorType.NOT_FOUND) {
-                        throw new AmqpRejectAndDontRequeueException(result.getError().getDescription());
+                var commandEvent = InboundEventCommand.findByEventName(eventName);
+                if (commandEvent != null) {
+                    log.info("Command event founded {}", commandEvent);
+                    var command = objectMapper.convertValue(payload, commandEvent);
+                    var result = (ResultWithValue<?>) pipeline.send(command);
+                    if (result.isFailure()) {
+                        log.warn("Inbound subscription event failed: event={} error={}", eventName, result.getError().getDescription());
+                        if (result.getError().getType() == ErrorType.VALIDATION || result.getError().getType() == ErrorType.CONFLICT || result.getError().getType() == ErrorType.NOT_FOUND) {
+                            throw new AmqpRejectAndDontRequeueException(result.getError().getDescription());
+                        }
+                        throw new IllegalStateException(result.getError().getDescription());
                     }
-                    throw new IllegalStateException(result.getError().getDescription());
-                }*/
-                System.out.println("ignoredCorrelation = " + ignoredCorrelation);
+                    log.info("Command {} executed success", command);
+                }
             }
         } catch (AmqpRejectAndDontRequeueException ex) {
             throw ex;

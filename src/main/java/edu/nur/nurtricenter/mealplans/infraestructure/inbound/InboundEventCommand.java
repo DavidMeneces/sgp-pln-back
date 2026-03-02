@@ -18,7 +18,7 @@ public final class InboundEventCommand {
         eventCommand.put("citas-evaluaciones.cita.agendada", CreatePatientCommand.class);
     }
 
-    public static Class<?> findByEventName(String eventName) {
+    public static Class<? extends Command> findByEventName(String eventName) {
         return eventCommand.get(eventName);
     }
 }
