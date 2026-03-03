@@ -22,10 +22,7 @@ public class InboundRabbitConfig {
     private static final Logger log = LoggerFactory.getLogger(InboundRabbitConfig.class);
 
     @Bean
-    public SimpleRabbitListenerContainerFactory rabbitListenerContainerFactory(
-            ConnectionFactory connectionFactory,
-            InboundSubscriptionProperties props
-    ) {
+    public SimpleRabbitListenerContainerFactory rabbitListenerContainerFactory(ConnectionFactory connectionFactory, InboundSubscriptionProperties props) {
         SimpleRabbitListenerContainerFactory factory = new SimpleRabbitListenerContainerFactory();
         factory.setConnectionFactory(connectionFactory);
         factory.setMissingQueuesFatal(false);
