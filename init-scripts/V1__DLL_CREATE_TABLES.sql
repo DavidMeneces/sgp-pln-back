@@ -111,6 +111,7 @@ CREATE TABLE public.subscription_type (
 
 CREATE TABLE public.appointment (
     id UUID PRIMARY KEY,
+    id_patient UUID PRIMARY KEY,
     status VARCHAR(255)
 );
 
