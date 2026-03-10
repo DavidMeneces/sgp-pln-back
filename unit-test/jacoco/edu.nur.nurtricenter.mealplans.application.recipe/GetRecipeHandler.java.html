@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>GetRecipeHandler.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">mealplans-api</a> &gt; <a href="index.source.html" class="el_package">edu.nur.nurtricenter.mealplans.application.recipe</a> &gt; <span class="el_source">GetRecipeHandler.java</span></div><h1>GetRecipeHandler.java</h1><pre class="source lang-java linenums">package edu.nur.nurtricenter.mealplans.application.recipe;
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>GetRecipeHandler.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">mealplans-api - Test Coverage</a> &gt; <a href="index.source.html" class="el_package">edu.nur.nurtricenter.mealplans.application.recipe</a> &gt; <span class="el_source">GetRecipeHandler.java</span></div><h1>GetRecipeHandler.java</h1><pre class="source lang-java linenums">package edu.nur.nurtricenter.mealplans.application.recipe;
 
 import an.awesome.pipelinr.Command;
 import edu.nur.nurtricenter.mealplans.application.recipe.mapper.ReciperDtoMapper;
@@ -6,26 +6,26 @@ import edu.nur.nurtricenter.mealplans.core.results.Error;
 import edu.nur.nurtricenter.mealplans.core.results.ResultWithValue;
 import edu.nur.nurtricenter.mealplans.domain.recipe.IRecipeRepository;
 import edu.nur.nurtricenter.mealplans.domain.recipe.Recipe;
-import edu.nur.nurtricenter.mealplans.infraestructure.UnitOfWork;
 import org.springframework.stereotype.Component;
 
 @Component
-public class GetRecipeHandler implements Command.Handler&lt;GetRecipeCommand, ResultWithValue&lt;RecipeDto&gt;&gt; {
+public class GetRecipeHandler
+		implements Command.Handler&lt;GetRecipeCommand, ResultWithValue&lt;RecipeDto&gt;&gt; {
 
-    private IRecipeRepository repository;
+	private IRecipeRepository repository;
 
-<span class="fc" id="L17">    public GetRecipeHandler(IRecipeRepository repository) {</span>
-<span class="fc" id="L18">        this.repository = repository;</span>
-<span class="fc" id="L19">    }</span>
+<span class="fc" id="L17">	public GetRecipeHandler(IRecipeRepository repository) {</span>
+<span class="fc" id="L18">		this.repository = repository;</span>
+<span class="fc" id="L19">	}</span>
 
-    @Override
-    public ResultWithValue&lt;RecipeDto&gt; handle(GetRecipeCommand command) {
-<span class="pc bpc" id="L23" title="1 of 2 branches missed.">        if (!repository.existById(command.id())) {</span>
-<span class="nc" id="L24">            return ResultWithValue.validationFailure(Error.notFound(&quot;NotFound&quot;, &quot;Not found recipe&quot;, command.id().toString()));</span>
-        }
-<span class="fc" id="L26">        Recipe recipe = repository.getById(command.id(), true);</span>
-<span class="fc" id="L27">        return ResultWithValue.success(ReciperDtoMapper.mapper(recipe));</span>
-    }
-
+	@Override
+	public ResultWithValue&lt;RecipeDto&gt; handle(GetRecipeCommand command) {
+<span class="fc bfc" id="L23" title="All 2 branches covered.">		if (!repository.existById(command.id())) {</span>
+<span class="fc" id="L24">			return ResultWithValue.validationFailure(</span>
+<span class="fc" id="L25">					Error.notFound(&quot;NotFound&quot;, &quot;Not found recipe&quot;, command.id().toString()));</span>
+		}
+<span class="fc" id="L27">		Recipe recipe = repository.getById(command.id(), true);</span>
+<span class="fc" id="L28">		return ResultWithValue.success(ReciperDtoMapper.mapper(recipe));</span>
+	}
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span>Generated with JaCoCo 0.8.11</div></body></html>

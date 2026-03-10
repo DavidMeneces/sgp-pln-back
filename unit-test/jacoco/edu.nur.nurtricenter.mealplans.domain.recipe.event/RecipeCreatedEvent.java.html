@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>RecipeCreatedEvent.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">mealplans-api - Test Coverage</a> &gt; <a href="index.source.html" class="el_package">edu.nur.nurtricenter.mealplans.domain.recipe.event</a> &gt; <span class="el_source">RecipeCreatedEvent.java</span></div><h1>RecipeCreatedEvent.java</h1><pre class="source lang-java linenums">package edu.nur.nurtricenter.mealplans.domain.recipe.event;
+
+import edu.nur.nurtricenter.mealplans.core.abstractions.DomainEvent;
+import edu.nur.nurtricenter.mealplans.domain.recipe.RecipeIngredient;
+import java.math.BigDecimal;
+import java.util.List;
+import java.util.UUID;
+
+public class RecipeCreatedEvent extends DomainEvent {
+
+	private UUID id;
+	private String name;
+	private String description;
+	private String instructions;
+	private BigDecimal totalCalories;
+	private List&lt;RecipeIngredient&gt; ingredients;
+
+	public RecipeCreatedEvent(
+			UUID id,
+			String name,
+			String description,
+			String instructions,
+			BigDecimal totalCalories,
+<span class="fc" id="L24">			List&lt;RecipeIngredient&gt; ingredients) {</span>
+<span class="fc" id="L25">		this.id = id;</span>
+<span class="fc" id="L26">		this.name = name;</span>
+<span class="fc" id="L27">		this.description = description;</span>
+<span class="fc" id="L28">		this.instructions = instructions;</span>
+<span class="fc" id="L29">		this.totalCalories = totalCalories;</span>
+<span class="fc" id="L30">		this.ingredients = ingredients;</span>
+<span class="fc" id="L31">	}</span>
+
+	@Override
+	public UUID getId() {
+<span class="fc" id="L35">		return id;</span>
+	}
+
+	public String getName() {
+<span class="nc" id="L39">		return name;</span>
+	}
+
+	public String getDescription() {
+<span class="nc" id="L43">		return description;</span>
+	}
+
+	public String getInstructions() {
+<span class="nc" id="L47">		return instructions;</span>
+	}
+
+	public BigDecimal getTotalCalories() {
+<span class="nc" id="L51">		return totalCalories;</span>
+	}
+
+	public List&lt;RecipeIngredient&gt; getIngredients() {
+<span class="nc" id="L55">		return ingredients;</span>
+	}
+
+	@Override
+	public String getAggregateType() {
+<span class="fc" id="L60">		return &quot;Recipe&quot;;</span>
+	}
+
+	@Override
+	public String getAggregateId() {
+<span class="fc" id="L65">		return id.toString();</span>
+	}
+
+	@Override
+	public String getEventName() {
+<span class="fc" id="L70">		return &quot;planes.receta.creado&quot;;</span>
+	}
+
+	@Override
+	public Object getPayload() {
+<span class="fc" id="L75">		return new Payload(</span>
+<span class="fc" id="L76">				id.toString(), name, description, instructions, totalCalories, ingredients);</span>
+	}
+
+<span class="fc" id="L79">	private record Payload(</span>
+			String id,
+			String name,
+			String description,
+			String instructions,
+			BigDecimal totalCalories,
+			List&lt;RecipeIngredient&gt; ingredients) {}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span>Generated with JaCoCo 0.8.11</div></body></html>

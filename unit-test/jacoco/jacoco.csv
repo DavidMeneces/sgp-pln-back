@@ -1,33 +1,43 @@
 GROUP,PACKAGE,CLASS,INSTRUCTION_MISSED,INSTRUCTION_COVERED,BRANCH_MISSED,BRANCH_COVERED,LINE_MISSED,LINE_COVERED,COMPLEXITY_MISSED,COMPLEXITY_COVERED,METHOD_MISSED,METHOD_COVERED
-mealplans-api,edu.nur.nurtricenter.mealplans.application.mealplan,GetMealPlanHandler,0,37,0,2,0,7,0,3,0,2
-mealplans-api,edu.nur.nurtricenter.mealplans.application.mealplan,CreateMealPlanCommand.TimeFoodRecipeCommand,0,9,0,0,0,1,0,1,0,1
-mealplans-api,edu.nur.nurtricenter.mealplans.application.mealplan,CancelMealPlanHandler,13,28,1,1,1,8,1,2,0,2
-mealplans-api,edu.nur.nurtricenter.mealplans.application.mealplan,CreateMealPlanCommand.TimeFoodCommad,0,12,0,0,0,1,0,1,0,1
-mealplans-api,edu.nur.nurtricenter.mealplans.application.mealplan,UpdateMealPlanCommand,6,0,0,0,1,0,1,0,1,0
-mealplans-api,edu.nur.nurtricenter.mealplans.application.mealplan,CreateMealPlanCommand,0,24,0,0,0,1,0,1,0,1
-mealplans-api,edu.nur.nurtricenter.mealplans.application.mealplan,UpdateMealPlanHandler,2,9,0,0,1,4,1,1,1,1
-mealplans-api,edu.nur.nurtricenter.mealplans.application.mealplan,GetMealPlanCommand,0,6,0,0,0,1,0,1,0,1
-mealplans-api,edu.nur.nurtricenter.mealplans.application.mealplan,CreateMealPlanHandler,55,128,6,6,5,28,6,8,0,8
-mealplans-api,edu.nur.nurtricenter.mealplans.application.mealplan,CreateMealPlanCommand.MealPlanDayCommad,0,9,0,0,0,1,0,1,0,1
-mealplans-api,edu.nur.nurtricenter.mealplans.application.mealplan,CancelMealPlanCommand,0,6,0,0,0,1,0,1,0,1
-mealplans-api,edu.nur.nurtricenter.mealplans.domain.shared,UnitMeasureEnum,0,15,0,0,0,2,0,1,0,1
-mealplans-api,edu.nur.nurtricenter.mealplans.domain.shared,TimeFoodEnum,0,27,0,0,0,2,0,1,0,1
-mealplans-api,edu.nur.nurtricenter.mealplans.application.ingredient,GetIngredientCommand,0,6,0,0,0,1,0,1,0,1
-mealplans-api,edu.nur.nurtricenter.mealplans.application.ingredient,GetIngredientHandler,13,24,1,1,1,6,1,2,0,2
-mealplans-api,edu.nur.nurtricenter.mealplans.application.ingredient,CreateIngredientCommand,0,15,0,0,0,1,0,1,0,1
-mealplans-api,edu.nur.nurtricenter.mealplans.application.ingredient,CreateIngredientHandler,0,33,0,0,0,9,0,2,0,2
-mealplans-api,edu.nur.nurtricenter.mealplans.application.ingredient.mapper,IngredientDtoMapper,3,18,0,0,1,7,1,1,1,1
-mealplans-api,edu.nur.nurtricenter.mealplans.domain.ingredient,Ingredient,9,67,3,9,3,18,4,9,1,6
-mealplans-api,edu.nur.nurtricenter.mealplans.domain.mealplan,TimeFood,23,44,6,6,6,13,7,5,1,5
-mealplans-api,edu.nur.nurtricenter.mealplans.domain.mealplan,TimeFoodRecipe,18,32,4,4,5,10,5,4,1,4
-mealplans-api,edu.nur.nurtricenter.mealplans.domain.mealplan,MealPlanDay,15,32,4,4,3,10,4,4,0,4
-mealplans-api,edu.nur.nurtricenter.mealplans.domain.mealplan,MealPlan,4,149,4,22,2,36,5,18,1,9
-mealplans-api,edu.nur.nurtricenter.mealplans.application.recipe,CreateRecipeHandler,3,55,1,1,0,13,1,4,0,4
-mealplans-api,edu.nur.nurtricenter.mealplans.application.recipe,CreateRecipeCommand.RecipeIngredientCommand,0,9,0,0,0,1,0,1,0,1
-mealplans-api,edu.nur.nurtricenter.mealplans.application.recipe,CreateRecipeCommand,0,18,0,0,0,1,0,1,0,1
-mealplans-api,edu.nur.nurtricenter.mealplans.application.recipe,GetRecipeHandler,13,24,1,1,1,6,1,2,0,2
-mealplans-api,edu.nur.nurtricenter.mealplans.application.recipe,GetRecipeCommand,0,6,0,0,0,1,0,1,0,1
-mealplans-api,edu.nur.nurtricenter.mealplans.domain.recipe,Recipe,4,102,5,17,2,25,6,13,1,7
-mealplans-api,edu.nur.nurtricenter.mealplans.domain.recipe,RecipeIngredient,18,32,4,4,5,10,5,4,1,4
-mealplans-api,edu.nur.nurtricenter.mealplans.application.recipe.mapper,ReciperDtoMapper,3,37,0,0,1,12,1,3,1,3
-mealplans-api,edu.nur.nurtricenter.mealplans,SpringApp,5,25,0,0,2,5,1,2,1,2
+mealplans-api - Test Coverage,edu.nur.nurtricenter.mealplans.application.mealplan,GetMealPlanHandler,0,37,0,2,0,8,0,3,0,2
+mealplans-api - Test Coverage,edu.nur.nurtricenter.mealplans.application.mealplan,CreateMealPlanCommand.TimeFoodRecipeCommand,0,9,0,0,0,1,0,1,0,1
+mealplans-api - Test Coverage,edu.nur.nurtricenter.mealplans.application.mealplan,CancelMealPlanHandler,13,30,1,1,2,8,1,2,0,2
+mealplans-api - Test Coverage,edu.nur.nurtricenter.mealplans.application.mealplan,CreateMealPlanCommand.TimeFoodCommad,0,12,0,0,0,1,0,1,0,1
+mealplans-api - Test Coverage,edu.nur.nurtricenter.mealplans.application.mealplan,UpdateMealPlanCommand,6,0,0,0,1,0,1,0,1,0
+mealplans-api - Test Coverage,edu.nur.nurtricenter.mealplans.application.mealplan,CreateMealPlanCommand,0,30,0,0,0,1,0,1,0,1
+mealplans-api - Test Coverage,edu.nur.nurtricenter.mealplans.application.mealplan,UpdateMealPlanHandler,2,9,0,0,1,4,1,1,1,1
+mealplans-api - Test Coverage,edu.nur.nurtricenter.mealplans.application.mealplan,GetMealPlanCommand,0,6,0,0,0,1,0,1,0,1
+mealplans-api - Test Coverage,edu.nur.nurtricenter.mealplans.application.mealplan,CreateMealPlanHandler,29,233,4,12,8,77,4,12,0,8
+mealplans-api - Test Coverage,edu.nur.nurtricenter.mealplans.application.mealplan,CreateMealPlanCommand.MealPlanDayCommad,0,9,0,0,0,1,0,1,0,1
+mealplans-api - Test Coverage,edu.nur.nurtricenter.mealplans.application.mealplan,CancelMealPlanCommand,0,6,0,0,0,1,0,1,0,1
+mealplans-api - Test Coverage,edu.nur.nurtricenter.mealplans.domain.shared,UnitMeasureEnum,0,15,0,0,0,3,0,1,0,1
+mealplans-api - Test Coverage,edu.nur.nurtricenter.mealplans.domain.shared,TimeFoodEnum,0,27,0,0,0,5,0,1,0,1
+mealplans-api - Test Coverage,edu.nur.nurtricenter.mealplans.domain.mealplan,TimeFood,3,64,2,10,2,17,3,9,1,5
+mealplans-api - Test Coverage,edu.nur.nurtricenter.mealplans.domain.mealplan,TimeFoodRecipe,3,47,1,7,2,13,2,7,1,4
+mealplans-api - Test Coverage,edu.nur.nurtricenter.mealplans.domain.mealplan,MealPlanDay,0,47,1,7,0,13,1,7,0,4
+mealplans-api - Test Coverage,edu.nur.nurtricenter.mealplans.domain.mealplan,MealPlan,14,167,6,24,4,42,7,20,1,11
+mealplans-api - Test Coverage,edu.nur.nurtricenter.mealplans.application.patient,CreatePatientCommand,0,9,0,0,0,1,0,1,0,1
+mealplans-api - Test Coverage,edu.nur.nurtricenter.mealplans.application.patient,CreatePatientHandler,0,23,0,0,0,6,0,2,0,2
+mealplans-api - Test Coverage,edu.nur.nurtricenter.mealplans.application.recipe,CreateRecipeHandler,0,81,0,2,0,30,0,5,0,4
+mealplans-api - Test Coverage,edu.nur.nurtricenter.mealplans.application.recipe,CreateRecipeCommand.RecipeIngredientCommand,0,9,0,0,0,1,0,1,0,1
+mealplans-api - Test Coverage,edu.nur.nurtricenter.mealplans.application.recipe,CreateRecipeCommand,0,18,0,0,0,1,0,1,0,1
+mealplans-api - Test Coverage,edu.nur.nurtricenter.mealplans.application.recipe,GetRecipeHandler,0,37,0,2,0,8,0,3,0,2
+mealplans-api - Test Coverage,edu.nur.nurtricenter.mealplans.application.recipe,GetRecipeCommand,0,6,0,0,0,1,0,1,0,1
+mealplans-api - Test Coverage,edu.nur.nurtricenter.mealplans.domain.recipe.event,RecipeCreatedEvent.Payload,0,21,0,0,0,1,0,1,0,1
+mealplans-api - Test Coverage,edu.nur.nurtricenter.mealplans.domain.recipe.event,RecipeCreatedEvent,15,49,0,0,5,14,5,6,5,6
+mealplans-api - Test Coverage,edu.nur.nurtricenter.mealplans.application.recipe.mapper,ReciperDtoMapper,3,37,0,0,1,15,1,3,1,3
+mealplans-api - Test Coverage,edu.nur.nurtricenter.mealplans.application.ingredient,GetIngredientCommand,0,6,0,0,0,1,0,1,0,1
+mealplans-api - Test Coverage,edu.nur.nurtricenter.mealplans.application.ingredient,GetIngredientHandler,0,37,0,2,0,8,0,3,0,2
+mealplans-api - Test Coverage,edu.nur.nurtricenter.mealplans.application.ingredient,CreateIngredientCommand,0,15,0,0,0,1,0,1,0,1
+mealplans-api - Test Coverage,edu.nur.nurtricenter.mealplans.application.ingredient,CreateIngredientHandler,0,35,0,0,0,13,0,2,0,2
+mealplans-api - Test Coverage,edu.nur.nurtricenter.mealplans.application.ingredient.mapper,IngredientDtoMapper,3,18,0,0,1,7,1,1,1,1
+mealplans-api - Test Coverage,edu.nur.nurtricenter.mealplans.domain.ingredient,Ingredient,9,67,3,9,3,18,4,9,1,6
+mealplans-api - Test Coverage,edu.nur.nurtricenter.mealplans.domain.mealplan.event,MealPlanCreatedEvent.Payload,0,33,0,0,0,1,0,1,0,1
+mealplans-api - Test Coverage,edu.nur.nurtricenter.mealplans.domain.mealplan.event,MealPlanCreatedEvent,27,68,0,0,9,17,9,6,9,6
+mealplans-api - Test Coverage,edu.nur.nurtricenter.mealplans.application.appointment,AttendAppointmentHandler,0,43,0,2,0,11,0,3,0,2
+mealplans-api - Test Coverage,edu.nur.nurtricenter.mealplans.application.appointment,AttendAppointmentCommand,0,6,0,0,0,1,0,1,0,1
+mealplans-api - Test Coverage,edu.nur.nurtricenter.mealplans.application.appointment,CreateAppointmentCommand,0,9,0,0,0,1,0,1,0,1
+mealplans-api - Test Coverage,edu.nur.nurtricenter.mealplans.application.appointment,CreateAppointmentHandler,0,23,0,0,0,6,0,2,0,2
+mealplans-api - Test Coverage,edu.nur.nurtricenter.mealplans.domain.recipe,Recipe,4,102,4,18,2,25,5,14,1,7
+mealplans-api - Test Coverage,edu.nur.nurtricenter.mealplans.domain.recipe,RecipeIngredient,18,32,4,4,5,10,5,4,1,4
+mealplans-api - Test Coverage,edu.nur.nurtricenter.mealplans,SpringApp,5,25,0,0,2,5,1,2,1,2

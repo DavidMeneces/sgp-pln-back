@@ -1,71 +1,83 @@
-<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Recipe.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">mealplans-api</a> &gt; <a href="index.source.html" class="el_package">edu.nur.nurtricenter.mealplans.domain.recipe</a> &gt; <span class="el_source">Recipe.java</span></div><h1>Recipe.java</h1><pre class="source lang-java linenums">package edu.nur.nurtricenter.mealplans.domain.recipe;
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Recipe.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">mealplans-api - Test Coverage</a> &gt; <a href="index.source.html" class="el_package">edu.nur.nurtricenter.mealplans.domain.recipe</a> &gt; <span class="el_source">Recipe.java</span></div><h1>Recipe.java</h1><pre class="source lang-java linenums">package edu.nur.nurtricenter.mealplans.domain.recipe;
 
 import edu.nur.nurtricenter.mealplans.core.abstractions.AggregateRoot;
-
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.UUID;
 
 public class Recipe extends AggregateRoot {
-    private String name;
-    private String description;
-    private String instructions;
-    private BigDecimal totalCalories;
-    private List&lt;RecipeIngredient&gt; ingredients;
+	private String name;
+	private String description;
+	private String instructions;
+	private BigDecimal totalCalories;
+	private List&lt;RecipeIngredient&gt; ingredients;
 
-    public Recipe() {
-<span class="nc" id="L17">        super(UUID.randomUUID());</span>
-<span class="nc" id="L18">    }</span>
+	public Recipe() {
+<span class="nc" id="L16">		super(UUID.randomUUID());</span>
+<span class="nc" id="L17">	}</span>
 
-    public Recipe(UUID id, String name, String description, String instructions, BigDecimal totalCalories, List&lt;RecipeIngredient&gt; ingredients) {
-<span class="fc" id="L21">        super(id);</span>
-<span class="fc" id="L22">        this.name = name;</span>
-<span class="fc" id="L23">        this.description = description;</span>
-<span class="fc" id="L24">        this.instructions = instructions;</span>
-<span class="fc" id="L25">        this.totalCalories = totalCalories;</span>
-<span class="fc" id="L26">        this.ingredients = ingredients;</span>
-<span class="fc" id="L27">    }</span>
+	public Recipe(
+			UUID id,
+			String name,
+			String description,
+			String instructions,
+			BigDecimal totalCalories,
+			List&lt;RecipeIngredient&gt; ingredients) {
+<span class="fc" id="L26">		super(id);</span>
+<span class="fc" id="L27">		this.name = name;</span>
+<span class="fc" id="L28">		this.description = description;</span>
+<span class="fc" id="L29">		this.instructions = instructions;</span>
+<span class="fc" id="L30">		this.totalCalories = totalCalories;</span>
+<span class="fc" id="L31">		this.ingredients = ingredients;</span>
+<span class="fc" id="L32">	}</span>
 
-    public static Recipe create(UUID id, String name, String description, String instructions, BigDecimal totalCalories, List&lt;RecipeIngredient&gt; ingredients) {
-<span class="fc bfc" id="L30" title="All 2 branches covered.">        if (id == null) {</span>
-<span class="fc" id="L31">            throw new IllegalArgumentException(&quot;Id cannot be null&quot;);</span>
-        }
-<span class="pc bpc" id="L33" title="1 of 4 branches missed.">        if (name == null || name.isEmpty()) {</span>
-<span class="fc" id="L34">            throw new IllegalArgumentException(&quot;name cannot be null or empty&quot;);</span>
-        }
-<span class="pc bpc" id="L36" title="1 of 4 branches missed.">        if (description == null || description.isEmpty()) {</span>
-<span class="fc" id="L37">            throw new IllegalArgumentException(&quot;description cannot be null or empty&quot;);</span>
-        }
-<span class="pc bpc" id="L39" title="1 of 4 branches missed.">        if (instructions == null || instructions.isEmpty()) {</span>
-<span class="fc" id="L40">            throw new IllegalArgumentException(&quot;instructions cannot be null or empty&quot;);</span>
-        }
-<span class="pc bpc" id="L42" title="1 of 4 branches missed.">        if (totalCalories == null || totalCalories.compareTo(BigDecimal.ZERO) &lt;= 0) {</span>
-<span class="fc" id="L43">            throw new IllegalArgumentException(&quot;totalCalories cannot be null or minor than or equal zero&quot;);</span>
-        }
-<span class="pc bpc" id="L45" title="1 of 4 branches missed.">        if (ingredients == null || ingredients.isEmpty()) {</span>
-<span class="fc" id="L46">            throw new IllegalArgumentException(&quot;ingredients cannot be null or empty&quot;);</span>
-        }
-<span class="fc" id="L48">        return new Recipe(id, name, description, instructions, totalCalories, ingredients);</span>
-    }
+	public static Recipe create(
+			UUID id,
+			String name,
+			String description,
+			String instructions,
+			BigDecimal totalCalories,
+			List&lt;RecipeIngredient&gt; ingredients) {
+<span class="fc bfc" id="L41" title="All 2 branches covered.">		if (id == null) {</span>
+<span class="fc" id="L42">			throw new IllegalArgumentException(&quot;Id cannot be null&quot;);</span>
+		}
+<span class="pc bpc" id="L44" title="1 of 4 branches missed.">		if (name == null || name.isEmpty()) {</span>
+<span class="fc" id="L45">			throw new IllegalArgumentException(&quot;name cannot be null or empty&quot;);</span>
+		}
+<span class="pc bpc" id="L47" title="1 of 4 branches missed.">		if (description == null || description.isEmpty()) {</span>
+<span class="fc" id="L48">			throw new IllegalArgumentException(&quot;description cannot be null or empty&quot;);</span>
+		}
+<span class="pc bpc" id="L50" title="1 of 4 branches missed.">		if (instructions == null || instructions.isEmpty()) {</span>
+<span class="fc" id="L51">			throw new IllegalArgumentException(&quot;instructions cannot be null or empty&quot;);</span>
+		}
+<span class="pc bpc" id="L53" title="1 of 4 branches missed.">		if (totalCalories == null || totalCalories.compareTo(BigDecimal.ZERO) &lt;= 0) {</span>
+<span class="fc" id="L54">			throw new IllegalArgumentException(</span>
+					&quot;totalCalories cannot be null or minor than or equal zero&quot;);
+		}
+<span class="fc bfc" id="L57" title="All 4 branches covered.">		if (ingredients == null || ingredients.isEmpty()) {</span>
+<span class="fc" id="L58">			throw new IllegalArgumentException(&quot;ingredients cannot be null or empty&quot;);</span>
+		}
+<span class="fc" id="L60">		return new Recipe(id, name, description, instructions, totalCalories, ingredients);</span>
+	}
 
-    public String getName() {
-<span class="fc" id="L52">        return name;</span>
-    }
+	public String getName() {
+<span class="fc" id="L64">		return name;</span>
+	}
 
-    public String getDescription() {
-<span class="fc" id="L56">        return description;</span>
-    }
+	public String getDescription() {
+<span class="fc" id="L68">		return description;</span>
+	}
 
-    public String getInstructions() {
-<span class="fc" id="L60">        return instructions;</span>
-    }
+	public String getInstructions() {
+<span class="fc" id="L72">		return instructions;</span>
+	}
 
-    public BigDecimal getTotalCalories() {
-<span class="fc" id="L64">        return totalCalories;</span>
-    }
+	public BigDecimal getTotalCalories() {
+<span class="fc" id="L76">		return totalCalories;</span>
+	}
 
-    public List&lt;RecipeIngredient&gt; getIngredients() {
-<span class="fc" id="L68">        return ingredients;</span>
-    }
+	public List&lt;RecipeIngredient&gt; getIngredients() {
+<span class="fc" id="L80">		return ingredients;</span>
+	}
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span>Generated with JaCoCo 0.8.11</div></body></html>

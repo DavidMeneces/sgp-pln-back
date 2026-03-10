@@ -1,43 +1,42 @@
-<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>MealPlanDay.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">mealplans-api</a> &gt; <a href="index.source.html" class="el_package">edu.nur.nurtricenter.mealplans.domain.mealplan</a> &gt; <span class="el_source">MealPlanDay.java</span></div><h1>MealPlanDay.java</h1><pre class="source lang-java linenums">package edu.nur.nurtricenter.mealplans.domain.mealplan;
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>MealPlanDay.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">mealplans-api - Test Coverage</a> &gt; <a href="index.source.html" class="el_package">edu.nur.nurtricenter.mealplans.domain.mealplan</a> &gt; <span class="el_source">MealPlanDay.java</span></div><h1>MealPlanDay.java</h1><pre class="source lang-java linenums">package edu.nur.nurtricenter.mealplans.domain.mealplan;
 
 import edu.nur.nurtricenter.mealplans.core.abstractions.Entity;
-
 import java.util.List;
 import java.util.UUID;
 
 public class MealPlanDay extends Entity {
-    private Integer day;
-    private List&lt;TimeFood&gt; timeFoods;
+	private Integer day;
+	private List&lt;TimeFood&gt; timeFoods;
 
-    private MealPlanDay() {
-        super();
-    }
+	private MealPlanDay() {
+		super();
+	}
 
-    public MealPlanDay(UUID id, Integer day, List&lt;TimeFood&gt; timeFoods) {
-<span class="fc" id="L17">        super(id);</span>
-<span class="fc" id="L18">        this.day = day;</span>
-<span class="fc" id="L19">        this.timeFoods = timeFoods;</span>
-<span class="fc" id="L20">    }</span>
+	public MealPlanDay(UUID id, Integer day, List&lt;TimeFood&gt; timeFoods) {
+<span class="fc" id="L16">		super(id);</span>
+<span class="fc" id="L17">		this.day = day;</span>
+<span class="fc" id="L18">		this.timeFoods = timeFoods;</span>
+<span class="fc" id="L19">	}</span>
 
-    public static MealPlanDay create(UUID id, Integer day, List&lt;TimeFood&gt; timeFoods) {
-<span class="pc bpc" id="L23" title="1 of 2 branches missed.">        if (id == null) {</span>
-<span class="nc" id="L24">            throw new IllegalArgumentException(&quot;Id cannot be null&quot;);</span>
-        }
-<span class="pc bpc" id="L26" title="1 of 2 branches missed.">        if (day == null) {</span>
-<span class="nc" id="L27">            throw new IllegalArgumentException(&quot;day cannot be null&quot;);</span>
-        }
-<span class="pc bpc" id="L29" title="2 of 4 branches missed.">        if (timeFoods == null || timeFoods.isEmpty()) {</span>
-<span class="nc" id="L30">            throw new IllegalArgumentException(&quot;timeFoods cannot be null or empty&quot;);</span>
-        }
-<span class="fc" id="L32">        return new MealPlanDay(id, day, timeFoods);</span>
-    }
+	public static MealPlanDay create(UUID id, Integer day, List&lt;TimeFood&gt; timeFoods) {
+<span class="fc bfc" id="L22" title="All 2 branches covered.">		if (id == null) {</span>
+<span class="fc" id="L23">			throw new IllegalArgumentException(&quot;Id cannot be null&quot;);</span>
+		}
+<span class="fc bfc" id="L25" title="All 2 branches covered.">		if (day == null) {</span>
+<span class="fc" id="L26">			throw new IllegalArgumentException(&quot;day cannot be null&quot;);</span>
+		}
+<span class="pc bpc" id="L28" title="1 of 4 branches missed.">		if (timeFoods == null || timeFoods.isEmpty()) {</span>
+<span class="fc" id="L29">			throw new IllegalArgumentException(&quot;timeFoods cannot be null or empty&quot;);</span>
+		}
+<span class="fc" id="L31">		return new MealPlanDay(id, day, timeFoods);</span>
+	}
 
-    public Integer getDay() {
-<span class="fc" id="L36">        return day;</span>
-    }
+	public Integer getDay() {
+<span class="fc" id="L35">		return day;</span>
+	}
 
-    public List&lt;TimeFood&gt; getTimeFoods() {
-<span class="fc" id="L40">        return timeFoods;</span>
-    }
+	public List&lt;TimeFood&gt; getTimeFoods() {
+<span class="fc" id="L39">		return timeFoods;</span>
+	}
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span>Generated with JaCoCo 0.8.11</div></body></html>

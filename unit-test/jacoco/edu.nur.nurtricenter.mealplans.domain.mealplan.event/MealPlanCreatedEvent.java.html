@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>MealPlanCreatedEvent.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">mealplans-api - Test Coverage</a> &gt; <a href="index.source.html" class="el_package">edu.nur.nurtricenter.mealplans.domain.mealplan.event</a> &gt; <span class="el_source">MealPlanCreatedEvent.java</span></div><h1>MealPlanCreatedEvent.java</h1><pre class="source lang-java linenums">package edu.nur.nurtricenter.mealplans.domain.mealplan.event;
+
+import edu.nur.nurtricenter.mealplans.core.abstractions.DomainEvent;
+import edu.nur.nurtricenter.mealplans.domain.mealplan.MealPlanDay;
+import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.util.List;
+import java.util.UUID;
+
+public class MealPlanCreatedEvent extends DomainEvent {
+
+	private UUID id;
+	private UUID idNutricionist;
+	private UUID idPatient;
+	private UUID idAppointment;
+	private UUID idSubscription;
+	private Integer totalDays;
+	private LocalDate starDate;
+	private LocalDate endDate;
+	private BigDecimal totalCalories;
+	private List&lt;MealPlanDay&gt; mealPlanDays;
+
+	public MealPlanCreatedEvent(
+			UUID id,
+			UUID idNutricionist,
+			UUID idPatient,
+			UUID idAppointment,
+			UUID idSubscription,
+			Integer totalDays,
+			LocalDate starDate,
+			LocalDate endDate,
+			BigDecimal totalCalories,
+<span class="fc" id="L33">			List&lt;MealPlanDay&gt; mealPlanDays) {</span>
+<span class="fc" id="L34">		this.id = id;</span>
+<span class="fc" id="L35">		this.idNutricionist = idNutricionist;</span>
+<span class="fc" id="L36">		this.idPatient = idPatient;</span>
+<span class="fc" id="L37">		this.idAppointment = idAppointment;</span>
+<span class="fc" id="L38">		this.idSubscription = idSubscription;</span>
+<span class="fc" id="L39">		this.totalDays = totalDays;</span>
+<span class="fc" id="L40">		this.starDate = starDate;</span>
+<span class="fc" id="L41">		this.endDate = endDate;</span>
+<span class="fc" id="L42">		this.totalCalories = totalCalories;</span>
+<span class="fc" id="L43">		this.mealPlanDays = mealPlanDays;</span>
+<span class="fc" id="L44">	}</span>
+
+	@Override
+	public UUID getId() {
+<span class="fc" id="L48">		return id;</span>
+	}
+
+	public UUID getIdNutricionist() {
+<span class="nc" id="L52">		return idNutricionist;</span>
+	}
+
+	public UUID getIdPatient() {
+<span class="nc" id="L56">		return idPatient;</span>
+	}
+
+	public UUID getIdAppointment() {
+<span class="nc" id="L60">		return idAppointment;</span>
+	}
+
+	public UUID getIdSubscription() {
+<span class="nc" id="L64">		return idSubscription;</span>
+	}
+
+	public Integer getTotalDays() {
+<span class="nc" id="L68">		return totalDays;</span>
+	}
+
+	public LocalDate getStarDate() {
+<span class="nc" id="L72">		return starDate;</span>
+	}
+
+	public LocalDate getEndDate() {
+<span class="nc" id="L76">		return endDate;</span>
+	}
+
+	public BigDecimal getTotalCalories() {
+<span class="nc" id="L80">		return totalCalories;</span>
+	}
+
+	public List&lt;MealPlanDay&gt; getMealPlanDays() {
+<span class="nc" id="L84">		return mealPlanDays;</span>
+	}
+
+	@Override
+	public String getAggregateType() {
+<span class="fc" id="L89">		return &quot;MealPlan&quot;;</span>
+	}
+
+	@Override
+	public String getAggregateId() {
+<span class="fc" id="L94">		return id.toString();</span>
+	}
+
+	@Override
+	public String getEventName() {
+<span class="fc" id="L99">		return &quot;planes.plan-alimetario.creado&quot;;</span>
+	}
+
+	@Override
+	public Object getPayload() {
+<span class="fc" id="L104">		return new Payload(</span>
+				id,
+				idNutricionist,
+				idPatient,
+				idAppointment,
+				idSubscription,
+				totalDays,
+				starDate,
+				endDate,
+				totalCalories,
+				mealPlanDays);
+	}
+
+<span class="fc" id="L117">	private record Payload(</span>
+			UUID id,
+			UUID idNutricionist,
+			UUID idPatient,
+			UUID idAppointment,
+			UUID idSubscription,
+			Integer totalDays,
+			LocalDate starDate,
+			LocalDate endDate,
+			BigDecimal totalCalories,
+			List&lt;MealPlanDay&gt; mealPlanDays) {}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span>Generated with JaCoCo 0.8.11</div></body></html>
