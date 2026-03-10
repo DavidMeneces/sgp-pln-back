@@ -6,15 +6,14 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.UUID;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
 @Builder
@@ -23,53 +22,67 @@ import java.util.UUID;
 @Entity
 @Table(schema = "public", name = "meal_plan")
 public class MealPlanModel {
-    @Id
-    @Column(name = "id")
-    private UUID id;
-    @Column(name = "id_nutricionist")
-    private UUID idNutricionist;
-    @Column(name = "id_patient")
-    private UUID idPatient;
-    @Column(name = "id_subscription")
-    private UUID idSubscription;
-    @Column(name = "id_appointment")
-    private UUID idAppointment;
-    @Column(name = "total_calories", columnDefinition = "numeric")
-    private BigDecimal totalCalories;
-    @Column(name = "total_days")
-    private Integer totalDays;
-    @Column(name = "star_date", columnDefinition = "timestamp")
-    private LocalDate starDate;
-    @Column(name = "end_date", columnDefinition = "timestamp")
-    private LocalDate endDate;
-    //Columnas de control de estado entidad
-    @Column(name = "transaccion")
-    private String transaccion;
-    @Column(name = "estado")
-    private String estado;
-    @Column(name = "usuario_creacion")
-    private String usuarioCreacion;
-    @Column(name = "fecha_creacion", columnDefinition = "timestamp")
-    private LocalDateTime fechaCreacion;
-    @Column(name = "usuario_modificacion")
-    private String usuarioModificacion;
-    @Column(name = "fecha_modificacion", columnDefinition = "timestamp")
-    private LocalDateTime fechaModificacion;
+	@Id
+	@Column(name = "id")
+	private UUID id;
 
-    public static MealPlanModel buildModel(MealPlan entity) {
-        var transaccion = TransaccionEstadoModel.CREAR;
-        return MealPlanModel.builder()
-                .id(entity.getId())
-                .idNutricionist(entity.getIdNutricionist())
-                .idPatient(entity.getIdPatient())
-                .idAppointment(entity.getIdAppointment())
-                .idSubscription(entity.getIdSubscription())
-                .totalCalories(entity.getTotalCalories())
-                .totalDays(entity.getTotalDays())
-                .transaccion(transaccion.name())
-                .estado(transaccion.getEstado())
-                .usuarioCreacion("sgp-pln")
-                .fechaCreacion(LocalDateTime.now())
-                .build();
-    }
+	@Column(name = "id_nutricionist")
+	private UUID idNutricionist;
+
+	@Column(name = "id_patient")
+	private UUID idPatient;
+
+	@Column(name = "id_subscription")
+	private UUID idSubscription;
+
+	@Column(name = "id_appointment")
+	private UUID idAppointment;
+
+	@Column(name = "total_calories", columnDefinition = "numeric")
+	private BigDecimal totalCalories;
+
+	@Column(name = "total_days")
+	private Integer totalDays;
+
+	@Column(name = "star_date", columnDefinition = "timestamp")
+	private LocalDate starDate;
+
+	@Column(name = "end_date", columnDefinition = "timestamp")
+	private LocalDate endDate;
+
+	// Columnas de control de estado entidad
+	@Column(name = "transaccion")
+	private String transaccion;
+
+	@Column(name = "estado")
+	private String estado;
+
+	@Column(name = "usuario_creacion")
+	private String usuarioCreacion;
+
+	@Column(name = "fecha_creacion", columnDefinition = "timestamp")
+	private LocalDateTime fechaCreacion;
+
+	@Column(name = "usuario_modificacion")
+	private String usuarioModificacion;
+
+	@Column(name = "fecha_modificacion", columnDefinition = "timestamp")
+	private LocalDateTime fechaModificacion;
+
+	public static MealPlanModel buildModel(MealPlan entity) {
+		var transaccion = TransaccionEstadoModel.CREAR;
+		return MealPlanModel.builder()
+				.id(entity.getId())
+				.idNutricionist(entity.getIdNutricionist())
+				.idPatient(entity.getIdPatient())
+				.idAppointment(entity.getIdAppointment())
+				.idSubscription(entity.getIdSubscription())
+				.totalCalories(entity.getTotalCalories())
+				.totalDays(entity.getTotalDays())
+				.transaccion(transaccion.name())
+				.estado(transaccion.getEstado())
+				.usuarioCreacion("sgp-pln")
+				.fechaCreacion(LocalDateTime.now())
+				.build();
+	}
 }

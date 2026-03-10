@@ -1,30 +1,33 @@
-package edu.nur.nurtricenter.mealplans.application.ingredient;
+package edu.nur.nurtricenter.mealplans.application.patient;
 
 import an.awesome.pipelinr.Pipeline;
+import edu.nur.nurtricenter.mealplans.application.ingredient.CreateIngredientCommand;
 import edu.nur.nurtricenter.mealplans.domain.shared.UnitMeasureEnum;
 import jakarta.inject.Inject;
-import java.math.BigDecimal;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.math.BigDecimal;
+import java.util.UUID;
+
+import static org.junit.jupiter.api.Assertions.*;
+
 @SpringBootTest
-class CreateIngredientHandlerTest {
+class CreatePatientHandlerTest {
 
 	private final Pipeline pipeline;
 
 	@Inject
-	public CreateIngredientHandlerTest(Pipeline pipeline) {
+	CreatePatientHandlerTest(Pipeline pipeline) {
 		this.pipeline = pipeline;
 	}
 
 	@Test
 	void handle() {
-		String name = "i1";
-		String description = "di1";
-		UnitMeasureEnum unitMeasure = UnitMeasureEnum.GRAM;
-		BigDecimal caloriesPerGram = BigDecimal.valueOf(150L);
-		var request = new CreateIngredientCommand(name, description, unitMeasure, caloriesPerGram);
+		UUID id = UUID.randomUUID();
+		String name = "David Meneces";
+		var request = new CreatePatientCommand(id, name);
 		var response = request.execute(pipeline);
 		Assertions.assertNotNull(response.getValue());
 	}

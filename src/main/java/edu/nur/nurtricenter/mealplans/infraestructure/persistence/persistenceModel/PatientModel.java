@@ -4,12 +4,11 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import java.util.UUID;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import java.util.UUID;
 
 @Data
 @Builder
@@ -19,11 +18,13 @@ import java.util.UUID;
 @Table(schema = "public", name = "patient")
 public class PatientModel {
 
-    @Id
-    @Column(name = "id")
-    private UUID id;
-    @Column(name = "name")
-    private String name;
-    @Column(name = "phone")
-    private String phone;
+	@Id
+	@Column(name = "id")
+	private UUID id;
+
+	@Column(name = "name")
+	private String name;
+
+	@Column(name = "phone")
+	private String phone;
 }

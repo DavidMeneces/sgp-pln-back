@@ -4,9 +4,9 @@ import java.util.UUID;
 
 public interface IRepository<T extends AggregateRoot> {
 
-    T getById(UUID id, boolean readOnly);
+	T getById(UUID id, boolean readOnly);
 
-    boolean existById(UUID id);
+	boolean existById(UUID id);
 
-    UUID add(T entity);
+	UUID add(T entity);
 }

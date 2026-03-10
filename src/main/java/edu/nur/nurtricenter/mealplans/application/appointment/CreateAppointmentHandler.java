@@ -8,22 +8,21 @@ import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Component;
 
 @Component
-public class CreateAppointmentHandler implements Command.Handler<CreateAppointmentCommand, ResultWithValue<Boolean>> {
+public class CreateAppointmentHandler
+		implements Command.Handler<CreateAppointmentCommand, ResultWithValue<Boolean>> {
 
-    private AppointmentModelRepository repository;
+	private AppointmentModelRepository repository;
 
-    public CreateAppointmentHandler(AppointmentModelRepository repository) {
-        this.repository = repository;
-    }
+	public CreateAppointmentHandler(AppointmentModelRepository repository) {
+		this.repository = repository;
+	}
 
-    @Override
-    @Transactional
-    public ResultWithValue<Boolean> handle(CreateAppointmentCommand command) {
-        AppointmentModel model = AppointmentModel.builder()
-                .id(command.id())
-                .idPatient(command.idPatient())
-                .build();
-        repository.save(model);
-        return ResultWithValue.success(Boolean.TRUE);
-    }
+	@Override
+	@Transactional
+	public ResultWithValue<Boolean> handle(CreateAppointmentCommand command) {
+		AppointmentModel model =
+				AppointmentModel.builder().id(command.id()).idPatient(command.idPatient()).build();
+		repository.save(model);
+		return ResultWithValue.success(Boolean.TRUE);
+	}
 }

@@ -4,11 +4,12 @@ import lombok.Getter;
 
 @Getter
 public enum TransaccionEstadoModel {
+	CREAR("CREADO"),
+	CANCELAR("CANCELADO"),
+	ELIMINAR("ELIMINADO");
+	private final String estado;
 
-    CREAR("CREADO"), CANCELAR("CANCELADO"), ELIMINAR("ELIMINADO");
-    private final String estado;
-
-    TransaccionEstadoModel(String estado) {
-        this.estado = estado;
-    }
+	TransaccionEstadoModel(String estado) {
+		this.estado = estado;
+	}
 }

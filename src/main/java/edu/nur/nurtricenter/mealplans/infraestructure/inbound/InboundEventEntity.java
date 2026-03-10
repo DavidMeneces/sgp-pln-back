@@ -1,150 +1,157 @@
 package edu.nur.nurtricenter.mealplans.infraestructure.inbound;
 
 import jakarta.persistence.*;
-
 import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Entity
 @Table(
-        name = "inbound_events",
-        schema = "public",
-        indexes = {
-                @Index(name = "idx_inbound_events_event_id", columnList = "event_id"),
-                @Index(name = "idx_inbound_events_status", columnList = "status"),
-                @Index(name = "idx_inbound_events_received_on", columnList = "received_on")
-        }
-)
+		name = "inbound_events",
+		schema = "public",
+		indexes = {
+			@Index(name = "idx_inbound_events_event_id", columnList = "event_id"),
+			@Index(name = "idx_inbound_events_status", columnList = "status"),
+			@Index(name = "idx_inbound_events_received_on", columnList = "received_on")
+		})
 public class InboundEventEntity {
-    @Id
-    private UUID id;
-    @Column(name = "event_id", nullable = false, unique = true)
-    private UUID eventId;
-    @Column(name = "event_name")
-    private String eventName;
-    @Column(name = "routing_key")
-    private String routingKey;
-    @Column(name = "correlation_id")
-    private UUID correlationId;
-    @Column(name = "schema_version")
-    private Integer schemaVersion;
-    private String status;
-    @Column(name = "occurred_on")
-    private LocalDateTime occurredOn;
-    @Column(name = "received_on")
-    private LocalDateTime receivedOn;
-    @Column(name = "processed_on")
-    private LocalDateTime processedOn;
-    @Column(name = "updated_on")
-    private LocalDateTime updatedOn;
+	@Id private UUID id;
 
-    @Column(columnDefinition = "TEXT")
-    private String payload;
+	@Column(name = "event_id", nullable = false, unique = true)
+	private UUID eventId;
 
-    @Column(name = "last_error", columnDefinition = "TEXT")
-    private String lastError;
+	@Column(name = "event_name")
+	private String eventName;
 
-    public UUID getId() {
-        return id;
-    }
+	@Column(name = "routing_key")
+	private String routingKey;
 
-    public void setId(UUID id) {
-        this.id = id;
-    }
+	@Column(name = "correlation_id")
+	private UUID correlationId;
 
-    public UUID getEventId() {
-        return eventId;
-    }
+	@Column(name = "schema_version")
+	private Integer schemaVersion;
 
-    public void setEventId(UUID eventId) {
-        this.eventId = eventId;
-    }
+	private String status;
 
-    public String getEventName() {
-        return eventName;
-    }
+	@Column(name = "occurred_on")
+	private LocalDateTime occurredOn;
 
-    public void setEventName(String eventName) {
-        this.eventName = eventName;
-    }
+	@Column(name = "received_on")
+	private LocalDateTime receivedOn;
 
-    public String getRoutingKey() {
-        return routingKey;
-    }
+	@Column(name = "processed_on")
+	private LocalDateTime processedOn;
 
-    public void setRoutingKey(String routingKey) {
-        this.routingKey = routingKey;
-    }
+	@Column(name = "updated_on")
+	private LocalDateTime updatedOn;
 
-    public UUID getCorrelationId() {
-        return correlationId;
-    }
+	@Column(columnDefinition = "TEXT")
+	private String payload;
 
-    public void setCorrelationId(UUID correlationId) {
-        this.correlationId = correlationId;
-    }
+	@Column(name = "last_error", columnDefinition = "TEXT")
+	private String lastError;
 
-    public Integer getSchemaVersion() {
-        return schemaVersion;
-    }
+	public UUID getId() {
+		return id;
+	}
 
-    public void setSchemaVersion(Integer schemaVersion) {
-        this.schemaVersion = schemaVersion;
-    }
+	public void setId(UUID id) {
+		this.id = id;
+	}
 
-    public String getStatus() {
-        return status;
-    }
+	public UUID getEventId() {
+		return eventId;
+	}
 
-    public void setStatus(String status) {
-        this.status = status;
-    }
+	public void setEventId(UUID eventId) {
+		this.eventId = eventId;
+	}
 
-    public LocalDateTime getOccurredOn() {
-        return occurredOn;
-    }
+	public String getEventName() {
+		return eventName;
+	}
 
-    public void setOccurredOn(LocalDateTime occurredOn) {
-        this.occurredOn = occurredOn;
-    }
+	public void setEventName(String eventName) {
+		this.eventName = eventName;
+	}
 
-    public LocalDateTime getReceivedOn() {
-        return receivedOn;
-    }
+	public String getRoutingKey() {
+		return routingKey;
+	}
 
-    public void setReceivedOn(LocalDateTime receivedOn) {
-        this.receivedOn = receivedOn;
-    }
+	public void setRoutingKey(String routingKey) {
+		this.routingKey = routingKey;
+	}
 
-    public LocalDateTime getProcessedOn() {
-        return processedOn;
-    }
+	public UUID getCorrelationId() {
+		return correlationId;
+	}
 
-    public void setProcessedOn(LocalDateTime processedOn) {
-        this.processedOn = processedOn;
-    }
+	public void setCorrelationId(UUID correlationId) {
+		this.correlationId = correlationId;
+	}
 
-    public LocalDateTime getUpdatedOn() {
-        return updatedOn;
-    }
+	public Integer getSchemaVersion() {
+		return schemaVersion;
+	}
 
-    public void setUpdatedOn(LocalDateTime updatedOn) {
-        this.updatedOn = updatedOn;
-    }
+	public void setSchemaVersion(Integer schemaVersion) {
+		this.schemaVersion = schemaVersion;
+	}
 
-    public String getPayload() {
-        return payload;
-    }
+	public String getStatus() {
+		return status;
+	}
 
-    public void setPayload(String payload) {
-        this.payload = payload;
-    }
+	public void setStatus(String status) {
+		this.status = status;
+	}
 
-    public String getLastError() {
-        return lastError;
-    }
+	public LocalDateTime getOccurredOn() {
+		return occurredOn;
+	}
 
-    public void setLastError(String lastError) {
-        this.lastError = lastError;
-    }
+	public void setOccurredOn(LocalDateTime occurredOn) {
+		this.occurredOn = occurredOn;
+	}
+
+	public LocalDateTime getReceivedOn() {
+		return receivedOn;
+	}
+
+	public void setReceivedOn(LocalDateTime receivedOn) {
+		this.receivedOn = receivedOn;
+	}
+
+	public LocalDateTime getProcessedOn() {
+		return processedOn;
+	}
+
+	public void setProcessedOn(LocalDateTime processedOn) {
+		this.processedOn = processedOn;
+	}
+
+	public LocalDateTime getUpdatedOn() {
+		return updatedOn;
+	}
+
+	public void setUpdatedOn(LocalDateTime updatedOn) {
+		this.updatedOn = updatedOn;
+	}
+
+	public String getPayload() {
+		return payload;
+	}
+
+	public void setPayload(String payload) {
+		this.payload = payload;
+	}
+
+	public String getLastError() {
+		return lastError;
+	}
+
+	public void setLastError(String lastError) {
+		this.lastError = lastError;
+	}
 }

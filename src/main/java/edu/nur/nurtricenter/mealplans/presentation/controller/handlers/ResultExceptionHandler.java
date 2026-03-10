@@ -12,9 +12,13 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 @ControllerAdvice
 public class ResultExceptionHandler extends ResponseEntityExceptionHandler {
 
-    @ExceptionHandler(IllegalArgumentException.class)
-    public ResponseEntity<ResultWithValue> handleIllegalArgumentException(IllegalArgumentException ex, HttpServletRequest request) {
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                .body(ResultWithValue.validationFailure(Error.failure("Invalid Request", ex.getMessage(), ex.getMessage())));
-    }
+	@ExceptionHandler(IllegalArgumentException.class)
+	public ResponseEntity<ResultWithValue> handleIllegalArgumentException(
+			IllegalArgumentException ex, HttpServletRequest request) {
+		return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+				.body(
+						ResultWithValue.validationFailure(
+								Error.failure(
+										"Invalid Request", ex.getMessage(), ex.getMessage())));
+	}
 }

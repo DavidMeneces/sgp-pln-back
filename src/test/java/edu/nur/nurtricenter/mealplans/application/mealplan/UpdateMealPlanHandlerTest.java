@@ -8,14 +8,13 @@ import org.springframework.boot.test.context.SpringBootTest;
 @SpringBootTest
 class UpdateMealPlanHandlerTest {
 
-    private final Pipeline pipeline;
+	private final Pipeline pipeline;
 
-    @Inject
-    UpdateMealPlanHandlerTest(Pipeline pipeline) {
-        this.pipeline = pipeline;
-    }
+	@Inject
+	UpdateMealPlanHandlerTest(Pipeline pipeline) {
+		this.pipeline = pipeline;
+	}
 
-    @Test
-    void handle() {
-    }
+	@Test
+	void handle() {}
 }

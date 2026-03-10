@@ -1,18 +1,18 @@
 package edu.nur.nurtricenter.mealplans.infraestructure.persistence.repositories;
 
 import edu.nur.nurtricenter.mealplans.infraestructure.persistence.persistenceModel.RecipeIngredientModel;
+import java.util.List;
+import java.util.UUID;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 
-import java.util.List;
-import java.util.UUID;
+public interface RecipeIngredientModelRepository
+		extends CrudRepository<RecipeIngredientModel, UUID> {
 
-public interface RecipeIngredientModelRepository extends CrudRepository<RecipeIngredientModel, UUID> {
-
-    @Query("""
-            SELECT rim
-            FROM RecipeIngredientModel rim
-            WHERE rim.idRecipe = :idRecipe""")
-    List<RecipeIngredientModel> findAllByIdRecipe(@Param("idRecipe") UUID idRecipe);
+	@Query("""
+			SELECT rim
+			FROM RecipeIngredientModel rim
+			WHERE rim.idRecipe = :idRecipe""")
+	List<RecipeIngredientModel> findAllByIdRecipe(@Param("idRecipe") UUID idRecipe);
 }

@@ -5,29 +5,27 @@ import edu.nur.nurtricenter.mealplans.application.ingredient.CreateIngredientCom
 import edu.nur.nurtricenter.mealplans.application.ingredient.GetIngredientCommand;
 import edu.nur.nurtricenter.mealplans.application.ingredient.IngredientDto;
 import edu.nur.nurtricenter.mealplans.core.results.ResultWithValue;
-import org.springframework.web.bind.annotation.*;
-
 import java.util.UUID;
-
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/ingredients")
 public class IngredientController {
 
-    private final Pipeline pipeline;
+	private final Pipeline pipeline;
 
-    public IngredientController(Pipeline pipeline) {
-        this.pipeline = pipeline;
-    }
+	public IngredientController(Pipeline pipeline) {
+		this.pipeline = pipeline;
+	}
 
-    @PostMapping("")
-    public ResultWithValue<UUID> create(@RequestBody CreateIngredientCommand command) {
-        return command.execute(pipeline);
-    }
+	@PostMapping("")
+	public ResultWithValue<UUID> create(@RequestBody CreateIngredientCommand command) {
+		return command.execute(pipeline);
+	}
 
-    @GetMapping("/{id}")
-    public ResultWithValue<IngredientDto> getById(@PathVariable UUID id) {
-        GetIngredientCommand command = new GetIngredientCommand(id);
-        return command.execute(pipeline);
-    }
+	@GetMapping("/{id}")
+	public ResultWithValue<IngredientDto> getById(@PathVariable UUID id) {
+		GetIngredientCommand command = new GetIngredientCommand(id);
+		return command.execute(pipeline);
+	}
 }

@@ -8,22 +8,20 @@ import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Component;
 
 @Component
-public class CreatePatientHandler implements Command.Handler<CreatePatientCommand, ResultWithValue<Boolean>> {
+public class CreatePatientHandler
+		implements Command.Handler<CreatePatientCommand, ResultWithValue<Boolean>> {
 
-    private PatientModelRepository repository;
+	private PatientModelRepository repository;
 
-    public CreatePatientHandler(PatientModelRepository repository) {
-        this.repository = repository;
-    }
+	public CreatePatientHandler(PatientModelRepository repository) {
+		this.repository = repository;
+	}
 
-    @Override
-    @Transactional
-    public ResultWithValue<Boolean> handle(CreatePatientCommand command) {
-        PatientModel model = PatientModel.builder()
-                .id(command.id())
-                .name(command.name())
-                .build();
-        repository.save(model);
-        return ResultWithValue.success(Boolean.TRUE);
-    }
+	@Override
+	@Transactional
+	public ResultWithValue<Boolean> handle(CreatePatientCommand command) {
+		PatientModel model = PatientModel.builder().id(command.id()).name(command.name()).build();
+		repository.save(model);
+		return ResultWithValue.success(Boolean.TRUE);
+	}
 }

@@ -4,13 +4,12 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import java.time.LocalDateTime;
+import java.util.UUID;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import java.time.LocalDateTime;
-import java.util.UUID;
 
 @Data
 @Builder
@@ -19,142 +18,144 @@ import java.util.UUID;
 @Entity
 @Table(schema = "public", name = "outbox_events")
 public class OutboxEventEntity {
-    @Id
-    private UUID id;
-    private UUID eventId;
-    private String aggregateType;
-    private String aggregateId;
-    private String eventType;
-    private String eventName;
-    private String routingKey;
-    private Integer schemaVersion;
-    private UUID correlationId;
-    @Column(columnDefinition = "TEXT")
-    private String payload;
-    private LocalDateTime occurredOn;
-    private LocalDateTime processedOn;
-    private Integer attempts;
-    private LocalDateTime nextAttemptAt;
-    @Column(columnDefinition = "TEXT")
-    private String lastError;
+	@Id private UUID id;
+	private UUID eventId;
+	private String aggregateType;
+	private String aggregateId;
+	private String eventType;
+	private String eventName;
+	private String routingKey;
+	private Integer schemaVersion;
+	private UUID correlationId;
 
-    public UUID getId() {
-        return id;
-    }
+	@Column(columnDefinition = "TEXT")
+	private String payload;
 
-    public void setId(UUID id) {
-        this.id = id;
-    }
+	private LocalDateTime occurredOn;
+	private LocalDateTime processedOn;
+	private Integer attempts;
+	private LocalDateTime nextAttemptAt;
 
-    public String getAggregateType() {
-        return aggregateType;
-    }
+	@Column(columnDefinition = "TEXT")
+	private String lastError;
 
-    public void setAggregateType(String aggregateType) {
-        this.aggregateType = aggregateType;
-    }
+	public UUID getId() {
+		return id;
+	}
 
-    public String getAggregateId() {
-        return aggregateId;
-    }
+	public void setId(UUID id) {
+		this.id = id;
+	}
 
-    public void setAggregateId(String aggregateId) {
-        this.aggregateId = aggregateId;
-    }
+	public String getAggregateType() {
+		return aggregateType;
+	}
 
-    public String getEventType() {
-        return eventType;
-    }
+	public void setAggregateType(String aggregateType) {
+		this.aggregateType = aggregateType;
+	}
 
-    public void setEventType(String eventType) {
-        this.eventType = eventType;
-    }
+	public String getAggregateId() {
+		return aggregateId;
+	}
 
-    public String getEventName() {
-        return eventName;
-    }
+	public void setAggregateId(String aggregateId) {
+		this.aggregateId = aggregateId;
+	}
 
-    public void setEventName(String eventName) {
-        this.eventName = eventName;
-    }
+	public String getEventType() {
+		return eventType;
+	}
 
-    public UUID getEventId() {
-        return eventId;
-    }
+	public void setEventType(String eventType) {
+		this.eventType = eventType;
+	}
 
-    public void setEventId(UUID eventId) {
-        this.eventId = eventId;
-    }
+	public String getEventName() {
+		return eventName;
+	}
 
-    public String getRoutingKey() {
-        return routingKey;
-    }
+	public void setEventName(String eventName) {
+		this.eventName = eventName;
+	}
 
-    public void setRoutingKey(String routingKey) {
-        this.routingKey = routingKey;
-    }
+	public UUID getEventId() {
+		return eventId;
+	}
 
-    public Integer getSchemaVersion() {
-        return schemaVersion;
-    }
+	public void setEventId(UUID eventId) {
+		this.eventId = eventId;
+	}
 
-    public void setSchemaVersion(Integer schemaVersion) {
-        this.schemaVersion = schemaVersion;
-    }
+	public String getRoutingKey() {
+		return routingKey;
+	}
 
-    public UUID getCorrelationId() {
-        return correlationId;
-    }
+	public void setRoutingKey(String routingKey) {
+		this.routingKey = routingKey;
+	}
 
-    public void setCorrelationId(UUID correlationId) {
-        this.correlationId = correlationId;
-    }
+	public Integer getSchemaVersion() {
+		return schemaVersion;
+	}
 
-    public String getPayload() {
-        return payload;
-    }
+	public void setSchemaVersion(Integer schemaVersion) {
+		this.schemaVersion = schemaVersion;
+	}
 
-    public void setPayload(String payload) {
-        this.payload = payload;
-    }
+	public UUID getCorrelationId() {
+		return correlationId;
+	}
 
-    public LocalDateTime getOccurredOn() {
-        return occurredOn;
-    }
+	public void setCorrelationId(UUID correlationId) {
+		this.correlationId = correlationId;
+	}
 
-    public void setOccurredOn(LocalDateTime occurredOn) {
-        this.occurredOn = occurredOn;
-    }
+	public String getPayload() {
+		return payload;
+	}
 
-    public LocalDateTime getProcessedOn() {
-        return processedOn;
-    }
+	public void setPayload(String payload) {
+		this.payload = payload;
+	}
 
-    public void setProcessedOn(LocalDateTime processedOn) {
-        this.processedOn = processedOn;
-    }
+	public LocalDateTime getOccurredOn() {
+		return occurredOn;
+	}
 
-    public Integer getAttempts() {
-        return attempts;
-    }
+	public void setOccurredOn(LocalDateTime occurredOn) {
+		this.occurredOn = occurredOn;
+	}
 
-    public void setAttempts(Integer attempts) {
-        this.attempts = attempts;
-    }
+	public LocalDateTime getProcessedOn() {
+		return processedOn;
+	}
 
-    public LocalDateTime getNextAttemptAt() {
-        return nextAttemptAt;
-    }
+	public void setProcessedOn(LocalDateTime processedOn) {
+		this.processedOn = processedOn;
+	}
 
-    public void setNextAttemptAt(LocalDateTime nextAttemptAt) {
-        this.nextAttemptAt = nextAttemptAt;
-    }
+	public Integer getAttempts() {
+		return attempts;
+	}
 
-    public String getLastError() {
-        return lastError;
-    }
+	public void setAttempts(Integer attempts) {
+		this.attempts = attempts;
+	}
 
-    public void setLastError(String lastError) {
-        this.lastError = lastError;
-    }
+	public LocalDateTime getNextAttemptAt() {
+		return nextAttemptAt;
+	}
+
+	public void setNextAttemptAt(LocalDateTime nextAttemptAt) {
+		this.nextAttemptAt = nextAttemptAt;
+	}
+
+	public String getLastError() {
+		return lastError;
+	}
+
+	public void setLastError(String lastError) {
+		this.lastError = lastError;
+	}
 }
