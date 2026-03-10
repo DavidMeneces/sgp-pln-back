@@ -5,7 +5,7 @@ echo "Ejecutando validaciones pre-commit..."
 # mvn clean verify sonar:sonar
 
 # Ejecutar tests y validaciones
-mvn clean test checkstyle:check
+mvn clean test spotless:check
 
 # Si falla, cancelar el commit
 if [ $? -ne 0 ]; then

@@ -2,11 +2,10 @@ package edu.nur.nurtricenter.mealplans.application.appointment;
 
 import an.awesome.pipelinr.Pipeline;
 import jakarta.inject.Inject;
+import java.util.UUID;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
-
-import java.util.UUID;
 
 @SpringBootTest
 class AttendAppointmentHandlerTest {
