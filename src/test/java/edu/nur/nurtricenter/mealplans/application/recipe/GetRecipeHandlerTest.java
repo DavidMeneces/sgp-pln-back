@@ -18,10 +18,18 @@ class GetRecipeHandlerTest {
 	}
 
 	@Test
-	void handle() {
+	void found() {
 		var id = UUID.fromString("331a6eed-fa94-4137-a4e1-0c60b186f338");
 		var request = new GetRecipeCommand(id);
 		var response = request.execute(pipeline);
 		Assertions.assertNotNull(response.getValue());
+	}
+
+	@Test
+	void notFound() {
+		var id = UUID.fromString("408ed13f-31d3-4987-9bd1-531dc19b47eb");
+		var request = new GetRecipeCommand(id);
+		var response = request.execute(pipeline);
+		Assertions.assertEquals("Not found recipe", response.getError().getDescription());
 	}
 }

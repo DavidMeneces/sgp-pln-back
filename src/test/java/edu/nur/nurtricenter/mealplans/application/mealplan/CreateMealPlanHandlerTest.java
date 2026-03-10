@@ -23,7 +23,7 @@ class CreateMealPlanHandlerTest {
 	}
 
 	@Test
-	void handle() {
+	void create() {
 		var idNutricionist = UUID.fromString("0063b8fd-4e81-464c-be6a-8c4fcac2c6bd");
 		var idPatient = UUID.fromString("e7070f4e-47ba-4a86-8a78-ebdc5bbb9c32");
 		var idAppointment = UUID.fromString("e7070f4e-47ba-4a86-8a78-ebdc5bbb9c32");
@@ -227,5 +227,109 @@ class CreateMealPlanHandlerTest {
 						mealPlanDays);
 		var response = request.execute(pipeline);
 		Assertions.assertNotNull(response.getValue());
+	}
+
+	@Test
+	void notFoundNutricionist() {
+		var idNutricionist = UUID.fromString("29f23f19-fa8e-481f-aecd-716650e79930");
+		var idPatient = UUID.fromString("29f23f19-fa8e-481f-aecd-716650e79930");
+		var idAppointment = UUID.fromString("29f23f19-fa8e-481f-aecd-716650e79930");
+		var idSubscription = UUID.fromString("29f23f19-fa8e-481f-aecd-716650e79930");
+		var totalDays = 15;
+		var starDate = LocalDate.parse("2025-01-01");
+		var endDate = LocalDate.parse("2025-01-15");
+		var totalCalories = BigDecimal.valueOf(100L);
+		List<CreateMealPlanCommand.MealPlanDayCommad> mealPlanDays = null;
+		var request =
+				new CreateMealPlanCommand(
+						idNutricionist,
+						idPatient,
+						idAppointment,
+						idSubscription,
+						totalDays,
+						starDate,
+						endDate,
+						totalCalories,
+						mealPlanDays);
+		var response = request.execute(pipeline);
+		Assertions.assertEquals("Not found nutricionist", response.getError().getDescription());
+	}
+
+	@Test
+	void notFoundPatient() {
+		var idNutricionist = UUID.fromString("0063b8fd-4e81-464c-be6a-8c4fcac2c6bd");
+		var idPatient = UUID.fromString("29f23f19-fa8e-481f-aecd-716650e79930");
+		var idAppointment = UUID.fromString("29f23f19-fa8e-481f-aecd-716650e79930");
+		var idSubscription = UUID.fromString("29f23f19-fa8e-481f-aecd-716650e79930");
+		var totalDays = 15;
+		var starDate = LocalDate.parse("2025-01-01");
+		var endDate = LocalDate.parse("2025-01-15");
+		var totalCalories = BigDecimal.valueOf(100L);
+		List<CreateMealPlanCommand.MealPlanDayCommad> mealPlanDays = null;
+		var request =
+				new CreateMealPlanCommand(
+						idNutricionist,
+						idPatient,
+						idAppointment,
+						idSubscription,
+						totalDays,
+						starDate,
+						endDate,
+						totalCalories,
+						mealPlanDays);
+		var response = request.execute(pipeline);
+		Assertions.assertEquals("Not found patient", response.getError().getDescription());
+	}
+
+	@Test
+	void notFoundAppoitment() {
+		var idNutricionist = UUID.fromString("0063b8fd-4e81-464c-be6a-8c4fcac2c6bd");
+		var idPatient = UUID.fromString("e7070f4e-47ba-4a86-8a78-ebdc5bbb9c32");
+		var idAppointment = UUID.fromString("29f23f19-fa8e-481f-aecd-716650e79930");
+		var idSubscription = UUID.fromString("29f23f19-fa8e-481f-aecd-716650e79930");
+		var totalDays = 15;
+		var starDate = LocalDate.parse("2025-01-01");
+		var endDate = LocalDate.parse("2025-01-15");
+		var totalCalories = BigDecimal.valueOf(100L);
+		List<CreateMealPlanCommand.MealPlanDayCommad> mealPlanDays = null;
+		var request =
+				new CreateMealPlanCommand(
+						idNutricionist,
+						idPatient,
+						idAppointment,
+						idSubscription,
+						totalDays,
+						starDate,
+						endDate,
+						totalCalories,
+						mealPlanDays);
+		var response = request.execute(pipeline);
+		Assertions.assertEquals("Not found appoitment", response.getError().getDescription());
+	}
+
+	@Test
+	void notFoundSuscriptionType() {
+		var idNutricionist = UUID.fromString("0063b8fd-4e81-464c-be6a-8c4fcac2c6bd");
+		var idPatient = UUID.fromString("e7070f4e-47ba-4a86-8a78-ebdc5bbb9c32");
+		var idAppointment = UUID.fromString("e7070f4e-47ba-4a86-8a78-ebdc5bbb9c32");
+		var idSubscription = UUID.fromString("29f23f19-fa8e-481f-aecd-716650e79930");
+		var totalDays = 15;
+		var starDate = LocalDate.parse("2025-01-01");
+		var endDate = LocalDate.parse("2025-01-15");
+		var totalCalories = BigDecimal.valueOf(100L);
+		List<CreateMealPlanCommand.MealPlanDayCommad> mealPlanDays = null;
+		var request =
+				new CreateMealPlanCommand(
+						idNutricionist,
+						idPatient,
+						idAppointment,
+						idSubscription,
+						totalDays,
+						starDate,
+						endDate,
+						totalCalories,
+						mealPlanDays);
+		var response = request.execute(pipeline);
+		Assertions.assertEquals("Not found suscription type", response.getError().getDescription());
 	}
 }

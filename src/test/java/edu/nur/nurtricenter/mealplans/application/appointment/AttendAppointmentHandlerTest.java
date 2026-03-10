@@ -18,18 +18,26 @@ class AttendAppointmentHandlerTest {
 	}
 
 	@Test
-	void handle() {
+	void attend() {
 		UUID id = createAppoinment();
 		var request = new AttendAppointmentCommand(id);
 		var response = request.execute(pipeline);
 		Assertions.assertNotNull(response.getValue());
 	}
 
-	UUID createAppoinment() {
+	private UUID createAppoinment() {
 		UUID id = UUID.randomUUID();
 		UUID idPatient = UUID.randomUUID();
 		var request = new CreateAppointmentCommand(id, idPatient);
 		request.execute(pipeline);
 		return id;
+	}
+
+	@Test
+	void notFound() {
+		UUID id = UUID.fromString("408ed13f-31d3-4987-9bd1-531dc19b47eb");
+		var request = new AttendAppointmentCommand(id);
+		var response = request.execute(pipeline);
+		Assertions.assertEquals("Not found appointment", response.getError().getDescription());
 	}
 }

@@ -20,7 +20,7 @@ class CreateRecipeHandlerTest {
 	}
 
 	@Test
-	void handle() {
+	void create() {
 		var name = "r1";
 		var description = "ir1";
 		var instructions = "ii1";
@@ -36,5 +36,23 @@ class CreateRecipeHandlerTest {
 		// Response
 		var response = request.execute(pipeline);
 		Assertions.assertNotNull(response.getValue());
+	}
+
+	@Test
+	void noIndredients() {
+		var name = "r1";
+		var description = "ir1";
+		var instructions = "ii1";
+		var totalCalories = BigDecimal.valueOf(100L);
+		List<CreateRecipeCommand.RecipeIngredientCommand> ingredients = null;
+		// Request
+		var request =
+				new CreateRecipeCommand(
+						name, description, instructions, totalCalories, ingredients);
+		// Response
+		IllegalArgumentException exception =
+				Assertions.assertThrows(
+						IllegalArgumentException.class, () -> request.execute(pipeline));
+		Assertions.assertEquals("ingredients cannot be null or empty", exception.getMessage());
 	}
 }
