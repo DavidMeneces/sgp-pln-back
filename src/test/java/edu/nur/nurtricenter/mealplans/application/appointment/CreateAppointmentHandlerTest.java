@@ -18,7 +18,7 @@ class CreateAppointmentHandlerTest {
 	}
 
 	@Test
-	void handle() {
+	void createSuccessful() {
 		UUID id = UUID.randomUUID();
 		UUID idPatient = UUID.randomUUID();
 		var request = new CreateAppointmentCommand(id, idPatient);

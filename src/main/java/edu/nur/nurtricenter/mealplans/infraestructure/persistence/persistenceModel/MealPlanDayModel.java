@@ -27,27 +27,27 @@ public class MealPlanDayModel {
 	@Column(name = "id_meal_plan")
 	private UUID idMealPlan;
 
-	@Column(name = "day")
+	@Column(name = "day_number")
 	private Integer day;
 
 	// Columnas de control de estado entidad
-	@Column(name = "transaccion")
-	private String transaccion;
+	@Column(name = "transaction")
+	private String transaction;
 
-	@Column(name = "estado")
-	private String estado;
+	@Column(name = "status")
+	private String status;
 
-	@Column(name = "usuario_creacion")
-	private String usuarioCreacion;
+	@Column(name = "created_by")
+	private String createdBy;
 
-	@Column(name = "fecha_creacion", columnDefinition = "timestamp")
-	private LocalDateTime fechaCreacion;
+	@Column(name = "created_at", columnDefinition = "timestamp")
+	private LocalDateTime createdAt;
 
-	@Column(name = "usuario_modificacion")
-	private String usuarioModificacion;
+	@Column(name = "updated_by")
+	private String updatedBy;
 
-	@Column(name = "fecha_modificacion", columnDefinition = "timestamp")
-	private LocalDateTime fechaModificacion;
+	@Column(name = "updated_at", columnDefinition = "timestamp")
+	private LocalDateTime updatedAt;
 
 	public static MealPlanDayModel buildModel(UUID idPlanAlimentario, MealPlanDay entity) {
 		var transaccion = TransaccionEstadoModel.CREAR;
@@ -55,10 +55,10 @@ public class MealPlanDayModel {
 				.id(entity.getId())
 				.idMealPlan(idPlanAlimentario)
 				.day(entity.getDay())
-				.transaccion(transaccion.name())
-				.estado(transaccion.getEstado())
-				.usuarioCreacion("sgp-pln")
-				.fechaCreacion(LocalDateTime.now())
+				.transaction(transaccion.name())
+				.status(transaccion.getEstado())
+				.createdBy("sgp-pln")
+				.createdAt(LocalDateTime.now())
 				.build();
 	}
 }

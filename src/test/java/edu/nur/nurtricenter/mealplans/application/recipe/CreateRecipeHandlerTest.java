@@ -20,7 +20,7 @@ class CreateRecipeHandlerTest {
 	}
 
 	@Test
-	void create() {
+	void createSuccessful() {
 		var name = "r1";
 		var description = "ir1";
 		var instructions = "ii1";
@@ -39,7 +39,7 @@ class CreateRecipeHandlerTest {
 	}
 
 	@Test
-	void noIndredients() {
+	void createWithNoIndredients() {
 		var name = "r1";
 		var description = "ir1";
 		var instructions = "ii1";

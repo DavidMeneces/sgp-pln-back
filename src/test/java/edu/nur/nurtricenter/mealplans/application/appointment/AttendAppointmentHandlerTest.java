@@ -18,7 +18,7 @@ class AttendAppointmentHandlerTest {
 	}
 
 	@Test
-	void attend() {
+	void attendSuccessful() {
 		UUID id = createAppoinment();
 		var request = new AttendAppointmentCommand(id);
 		var response = request.execute(pipeline);

@@ -111,10 +111,10 @@ public class MealPlanRepository implements IMealPlanRepository {
 	public void cancelById(UUID id) {
 		MealPlanModel model = repository.findById(id).get();
 		TransaccionEstadoModel transaccion = TransaccionEstadoModel.CANCELAR;
-		model.setTransaccion(transaccion.name());
-		model.setEstado(transaccion.getEstado());
-		model.setUsuarioModificacion("sgp-pln");
-		model.setFechaModificacion(LocalDateTime.now());
+		model.setTransaction(transaccion.name());
+		model.setStatus(transaccion.getEstado());
+		model.setUpdatedBy("sgp-pln");
+		model.setUpdatedAt(LocalDateTime.now());
 		repository.save(model);
 	}
 

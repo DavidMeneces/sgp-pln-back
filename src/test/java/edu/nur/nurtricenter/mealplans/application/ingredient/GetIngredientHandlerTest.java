@@ -1,7 +1,9 @@
 package edu.nur.nurtricenter.mealplans.application.ingredient;
 
 import an.awesome.pipelinr.Pipeline;
+import edu.nur.nurtricenter.mealplans.domain.shared.UnitMeasureEnum;
 import jakarta.inject.Inject;
+import java.math.BigDecimal;
 import java.util.UUID;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -18,11 +20,21 @@ class GetIngredientHandlerTest {
 	}
 
 	@Test
-	void fund() {
-		var id = UUID.fromString("c8aa1d9b-ba79-477c-87bd-df96e00579f6");
+	void fundSuccessful() {
+		var id = createIngredient();
 		var request = new GetIngredientCommand(id);
 		var response = request.execute(pipeline);
 		Assertions.assertNotNull(response.getValue());
+	}
+
+	private UUID createIngredient() {
+		String name = "i1";
+		String description = "di1";
+		UnitMeasureEnum unitMeasure = UnitMeasureEnum.GRAM;
+		BigDecimal caloriesPerGram = BigDecimal.valueOf(150L);
+		var request = new CreateIngredientCommand(name, description, unitMeasure, caloriesPerGram);
+		var response = request.execute(pipeline);
+		return response.getValue();
 	}
 
 	@Test

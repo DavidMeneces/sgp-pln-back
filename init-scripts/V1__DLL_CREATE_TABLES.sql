@@ -1,31 +1,60 @@
--- public.ingredient definition
-
+-- public.nutricionist definition
 -- Drop table
+-- DROP TABLE public.nutricionist;
+CREATE TABLE public.nutricionist (
+	id uuid NOT NULL,
+	"name" varchar(255) NULL,
+	CONSTRAINT nutricionist_pkey PRIMARY KEY (id)
+);
 
+-- public.patient definition
+-- Drop table
+-- DROP TABLE public.patient;
+CREATE TABLE public.patient (
+	id uuid NOT NULL,
+	"name" varchar(255) NULL,
+	phone varchar(255) NULL,
+	CONSTRAINT patient_pkey PRIMARY KEY (id)
+);
+
+-- public.subscription_type definition
+-- Drop table
+-- DROP TABLE public.subscription_type;
+CREATE TABLE public.subscription_type (
+    id UUID PRIMARY KEY,
+    name VARCHAR(255)
+);
+
+-- public.appointment definition
+-- Drop table
+-- DROP TABLE public.appointment;
+CREATE TABLE public.appointment (
+    id UUID PRIMARY KEY,
+    id_patient UUID PRIMARY KEY,
+    status VARCHAR(255)
+);
+
+-- public.ingredient definition
+-- Drop table
 -- DROP TABLE public.ingredient;
-
 CREATE TABLE public.ingredient (
 	id uuid NOT NULL,
-	calories_per_gram numeric(38, 2) NULL,
-	fecha_creacion timestamp NULL,
-	fecha_modificacion timestamp NULL,
-	description varchar(255) NULL,
-	estado varchar(255) NULL,
 	"name" varchar(255) NULL,
-	transaccion varchar(255) NULL,
+	description varchar(255) NULL,
 	unit_measure varchar(255) NULL,
-	usuario_creacion varchar(255) NULL,
-	usuario_modificacion varchar(255) NULL,
+	calories_per_gram numeric(38, 2) NULL,
+	"transaction" varchar(255) NULL,
+	status varchar(255) NULL,
+	created_at timestamp NULL,
+	created_by varchar(255) NULL,
+    updated_at timestamp NULL,
+	updated_by varchar(255) NULL,
 	CONSTRAINT ingredient_pkey PRIMARY KEY (id)
 );
 
-
 -- public.meal_plan definition
-
 -- Drop table
-
 -- DROP TABLE public.meal_plan;
-
 CREATE TABLE public.meal_plan (
 	id uuid NOT NULL,
 	id_nutricionist uuid NULL,
@@ -36,176 +65,103 @@ CREATE TABLE public.meal_plan (
 	end_date timestamp NULL,
 	star_date timestamp NULL,
 	total_days int4 NULL,
-	fecha_creacion timestamp NULL,
-	fecha_modificacion timestamp NULL,
-	estado varchar(255) NULL,
-	transaccion varchar(255) NULL,
-	usuario_creacion varchar(255) NULL,
-	usuario_modificacion varchar(255) NULL,
+	"transaction" varchar(255) NULL,
+	status varchar(255) NULL,
+	created_by varchar(255) NULL,
+	created_at timestamp NULL,
+	updated_by varchar(255) NULL,
+	updated_at timestamp NULL,
 	CONSTRAINT meal_plan_pkey PRIMARY KEY (id)
 );
 
-
 -- public.meal_plan_day definition
-
 -- Drop table
-
 -- DROP TABLE public.meal_plan_day;
-
 CREATE TABLE public.meal_plan_day (
 	id uuid NOT NULL,
 	id_meal_plan uuid NULL,
-	"day" int4 NULL,
-	fecha_creacion timestamp NULL,
-	fecha_modificacion timestamp NULL,
-	estado varchar(255) NULL,
-	transaccion varchar(255) NULL,
-	usuario_creacion varchar(255) NULL,
-	usuario_modificacion varchar(255) NULL,
+	day_number int4 NULL,
+	"transaction" varchar(255) NULL,
+	status varchar(255) NULL,
+	created_by varchar(255) NULL,
+	created_at timestamp NULL,
+	updated_by varchar(255) NULL,
+	updated_at timestamp NULL,
 	CONSTRAINT meal_plan_day_pkey PRIMARY KEY (id)
 );
 
-
--- public.nutricionist definition
-
--- Drop table
-
--- DROP TABLE public.nutricionist;
-
-CREATE TABLE public.nutricionist (
-	id uuid NOT NULL,
-	"name" varchar(255) NULL,
-	CONSTRAINT nutricionist_pkey PRIMARY KEY (id)
-);
-
-
--- public.patient definition
-
--- Drop table
-
--- DROP TABLE public.patient;
-
-CREATE TABLE public.patient (
-	id uuid NOT NULL,
-	"name" varchar(255) NULL,
-	phone varchar(255) NULL,
-	CONSTRAINT patient_pkey PRIMARY KEY (id)
-);
-
--- public.subscription_type definition
-
--- Drop table
-
--- DROP TABLE public.subscription_type;
-
-CREATE TABLE public.subscription_type (
-    id UUID PRIMARY KEY,
-    name VARCHAR(255)
-);
-
--- public.appointment definition
-
--- Drop table
-
--- DROP TABLE public.appointment;
-
-CREATE TABLE public.appointment (
-    id UUID PRIMARY KEY,
-    id_patient UUID PRIMARY KEY,
-    status VARCHAR(255)
-);
-
-
 -- public.recipe definition
-
 -- Drop table
-
 -- DROP TABLE public.recipe;
-
 CREATE TABLE public.recipe (
 	id uuid NOT NULL,
-	total_calories numeric NULL,
-	fecha_creacion timestamp NULL,
-	fecha_modificacion timestamp NULL,
-	description varchar(255) NULL,
-	estado varchar(255) NULL,
-	instructions varchar(255) NULL,
 	"name" varchar(255) NULL,
-	transaccion varchar(255) NULL,
-	usuario_creacion varchar(255) NULL,
-	usuario_modificacion varchar(255) NULL,
+	description varchar(255) NULL,
+	instructions varchar(255) NULL,
+	total_calories numeric NULL,
+	"transaction" varchar(255) NULL,
+	status varchar(255) NULL,
+	created_by varchar(255) NULL,
+	created_at timestamp NULL,
+	updated_by varchar(255) NULL,
+	updated_at timestamp NULL,
 	CONSTRAINT recipe_pkey PRIMARY KEY (id)
 );
 
-
 -- public.recipe_ingredient definition
-
 -- Drop table
-
 -- DROP TABLE public.recipe_ingredient;
-
 CREATE TABLE public.recipe_ingredient (
 	id uuid NOT NULL,
 	id_recipe uuid NULL,
 	id_ingredient uuid NULL,
 	quantity numeric NULL,
-	fecha_creacion timestamp NULL,
-	fecha_modificacion timestamp NULL,
-	estado varchar(255) NULL,
-	transaccion varchar(255) NULL,
-	usuario_creacion varchar(255) NULL,
-	usuario_modificacion varchar(255) NULL,
+	"transaction" varchar(255) NULL,
+	status varchar(255) NULL,
+	created_by varchar(255) NULL,
+	created_at timestamp NULL,
+	updated_by varchar(255) NULL,
+	updated_at timestamp NULL,
 	CONSTRAINT recipe_ingredient_pkey PRIMARY KEY (id)
 );
 
-
 -- public.time_food definition
-
 -- Drop table
-
 -- DROP TABLE public.time_food;
-
 CREATE TABLE public.time_food (
 	id uuid NOT NULL,
 	id_meal_plan_day uuid NULL,
-	sort_order numeric NULL,
-	fecha_creacion timestamp NULL,
-	fecha_modificacion timestamp NULL,
-	estado varchar(255) NULL,
-	transaccion varchar(255) NULL,
 	"type" varchar(255) NULL,
-	usuario_creacion varchar(255) NULL,
-	usuario_modificacion varchar(255) NULL,
+	sort_order numeric NULL,
+	"transaction" varchar(255) NULL,
+	status varchar(255) NULL,
+	created_by varchar(255) NULL,
+	created_at timestamp NULL,
+	updated_by varchar(255) NULL,
+	updated_at timestamp NULL,
 	CONSTRAINT time_food_pkey PRIMARY KEY (id)
 );
 
-
 -- public.time_food_recipe definition
-
 -- Drop table
-
 -- DROP TABLE public.time_food_recipe;
-
 CREATE TABLE public.time_food_recipe (
 	id uuid NOT NULL,
 	id_recipe uuid NULL,
 	id_time_food uuid NULL,
 	portion numeric NULL,
-	fecha_creacion timestamp NULL,
-	fecha_modificacion timestamp NULL,
-	estado varchar(255) NULL,
-	transaccion varchar(255) NULL,
-	usuario_creacion varchar(255) NULL,
-	usuario_modificacion varchar(255) NULL,
+    "transaction" varchar(255) NULL,
+	status varchar(255) NULL,
+    created_by varchar(255) NULL,
+    created_at timestamp NULL,
+    updated_by varchar(255) NULL,
+    updated_at timestamp NULL,
 	CONSTRAINT time_food_recipe_pkey PRIMARY KEY (id)
 );
 
 -- public.outbox_events definition
-
 -- Drop table
-
 -- DROP TABLE public.outbox_events;
-
 CREATE TABLE public.outbox_events (
 	id uuid NOT NULL,
 	event_id uuid NOT NULL,
@@ -227,11 +183,8 @@ CREATE TABLE public.outbox_events (
 );
 
 -- public.inbound_events definition
-
 -- Drop table
-
 -- DROP TABLE public.inbound_events;
-
 CREATE TABLE public.inbound_events (
 	id uuid NOT NULL,
 	event_id uuid NOT NULL,

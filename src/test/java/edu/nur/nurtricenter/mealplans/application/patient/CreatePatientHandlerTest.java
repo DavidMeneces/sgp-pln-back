@@ -20,7 +20,7 @@ class CreatePatientHandlerTest {
 	}
 
 	@Test
-	void handle() {
+	void createSuccessful() {
 		UUID id = UUID.randomUUID();
 		String name = "David Meneces";
 		var request = new CreatePatientCommand(id, name);

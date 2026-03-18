@@ -23,8 +23,8 @@ class CreateMealPlanHandlerTest {
 	}
 
 	@Test
-	void create() {
-		var idNutricionist = UUID.fromString("0063b8fd-4e81-464c-be6a-8c4fcac2c6bd");
+	void createSuccessful() {
+		var idNutricionist = UUID.fromString("e7070f4e-47ba-4a86-8a78-ebdc5bbb9c32");
 		var idPatient = UUID.fromString("e7070f4e-47ba-4a86-8a78-ebdc5bbb9c32");
 		var idAppointment = UUID.fromString("e7070f4e-47ba-4a86-8a78-ebdc5bbb9c32");
 		var idSubscription = UUID.fromString("e7070f4e-47ba-4a86-8a78-ebdc5bbb9c32");
@@ -44,7 +44,7 @@ class CreateMealPlanHandlerTest {
 														new CreateMealPlanCommand
 																.TimeFoodRecipeCommand(
 																UUID.fromString(
-																		"331a6eed-fa94-4137-a4e1-0c60b186f338"),
+																		"e7070f4e-47ba-4a86-8a78-ebdc5bbb9c32"),
 																1))))),
 						new CreateMealPlanCommand.MealPlanDayCommad(
 								2,
@@ -56,7 +56,7 @@ class CreateMealPlanHandlerTest {
 														new CreateMealPlanCommand
 																.TimeFoodRecipeCommand(
 																UUID.fromString(
-																		"331a6eed-fa94-4137-a4e1-0c60b186f338"),
+																		"e7070f4e-47ba-4a86-8a78-ebdc5bbb9c32"),
 																1))))),
 						new CreateMealPlanCommand.MealPlanDayCommad(
 								3,
@@ -68,7 +68,7 @@ class CreateMealPlanHandlerTest {
 														new CreateMealPlanCommand
 																.TimeFoodRecipeCommand(
 																UUID.fromString(
-																		"331a6eed-fa94-4137-a4e1-0c60b186f338"),
+																		"e7070f4e-47ba-4a86-8a78-ebdc5bbb9c32"),
 																1))))),
 						new CreateMealPlanCommand.MealPlanDayCommad(
 								4,
@@ -80,7 +80,7 @@ class CreateMealPlanHandlerTest {
 														new CreateMealPlanCommand
 																.TimeFoodRecipeCommand(
 																UUID.fromString(
-																		"331a6eed-fa94-4137-a4e1-0c60b186f338"),
+																		"e7070f4e-47ba-4a86-8a78-ebdc5bbb9c32"),
 																1))))),
 						new CreateMealPlanCommand.MealPlanDayCommad(
 								5,
@@ -92,7 +92,7 @@ class CreateMealPlanHandlerTest {
 														new CreateMealPlanCommand
 																.TimeFoodRecipeCommand(
 																UUID.fromString(
-																		"331a6eed-fa94-4137-a4e1-0c60b186f338"),
+																		"e7070f4e-47ba-4a86-8a78-ebdc5bbb9c32"),
 																1))))),
 						new CreateMealPlanCommand.MealPlanDayCommad(
 								6,
@@ -104,7 +104,7 @@ class CreateMealPlanHandlerTest {
 														new CreateMealPlanCommand
 																.TimeFoodRecipeCommand(
 																UUID.fromString(
-																		"331a6eed-fa94-4137-a4e1-0c60b186f338"),
+																		"e7070f4e-47ba-4a86-8a78-ebdc5bbb9c32"),
 																1))))),
 						new CreateMealPlanCommand.MealPlanDayCommad(
 								7,
@@ -116,7 +116,7 @@ class CreateMealPlanHandlerTest {
 														new CreateMealPlanCommand
 																.TimeFoodRecipeCommand(
 																UUID.fromString(
-																		"331a6eed-fa94-4137-a4e1-0c60b186f338"),
+																		"e7070f4e-47ba-4a86-8a78-ebdc5bbb9c32"),
 																1))))),
 						new CreateMealPlanCommand.MealPlanDayCommad(
 								8,
@@ -128,7 +128,7 @@ class CreateMealPlanHandlerTest {
 														new CreateMealPlanCommand
 																.TimeFoodRecipeCommand(
 																UUID.fromString(
-																		"331a6eed-fa94-4137-a4e1-0c60b186f338"),
+																		"e7070f4e-47ba-4a86-8a78-ebdc5bbb9c32"),
 																1))))),
 						new CreateMealPlanCommand.MealPlanDayCommad(
 								9,
@@ -140,7 +140,7 @@ class CreateMealPlanHandlerTest {
 														new CreateMealPlanCommand
 																.TimeFoodRecipeCommand(
 																UUID.fromString(
-																		"331a6eed-fa94-4137-a4e1-0c60b186f338"),
+																		"e7070f4e-47ba-4a86-8a78-ebdc5bbb9c32"),
 																1))))),
 						new CreateMealPlanCommand.MealPlanDayCommad(
 								10,
@@ -152,7 +152,7 @@ class CreateMealPlanHandlerTest {
 														new CreateMealPlanCommand
 																.TimeFoodRecipeCommand(
 																UUID.fromString(
-																		"331a6eed-fa94-4137-a4e1-0c60b186f338"),
+																		"e7070f4e-47ba-4a86-8a78-ebdc5bbb9c32"),
 																1))))),
 						new CreateMealPlanCommand.MealPlanDayCommad(
 								11,
@@ -164,7 +164,7 @@ class CreateMealPlanHandlerTest {
 														new CreateMealPlanCommand
 																.TimeFoodRecipeCommand(
 																UUID.fromString(
-																		"331a6eed-fa94-4137-a4e1-0c60b186f338"),
+																		"e7070f4e-47ba-4a86-8a78-ebdc5bbb9c32"),
 																1))))),
 						new CreateMealPlanCommand.MealPlanDayCommad(
 								12,
@@ -176,7 +176,7 @@ class CreateMealPlanHandlerTest {
 														new CreateMealPlanCommand
 																.TimeFoodRecipeCommand(
 																UUID.fromString(
-																		"331a6eed-fa94-4137-a4e1-0c60b186f338"),
+																		"e7070f4e-47ba-4a86-8a78-ebdc5bbb9c32"),
 																1))))),
 						new CreateMealPlanCommand.MealPlanDayCommad(
 								13,
@@ -188,7 +188,7 @@ class CreateMealPlanHandlerTest {
 														new CreateMealPlanCommand
 																.TimeFoodRecipeCommand(
 																UUID.fromString(
-																		"331a6eed-fa94-4137-a4e1-0c60b186f338"),
+																		"e7070f4e-47ba-4a86-8a78-ebdc5bbb9c32"),
 																1))))),
 						new CreateMealPlanCommand.MealPlanDayCommad(
 								14,
@@ -200,7 +200,7 @@ class CreateMealPlanHandlerTest {
 														new CreateMealPlanCommand
 																.TimeFoodRecipeCommand(
 																UUID.fromString(
-																		"331a6eed-fa94-4137-a4e1-0c60b186f338"),
+																		"e7070f4e-47ba-4a86-8a78-ebdc5bbb9c32"),
 																1))))),
 						new CreateMealPlanCommand.MealPlanDayCommad(
 								15,
@@ -212,7 +212,7 @@ class CreateMealPlanHandlerTest {
 														new CreateMealPlanCommand
 																.TimeFoodRecipeCommand(
 																UUID.fromString(
-																		"331a6eed-fa94-4137-a4e1-0c60b186f338"),
+																		"e7070f4e-47ba-4a86-8a78-ebdc5bbb9c32"),
 																1))))));
 		var request =
 				new CreateMealPlanCommand(
@@ -257,7 +257,7 @@ class CreateMealPlanHandlerTest {
 
 	@Test
 	void notFoundPatient() {
-		var idNutricionist = UUID.fromString("0063b8fd-4e81-464c-be6a-8c4fcac2c6bd");
+		var idNutricionist = UUID.fromString("e7070f4e-47ba-4a86-8a78-ebdc5bbb9c32");
 		var idPatient = UUID.fromString("29f23f19-fa8e-481f-aecd-716650e79930");
 		var idAppointment = UUID.fromString("29f23f19-fa8e-481f-aecd-716650e79930");
 		var idSubscription = UUID.fromString("29f23f19-fa8e-481f-aecd-716650e79930");
@@ -283,7 +283,7 @@ class CreateMealPlanHandlerTest {
 
 	@Test
 	void notFoundAppoitment() {
-		var idNutricionist = UUID.fromString("0063b8fd-4e81-464c-be6a-8c4fcac2c6bd");
+		var idNutricionist = UUID.fromString("e7070f4e-47ba-4a86-8a78-ebdc5bbb9c32");
 		var idPatient = UUID.fromString("e7070f4e-47ba-4a86-8a78-ebdc5bbb9c32");
 		var idAppointment = UUID.fromString("29f23f19-fa8e-481f-aecd-716650e79930");
 		var idSubscription = UUID.fromString("29f23f19-fa8e-481f-aecd-716650e79930");
@@ -309,7 +309,7 @@ class CreateMealPlanHandlerTest {
 
 	@Test
 	void notFoundSuscriptionType() {
-		var idNutricionist = UUID.fromString("0063b8fd-4e81-464c-be6a-8c4fcac2c6bd");
+		var idNutricionist = UUID.fromString("e7070f4e-47ba-4a86-8a78-ebdc5bbb9c32");
 		var idPatient = UUID.fromString("e7070f4e-47ba-4a86-8a78-ebdc5bbb9c32");
 		var idAppointment = UUID.fromString("e7070f4e-47ba-4a86-8a78-ebdc5bbb9c32");
 		var idSubscription = UUID.fromString("29f23f19-fa8e-481f-aecd-716650e79930");

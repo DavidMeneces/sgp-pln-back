@@ -19,7 +19,7 @@ class CreateIngredientHandlerTest {
 	}
 
 	@Test
-	void handle() {
+	void createSuccessful() {
 		String name = "i1";
 		String description = "di1";
 		UnitMeasureEnum unitMeasure = UnitMeasureEnum.GRAM;
