@@ -2,7 +2,7 @@
 echo "Ejecutando validaciones pre-commit..."
 
 # Ejecutar análisis de SonarQube (necesitas SonarQube local o conectado)
-mvn clean verify sonar:sonar
+# mvn clean verify sonar:sonar
 
 # Ejecutar tests y validaciones
 mvn clean test spotless:check
