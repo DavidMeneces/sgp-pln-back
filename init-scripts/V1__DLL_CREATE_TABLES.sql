@@ -30,7 +30,7 @@ CREATE TABLE public.subscription_type (
 -- DROP TABLE public.appointment;
 CREATE TABLE public.appointment (
     id UUID PRIMARY KEY,
-    id_patient UUID PRIMARY KEY,
+    id_patient UUID,
     status VARCHAR(255)
 );
 
