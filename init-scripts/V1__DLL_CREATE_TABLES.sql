@@ -21,17 +21,19 @@ CREATE TABLE public.patient (
 -- Drop table
 -- DROP TABLE public.subscription_type;
 CREATE TABLE public.subscription_type (
-    id UUID PRIMARY KEY,
-    name VARCHAR(255)
+    id uuid NOT NULL,
+    name VARCHAR(255),
+    CONSTRAINT subscription_type_pkey PRIMARY KEY (id)
 );
 
 -- public.appointment definition
 -- Drop table
 -- DROP TABLE public.appointment;
 CREATE TABLE public.appointment (
-    id UUID PRIMARY KEY,
-    id_patient UUID,
-    status VARCHAR(255)
+    id uuid NOT NULL,
+    id_patient uuid NOT NULL,
+    status VARCHAR(255),
+    CONSTRAINT appointment_pkey PRIMARY KEY (id)
 );
 
 -- public.ingredient definition

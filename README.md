@@ -10,7 +10,7 @@ El siguiente proyecto tiene por objetivo la gestion de los planes alimentarios, 
 
 ## Main features
 
-- **Registro de ingredientes:** listado y registro de ingredientes.  
+- **Registro de ingredientes:** listado y registro de ingredientes.
 - **Gestion de recetas:** permite crear, editar y eliminar una receta.
 - **Gestion de planes:** permite registrar, editar y eliminar una plan alimentario.
 
@@ -18,7 +18,7 @@ El siguiente proyecto tiene por objetivo la gestion de los planes alimentarios, 
 
 ## Image and Container
 ```shell script
-docker image build --tag nurtricenter-nurtricenter-mealplans-api:1.0.0 .
+docker image build --tag nurtricenter-mealplans-api:1.0.0 .
 docker container run -p 8080:8080 -d  --name nurtricenter-mealplans-api nurtricenter-mealplans-api:1.0.0
 ```
 

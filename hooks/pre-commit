@@ -1,17 +1,9 @@
 #!/usr/bin/env bash
 echo "Ejecutando validaciones pre-commit..."
-
-# Ejecutar análisis de SonarQube (necesitas SonarQube local o conectado)
-# mvn clean verify sonar:sonar
-
-# Ejecutar tests y validaciones
 mvn clean test spotless:check
-
-# Si falla, cancelar el commit
 if [ $? -ne 0 ]; then
     echo "❌ Las validaciones fallaron. Revisa los errores."
     exit 1
 fi
-
 echo "✅ Validaciones exitosas."
 exit 0
