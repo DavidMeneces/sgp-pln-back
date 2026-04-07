@@ -6,8 +6,10 @@ import edu.nur.nurtricenter.mealplans.application.recipe.GetRecipeCommand;
 import edu.nur.nurtricenter.mealplans.application.recipe.RecipeDto;
 import edu.nur.nurtricenter.mealplans.core.results.ResultWithValue;
 import java.util.UUID;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
+@Slf4j
 @RestController
 @RequestMapping("/recipes")
 public class RecipeController {
@@ -20,12 +22,14 @@ public class RecipeController {
 
 	@PostMapping("")
 	public ResultWithValue<UUID> create(@RequestBody CreateRecipeCommand command) {
+		log.info("[POST] create {}", command);
 		return command.execute(pipeline);
 	}
 
 	@GetMapping("/{id}")
 	public ResultWithValue<RecipeDto> getById(@PathVariable UUID id) {
 		GetRecipeCommand command = new GetRecipeCommand(id);
+		log.info("[GET] getById {}", command);
 		return command.execute(pipeline);
 	}
 }
