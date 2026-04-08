@@ -21,7 +21,7 @@ services:
       retries: 3
 
   mealplans-api:
-    image: davidmeneces/nurtricenter-mealplans-api:1.0.0
+    build: .
     container_name: mealplans-api
     environment:
       DATASOURCE_URL: jdbc:postgresql://mealplans-db:5432/sgppln
