@@ -1,8 +1,8 @@
-name: Build & Deploy Spring Boot
+name: Release
 
 on:
   push:
-    branches: [main]
+    branches: [ "main" ]
 
 jobs:
   deploy:
@@ -10,24 +10,20 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-
       - name: Setup JDK
         uses: actions/setup-java@v4
         with:
           java-version: '17'
           distribution: 'temurin'
           cache: 'maven'
-
       - name: Build with Maven
         run: mvn clean package
-
       - name: Configure SSH
         run: |
-          mkdir -p ~/.ssh 
+          mkdir -p ~/.ssh
           echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_ed25519
           chmod 600 ~/.ssh/id_ed25519
           ssh-keyscan -H ${{ secrets.SSH_HOST }} >> ~/.ssh/known_hosts
-
       - name: Deploy JAR via rsync
         run: |
           rsync -avz \
@@ -42,14 +38,6 @@ jobs:
           username: ${{ secrets.SSH_USER }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
-            # Detener la aplicación si está corriendo
             sudo systemctl stop myapp || true
-            
-            # Copiar el JAR a la ubicación final (si es necesario)
-            # sudo cp /opt/application/app.jar /opt/application/app.jar.backup
-            
-            # Iniciar la aplicación
             sudo systemctl start myapp
-            
-            # Opcional: verificar el estado
             sudo systemctl status myapp
