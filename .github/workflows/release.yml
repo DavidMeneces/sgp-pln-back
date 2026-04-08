@@ -9,15 +9,6 @@ jobs:
     name: Build and Deploy
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - name: Setup JDK
-        uses: actions/setup-java@v4
-        with:
-          java-version: '17'
-          distribution: 'temurin'
-          cache: 'maven'
-      - name: Build with Maven
-        run: mvn clean package
       - name: Configure SSH
         run: |
           mkdir -p ~/.ssh
@@ -31,13 +22,12 @@ jobs:
           ./target/*.jar \
           ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:/opt/application/app.jar
 
-      - name: Restart Spring Boot Application
+      - name: Deploy Aplication
         uses: appleboy/ssh-action@v1
         with:
           host: ${{ secrets.SSH_HOST }}
           username: ${{ secrets.SSH_USER }}
+          timeout: 2m
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
-            sudo systemctl stop myapp || true
-            sudo systemctl start myapp
-            sudo systemctl status myapp
+            bash /opt/application/deploy.sh
