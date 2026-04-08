@@ -5,7 +5,7 @@
 
     <groupId>edu.nur.nurtricenter</groupId>
     <artifactId>mealplans-api</artifactId>
-    <version>0.0.4-SNAPSHOT</version>
+    <version>0.0.5-SNAPSHOT</version>
 
     <parent>
         <groupId>org.springframework.boot</groupId>
@@ -34,6 +34,7 @@
             **/*Application.java,
             **/exception/**
         </sonar.exclusions>
+		<git.build.hook.skip>false</git.build.hook.skip>
     </properties>
 
     <dependencies>
@@ -229,7 +230,7 @@
 					<installHooks>
 						<pre-commit>hooks/pre-commit</pre-commit>
 					</installHooks>
-					<skip>true</skip>
+					<skip>${git.build.hook.skip}</skip>
 				</configuration>
 				<executions>
 					<execution>
@@ -250,6 +251,14 @@
 					</archive>
 				</configuration>
 			</plugin>
-        </plugins>
-    </build>
+		</plugins>
+	</build>
+	<profiles>
+		<profile>
+			<id>docker-build</id>
+			<properties>
+				<git.build.hook.skip>true</git.build.hook.skip>
+			</properties>
+		</profile>
+	</profiles>
 </project>
