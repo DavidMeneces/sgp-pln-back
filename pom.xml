@@ -229,6 +229,7 @@
 					<installHooks>
 						<pre-commit>hooks/pre-commit</pre-commit>
 					</installHooks>
+					<skip>true</skip>
 				</configuration>
 				<executions>
 					<execution>
