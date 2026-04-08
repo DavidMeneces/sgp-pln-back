@@ -15,12 +15,6 @@ jobs:
           echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_ed25519
           chmod 600 ~/.ssh/id_ed25519
           ssh-keyscan -H ${{ secrets.SSH_HOST }} >> ~/.ssh/known_hosts
-      - name: Deploy JAR via rsync
-        run: |
-          rsync -avz \
-          -e "ssh -i ~/.ssh/id_ed25519 -o StrictHostKeyChecking=no" \
-          ./target/*.jar \
-          ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:/opt/application/app.jar
 
       - name: Deploy Aplication
         uses: appleboy/ssh-action@v1
