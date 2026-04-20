@@ -1,28 +1,16 @@
 package edu.nur.nurtricenter.mealplans.domain.mealplan.event;
 
-import edu.nur.nurtricenter.mealplans.core.abstractions.DomainEvent;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
 
-public class MealPlanCancelledEvent extends DomainEvent {
+public class MealPlanCancelledEvent extends MealPlanEvent {
 
-	private UUID idMealPlan;
-	private LocalDateTime dateTime;
+	private final LocalDateTime vDateTime;
 
-	public MealPlanCancelledEvent(UUID idMealPlan, LocalDateTime dateTime) {
-		this.idMealPlan = idMealPlan;
-		this.dateTime = dateTime;
-	}
-
-	@Override
-	public String getAggregateType() {
-		return "MealPlan";
-	}
-
-	@Override
-	public String getAggregateId() {
-		return idMealPlan.toString();
+	public MealPlanCancelledEvent(UUID vId, LocalDateTime vDateTime) {
+		this.vId = vId;
+		this.vDateTime = vDateTime;
 	}
 
 	@Override
@@ -32,7 +20,7 @@ public class MealPlanCancelledEvent extends DomainEvent {
 
 	@Override
 	public Object getPayload() {
-		return new Payload(idMealPlan, dateTime);
+		return new Payload(vId, vDateTime);
 	}
 
 	private record Payload(
