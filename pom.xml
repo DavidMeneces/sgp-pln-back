@@ -198,18 +198,16 @@
 				<version>2.43.0</version>
 				<configuration>
 					<java>
-						<googleJavaFormat>
-							<version>1.17.0</version>
-							<style>AOSP</style>
-						</googleJavaFormat>
-						<toggleOffOn/>
-						<trimTrailingWhitespace/>
-						<endWithNewline/>
 						<indent>
 							<tabs>true</tabs>
 							<spacesPerTab>4</spacesPerTab>
 						</indent>
+						<removeUnusedImports/>
+						<trimTrailingWhitespace/>
+						<endWithNewline/>
+						<encoding>UTF-8</encoding>
 					</java>
+					<lineEndings>UNIX</lineEndings>
 				</configuration>
 				<executions>
 					<execution>

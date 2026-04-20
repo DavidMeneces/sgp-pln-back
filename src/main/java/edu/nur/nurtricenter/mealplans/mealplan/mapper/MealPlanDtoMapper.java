@@ -1,13 +1,14 @@
-package edu.nur.nurtricenter.mealplans.application.mealplan.mapper;
+package edu.nur.nurtricenter.mealplans.mealplan.mapper;
 
-import edu.nur.nurtricenter.mealplans.application.mealplan.MealPlanDayDto;
-import edu.nur.nurtricenter.mealplans.application.mealplan.MealPlanDto;
-import edu.nur.nurtricenter.mealplans.application.mealplan.TimeFoodDto;
-import edu.nur.nurtricenter.mealplans.application.mealplan.TimeFoodRecipeDto;
+import edu.nur.nurtricenter.mealplans.mealplan.MealPlanDayDto;
+import edu.nur.nurtricenter.mealplans.mealplan.MealPlanDto;
+import edu.nur.nurtricenter.mealplans.mealplan.TimeFoodDto;
+import edu.nur.nurtricenter.mealplans.mealplan.TimeFoodRecipeDto;
 import edu.nur.nurtricenter.mealplans.domain.mealplan.MealPlan;
 import edu.nur.nurtricenter.mealplans.domain.mealplan.MealPlanDay;
 import edu.nur.nurtricenter.mealplans.domain.mealplan.TimeFood;
 import edu.nur.nurtricenter.mealplans.domain.mealplan.TimeFoodRecipe;
+
 import java.util.List;
 
 public final class MealPlanDtoMapper {

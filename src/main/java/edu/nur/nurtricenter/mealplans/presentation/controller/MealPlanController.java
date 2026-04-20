@@ -1,9 +1,11 @@
 package edu.nur.nurtricenter.mealplans.presentation.controller;
 
 import an.awesome.pipelinr.Pipeline;
-import edu.nur.nurtricenter.mealplans.application.mealplan.*;
 import edu.nur.nurtricenter.mealplans.core.results.ResultWithValue;
+
 import java.util.UUID;
+
+import edu.nur.nurtricenter.mealplans.mealplan.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
@@ -33,46 +35,46 @@ public class MealPlanController {
 
 	@PutMapping("/{id}")
 	public ResultWithValue<Boolean> updateById(
-			@PathVariable UUID id, @RequestBody MealPlanDto dto) {
+		@PathVariable UUID id, @RequestBody MealPlanDto dto) {
 		UpdateMealPlanCommand command =
-				new UpdateMealPlanCommand(
-						id,
-						dto.getIdNutricionist(),
-						dto.getIdPatient(),
-						dto.getIdAppointment(),
-						dto.getIdSubscription(),
-						dto.getTotalDays(),
-						dto.getStarDate(),
-						dto.getEndDate(),
-						dto.getTotalCalories(),
-						dto.getMealPlanDays().stream()
-								.map(
-										dayDto ->
-												new UpdateMealPlanCommand.MealPlanDayCommad(
-														dayDto.getDay(),
-														dayDto.getTimeFoods().stream()
-																.map(
-																		timeFoodDto ->
-																				new UpdateMealPlanCommand
-																						.TimeFoodCommad(
-																						timeFoodDto
-																								.getType(),
-																						timeFoodDto
-																								.getOrder(),
-																						timeFoodDto
-																								.getRecipes()
-																								.stream()
-																								.map(
-																										recipeDto ->
-																												new UpdateMealPlanCommand
-																														.TimeFoodRecipeCommand(
-																														recipeDto
-																																.getIdRecipe(),
-																														recipeDto
-																																.getPortion()))
-																								.toList()))
-																.toList()))
-								.toList());
+			new UpdateMealPlanCommand(
+				id,
+				dto.getIdNutricionist(),
+				dto.getIdPatient(),
+				dto.getIdAppointment(),
+				dto.getIdSubscription(),
+				dto.getTotalDays(),
+				dto.getStarDate(),
+				dto.getEndDate(),
+				dto.getTotalCalories(),
+				dto.getMealPlanDays().stream()
+					.map(
+						dayDto ->
+							new UpdateMealPlanCommand.MealPlanDayCommad(
+								dayDto.getDay(),
+								dayDto.getTimeFoods().stream()
+									.map(
+										timeFoodDto ->
+											new UpdateMealPlanCommand
+												.TimeFoodCommad(
+												timeFoodDto
+													.getType(),
+												timeFoodDto
+													.getOrder(),
+												timeFoodDto
+													.getRecipes()
+													.stream()
+													.map(
+														recipeDto ->
+															new UpdateMealPlanCommand
+																.TimeFoodRecipeCommand(
+																recipeDto
+																	.getIdRecipe(),
+																recipeDto
+																	.getPortion()))
+													.toList()))
+									.toList()))
+					.toList());
 		log.info("[PUT] updateById {}", command);
 		return command.execute(pipeline);
 	}

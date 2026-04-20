@@ -1,4 +1,4 @@
-package edu.nur.nurtricenter.mealplans.application.mealplan;
+package edu.nur.nurtricenter.mealplans.mealplan;
 
 import an.awesome.pipelinr.Command;
 import edu.nur.nurtricenter.mealplans.core.results.ResultWithValue;
@@ -8,8 +8,7 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
 
-public record UpdateMealPlanCommand(
-		UUID id,
+public record CreateMealPlanCommand(
 		UUID idNutricionist,
 		UUID idPatient,
 		UUID idAppointment,
@@ -19,7 +18,7 @@ public record UpdateMealPlanCommand(
 		LocalDate endDate,
 		BigDecimal totalCalories,
 		List<MealPlanDayCommad> mealPlanDays)
-		implements Command<ResultWithValue<Boolean>> {
+		implements Command<ResultWithValue<UUID>> {
 	public record MealPlanDayCommad(Integer day, List<TimeFoodCommad> timeFoods) {}
 
 	public record TimeFoodCommad(

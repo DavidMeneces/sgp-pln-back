@@ -1,4 +1,4 @@
-package edu.nur.nurtricenter.mealplans.application.mealplan;
+package edu.nur.nurtricenter.mealplans.mealplan;
 
 import edu.nur.nurtricenter.mealplans.domain.shared.TimeFoodEnum;
 import java.util.List;

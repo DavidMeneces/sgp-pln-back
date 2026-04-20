@@ -1,4 +1,4 @@
-package edu.nur.nurtricenter.mealplans.application.mealplan;
+package edu.nur.nurtricenter.mealplans.mealplan;
 
 import an.awesome.pipelinr.Command;
 import edu.nur.nurtricenter.mealplans.core.results.Error;
@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class CancelMealPlanHandler
-		implements Command.Handler<CancelMealPlanCommand, ResultWithValue<Boolean>> {
+	implements Command.Handler<CancelMealPlanCommand, ResultWithValue<Boolean>> {
 
 	private final IMealPlanRepository repository;
 	private final UnitOfWork unitOfWork;
@@ -23,7 +23,7 @@ public class CancelMealPlanHandler
 	public ResultWithValue<Boolean> handle(CancelMealPlanCommand command) {
 		if (!repository.existById(command.id(), "CREADO")) {
 			return ResultWithValue.validationFailure(
-					Error.notFound("NotFound", "Not found meal plan", command.id().toString()));
+				Error.notFound("NotFound", "Not found meal plan", command.id().toString()));
 		}
 		this.repository.cancelById(command.id());
 		this.unitOfWork.commitAsync();
