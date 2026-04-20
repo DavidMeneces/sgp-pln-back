@@ -10,7 +10,7 @@ import java.util.UUID;
 
 public class MealPlanCreatedEvent extends DomainEvent {
 
-	private UUID id;
+	private UUID idMealPlan;
 	private UUID idNutricionist;
 	private UUID idPatient;
 	private UUID idAppointment;
@@ -21,18 +21,8 @@ public class MealPlanCreatedEvent extends DomainEvent {
 	private BigDecimal totalCalories;
 	private List<MealPlanDay> mealPlanDays;
 
-	public MealPlanCreatedEvent(
-			UUID id,
-			UUID idNutricionist,
-			UUID idPatient,
-			UUID idAppointment,
-			UUID idSubscription,
-			Integer totalDays,
-			LocalDate starDate,
-			LocalDate endDate,
-			BigDecimal totalCalories,
-			List<MealPlanDay> mealPlanDays) {
-		this.id = id;
+	public MealPlanCreatedEvent(UUID idMealPlan, UUID idNutricionist, UUID idPatient, UUID idAppointment, UUID idSubscription, Integer totalDays, LocalDate starDate, LocalDate endDate, BigDecimal totalCalories, List<MealPlanDay> mealPlanDays) {
+		this.idMealPlan = idMealPlan;
 		this.idNutricionist = idNutricionist;
 		this.idPatient = idPatient;
 		this.idAppointment = idAppointment;
@@ -45,54 +35,13 @@ public class MealPlanCreatedEvent extends DomainEvent {
 	}
 
 	@Override
-	public UUID getId() {
-		return id;
-	}
-
-	public UUID getIdNutricionist() {
-		return idNutricionist;
-	}
-
-	public UUID getIdPatient() {
-		return idPatient;
-	}
-
-	public UUID getIdAppointment() {
-		return idAppointment;
-	}
-
-	public UUID getIdSubscription() {
-		return idSubscription;
-	}
-
-	public Integer getTotalDays() {
-		return totalDays;
-	}
-
-	public LocalDate getStarDate() {
-		return starDate;
-	}
-
-	public LocalDate getEndDate() {
-		return endDate;
-	}
-
-	public BigDecimal getTotalCalories() {
-		return totalCalories;
-	}
-
-	public List<MealPlanDay> getMealPlanDays() {
-		return mealPlanDays;
-	}
-
-	@Override
 	public String getAggregateType() {
 		return "MealPlan";
 	}
 
 	@Override
 	public String getAggregateId() {
-		return id.toString();
+		return idMealPlan.toString();
 	}
 
 	@Override
@@ -102,17 +51,7 @@ public class MealPlanCreatedEvent extends DomainEvent {
 
 	@Override
 	public Object getPayload() {
-		return new Payload(
-				id,
-				idNutricionist,
-				idPatient,
-				idAppointment,
-				idSubscription,
-				totalDays,
-				starDate,
-				endDate,
-				totalCalories,
-				mealPlanDays);
+		return new Payload(idMealPlan, idNutricionist, idPatient, idAppointment, idSubscription, totalDays, starDate, endDate, totalCalories, mealPlanDays);
 	}
 
 	private record Payload(

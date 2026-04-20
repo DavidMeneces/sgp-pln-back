@@ -7,23 +7,12 @@ import java.util.UUID;
 
 public class MealPlanCancelledEvent extends DomainEvent {
 
-	private UUID id;
+	private UUID idMealPlan;
 	private LocalDateTime dateTime;
 
-	public MealPlanCancelledEvent(
-		UUID id,
-		LocalDateTime dateTime) {
-		this.id = id;
+	public MealPlanCancelledEvent(UUID idMealPlan, LocalDateTime dateTime) {
+		this.idMealPlan = idMealPlan;
 		this.dateTime = dateTime;
-	}
-
-	@Override
-	public UUID getId() {
-		return id;
-	}
-
-	public LocalDateTime getDateTime() {
-		return dateTime;
 	}
 
 	@Override
@@ -33,7 +22,7 @@ public class MealPlanCancelledEvent extends DomainEvent {
 
 	@Override
 	public String getAggregateId() {
-		return id.toString();
+		return idMealPlan.toString();
 	}
 
 	@Override
@@ -43,9 +32,7 @@ public class MealPlanCancelledEvent extends DomainEvent {
 
 	@Override
 	public Object getPayload() {
-		return new Payload(
-			id,
-			dateTime);
+		return new Payload(idMealPlan, dateTime);
 	}
 
 	private record Payload(
