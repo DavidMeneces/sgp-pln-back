@@ -150,7 +150,24 @@ public class MealPlanRepository implements IMealPlanRepository {
 	}
 
 	@Override
-	public void update(MealPlan item) {}
+	public void update(MealPlan entity) {
+		var model = repository.findById(entity.getId()).get();
+		model.setIdNutricionist(entity.getIdNutricionist());
+		model.setIdPatient(entity.getIdPatient());
+		model.setIdAppointment(entity.getIdAppointment());
+		model.setIdSubscription(entity.getIdSubscription());
+		model.setTotalCalories(entity.getTotalCalories());
+		model.setTotalDays(entity.getTotalDays());
+		model.setUpdatedBy("sgp-pln");
+		model.setUpdatedAt(LocalDateTime.now());
+		repository.save(model);
+		deleteMealPlanDay(model.getId());
+		addMealPlanDay(model.getId(), entity.getMealPlanDays());
+	}
+
+	protected void deleteMealPlanDay(UUID id) {
+		mealPlanDayModelRepository.deleteAllByIdMealPlan(id);
+	}
 
 	@Override
 	public void delete(UUID id) {}

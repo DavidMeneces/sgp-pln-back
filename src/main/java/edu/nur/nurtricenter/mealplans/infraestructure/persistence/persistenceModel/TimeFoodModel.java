@@ -54,14 +54,14 @@ public class TimeFoodModel {
 	private LocalDateTime updatedAt;
 
 	public static TimeFoodModel buildModel(UUID idPlanAlimentarioDia, TimeFood entity) {
-		var transaccion = TransaccionEstadoModel.CREAR;
+		var transaction = TransaccionEstadoModel.CREAR;
 		return TimeFoodModel.builder()
 				.id(entity.getId())
 				.idMealPlanDay(idPlanAlimentarioDia)
 				.type(entity.getType().name())
 				.order(entity.getOrder())
-				.transaction(transaccion.name())
-				.status(transaccion.getEstado())
+				.transaction(transaction.name())
+				.status(transaction.getEstado())
 				.createdBy("sgp-pln")
 				.createdAt(LocalDateTime.now())
 				.build();

@@ -58,15 +58,15 @@ public class RecipeModel {
 	private LocalDateTime updatedAt;
 
 	public static RecipeModel buildModel(Recipe entity) {
-		var transaccion = TransaccionEstadoModel.CREAR;
+		var transaction = TransaccionEstadoModel.CREAR;
 		return RecipeModel.builder()
 				.id(entity.getId())
 				.name(entity.getName())
 				.description(entity.getDescription())
 				.instructions(entity.getInstructions())
 				.totalCalories(entity.getTotalCalories())
-				.transaction(transaccion.name())
-				.status(transaccion.getEstado())
+				.transaction(transaction.name())
+				.status(transaction.getEstado())
 				.createdBy("sgp-pln")
 				.createdAt(LocalDateTime.now())
 				.build();
