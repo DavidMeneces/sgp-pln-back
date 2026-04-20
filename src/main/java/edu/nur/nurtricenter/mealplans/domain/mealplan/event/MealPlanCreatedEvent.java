@@ -2,6 +2,7 @@ package edu.nur.nurtricenter.mealplans.domain.mealplan.event;
 
 import edu.nur.nurtricenter.mealplans.core.abstractions.DomainEvent;
 import edu.nur.nurtricenter.mealplans.domain.mealplan.MealPlanDay;
+
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
@@ -124,5 +125,6 @@ public class MealPlanCreatedEvent extends DomainEvent {
 			LocalDate starDate,
 			LocalDate endDate,
 			BigDecimal totalCalories,
-			List<MealPlanDay> mealPlanDays) {}
+			List<MealPlanDay> mealPlanDays) {
+	}
 }
