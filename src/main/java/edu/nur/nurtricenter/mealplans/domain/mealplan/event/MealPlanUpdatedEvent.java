@@ -2,6 +2,7 @@ package edu.nur.nurtricenter.mealplans.domain.mealplan.event;
 
 import edu.nur.nurtricenter.mealplans.core.abstractions.DomainEvent;
 import edu.nur.nurtricenter.mealplans.domain.mealplan.MealPlanDay;
+
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
@@ -20,17 +21,7 @@ public class MealPlanUpdatedEvent extends DomainEvent {
 	private BigDecimal totalCalories;
 	private List<MealPlanDay> mealPlanDays;
 
-	public MealPlanUpdatedEvent(
-			UUID id,
-			UUID idNutricionist,
-			UUID idPatient,
-			UUID idAppointment,
-			UUID idSubscription,
-			Integer totalDays,
-			LocalDate starDate,
-			LocalDate endDate,
-			BigDecimal totalCalories,
-			List<MealPlanDay> mealPlanDays) {
+	public MealPlanUpdatedEvent(UUID id, UUID idNutricionist, UUID idPatient, UUID idAppointment, UUID idSubscription, Integer totalDays, LocalDate starDate, LocalDate endDate, BigDecimal totalCalories, List<MealPlanDay> mealPlanDays) {
 		this.id = id;
 		this.idNutricionist = idNutricionist;
 		this.idPatient = idPatient;
@@ -101,28 +92,11 @@ public class MealPlanUpdatedEvent extends DomainEvent {
 
 	@Override
 	public Object getPayload() {
-		return new Payload(
-				id,
-				idNutricionist,
-				idPatient,
-				idAppointment,
-				idSubscription,
-				totalDays,
-				starDate,
-				endDate,
-				totalCalories,
-				mealPlanDays);
+		return new Payload(id, idNutricionist, idPatient, idAppointment, idSubscription, totalDays, starDate, endDate, totalCalories, mealPlanDays);
 	}
 
-	private record Payload(
-			UUID id,
-			UUID idNutricionist,
-			UUID idPatient,
-			UUID idAppointment,
-			UUID idSubscription,
-			Integer totalDays,
-			LocalDate starDate,
-			LocalDate endDate,
-			BigDecimal totalCalories,
-			List<MealPlanDay> mealPlanDays) {}
+	private record Payload(UUID id, UUID idNutricionist, UUID idPatient, UUID idAppointment, UUID idSubscription,
+						Integer totalDays, LocalDate starDate, LocalDate endDate, BigDecimal totalCalories,
+						List<MealPlanDay> mealPlanDays) {
+	}
 }
