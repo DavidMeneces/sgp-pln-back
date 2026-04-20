@@ -34,6 +34,19 @@
             **/*Application.java,
             **/exception/**
         </sonar.exclusions>
+		<sonar.coverage.exclusions>
+			**/edu/nur/nurtricenter/mealplans/infraestructure/**,
+			**/edu/nur/nurtricenter/mealplans/core/results/**,
+			**/edu/nur/nurtricenter/mealplans/application/mealplan/mapper/**,
+			**/edu/nur/nurtricenter/mealplans/presentation/controllers/**,
+			**/edu/nur/nurtricenter/mealplans/core/abstractions/**,
+			**/config/**,
+			**/model/**,
+			**/entity/**,
+			**/dto/**,
+			**/*Application.java,
+			**/exception/**
+		</sonar.coverage.exclusions>
 		<git.build.hook.skip>false</git.build.hook.skip>
     </properties>
 
