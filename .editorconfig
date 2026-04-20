@@ -9,7 +9,6 @@ trim_trailing_whitespace = true
 [*.java]
 indent_style = tab
 indent_size = 4
-tab_width = 4
 
 [*.{js,html,css,xml}]
 indent_style = tab

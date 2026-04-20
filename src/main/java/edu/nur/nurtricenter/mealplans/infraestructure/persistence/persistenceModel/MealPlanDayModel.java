@@ -50,13 +50,13 @@ public class MealPlanDayModel {
 	private LocalDateTime updatedAt;
 
 	public static MealPlanDayModel buildModel(UUID idPlanAlimentario, MealPlanDay entity) {
-		var transaccion = TransaccionEstadoModel.CREAR;
+		var transaction = TransaccionEstadoModel.CREAR;
 		return MealPlanDayModel.builder()
 				.id(entity.getId())
 				.idMealPlan(idPlanAlimentario)
 				.day(entity.getDay())
-				.transaction(transaccion.name())
-				.status(transaccion.getEstado())
+				.transaction(transaction.name())
+				.status(transaction.getEstado())
 				.createdBy("sgp-pln")
 				.createdAt(LocalDateTime.now())
 				.build();

@@ -12,10 +12,10 @@ public interface MealPlanModelRepository extends CrudRepository<MealPlanModel, U
 			value =
 					"""
 			SELECT EXISTS (
-				SELECT 1
-				FROM meal_plan mp
-				WHERE mp.id = :id
-				AND mp.status = :status)""",
+			SELECT 1
+			FROM meal_plan mp
+			WHERE mp.id = :id
+			AND mp.status = :status)""",
 			nativeQuery = true)
 	Boolean existById(@Param("id") UUID id, @Param("status") String status);
 }
