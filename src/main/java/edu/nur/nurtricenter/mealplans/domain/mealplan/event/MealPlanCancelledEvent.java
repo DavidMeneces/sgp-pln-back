@@ -4,12 +4,12 @@ package edu.nur.nurtricenter.mealplans.domain.mealplan.event;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
-public class MealPlanCancelledEvent extends MealPlanEvent {
+public class MealPlanCancelledEvent extends MealPlanIdEvent {
 
 	private final LocalDateTime vDateTime;
 
 	public MealPlanCancelledEvent(UUID vId, LocalDateTime vDateTime) {
-		this.vId = vId;
+		super(vId);
 		this.vDateTime = vDateTime;
 	}
 

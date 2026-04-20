@@ -9,27 +9,8 @@ import java.util.UUID;
 
 public class MealPlanCreatedEvent extends MealPlanEvent {
 
-	private final UUID vIdNutricionist;
-	private final UUID vIdPatient;
-	private final UUID vIdAppointment;
-	private final UUID vIdSubscription;
-	private final Integer vTotalDays;
-	private final LocalDate vStarDate;
-	private final LocalDate vEndDate;
-	private final BigDecimal vTotalCalories;
-	private final List<MealPlanDay> vMealPlanDays;
-
-	public MealPlanCreatedEvent(UUID idMealPlan, UUID vIdNutricionist, UUID vIdPatient, UUID vIdAppointment, UUID vIdSubscription, Integer vTotalDays, LocalDate vStarDate, LocalDate vEndDate, BigDecimal vTotalCalories, List<MealPlanDay> vMealPlanDays) {
-		this.vId = idMealPlan;
-		this.vIdNutricionist = vIdNutricionist;
-		this.vIdPatient = vIdPatient;
-		this.vIdAppointment = vIdAppointment;
-		this.vIdSubscription = vIdSubscription;
-		this.vTotalDays = vTotalDays;
-		this.vStarDate = vStarDate;
-		this.vEndDate = vEndDate;
-		this.vTotalCalories = vTotalCalories;
-		this.vMealPlanDays = vMealPlanDays;
+	public MealPlanCreatedEvent(UUID vId, UUID vIdNutricionist, UUID vIdPatient, UUID vIdAppointment, UUID vIdSubscription, Integer vTotalDays, LocalDate vStarDate, LocalDate vEndDate, BigDecimal vTotalCalories, List<MealPlanDay> vMealPlanDays) {
+		super(vId, vIdNutricionist, vIdPatient, vIdAppointment, vIdSubscription, vTotalDays, vStarDate, vEndDate, vTotalCalories, vMealPlanDays);
 	}
 
 	@Override
