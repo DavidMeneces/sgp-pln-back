@@ -1,5 +1,6 @@
-package edu.nur.nurtricenter.mealplans.mealplan;
+package edu.nur.nurtricenter.mealplans.application.mealplan;
 
+import java.util.List;
 import java.util.UUID;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -10,8 +11,9 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class TimeFoodRecipeDto {
+public class MealPlanDayDto {
+
 	private UUID id;
-	private UUID idRecipe;
-	private Integer portion;
+	private Integer day;
+	private List<TimeFoodDto> timeFoods;
 }

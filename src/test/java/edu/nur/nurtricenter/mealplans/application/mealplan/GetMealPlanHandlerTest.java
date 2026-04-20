@@ -1,7 +1,6 @@
 package edu.nur.nurtricenter.mealplans.application.mealplan;
 
 import an.awesome.pipelinr.Pipeline;
-import edu.nur.nurtricenter.mealplans.mealplan.GetMealPlanCommand;
 import jakarta.inject.Inject;
 import java.util.UUID;
 import org.junit.jupiter.api.Assertions;

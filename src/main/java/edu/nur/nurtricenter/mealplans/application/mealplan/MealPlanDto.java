@@ -1,4 +1,4 @@
-package edu.nur.nurtricenter.mealplans.mealplan;
+package edu.nur.nurtricenter.mealplans.application.mealplan;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
