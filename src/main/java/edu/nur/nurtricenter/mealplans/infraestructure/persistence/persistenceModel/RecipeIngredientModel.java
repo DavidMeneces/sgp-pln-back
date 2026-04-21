@@ -54,14 +54,14 @@ public class RecipeIngredientModel {
 	private LocalDateTime updatedAt;
 
 	public static RecipeIngredientModel buildModel(UUID idReceta, RecipeIngredient entity) {
-		var transaccion = TransaccionEstadoModel.CREAR;
+		var transaction = TransaccionEstadoModel.CREAR;
 		return RecipeIngredientModel.builder()
 				.id(entity.getId())
 				.idRecipe(idReceta)
 				.idIngredient(entity.getIdIngredient())
 				.quantity(entity.getQuantity())
-				.transaction(transaccion.name())
-				.status(transaccion.getEstado())
+				.transaction(transaction.name())
+				.status(transaction.getEstado())
 				.createdBy("sgp-pln")
 				.createdAt(LocalDateTime.now())
 				.build();

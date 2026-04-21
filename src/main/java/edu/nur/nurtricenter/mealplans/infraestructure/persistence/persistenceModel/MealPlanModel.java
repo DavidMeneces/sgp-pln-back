@@ -70,7 +70,7 @@ public class MealPlanModel {
 	private LocalDateTime updatedAt;
 
 	public static MealPlanModel buildModel(MealPlan entity) {
-		var transaccion = TransaccionEstadoModel.CREAR;
+		var transaction = TransaccionEstadoModel.CREAR;
 		return MealPlanModel.builder()
 				.id(entity.getId())
 				.idNutricionist(entity.getIdNutricionist())
@@ -79,8 +79,8 @@ public class MealPlanModel {
 				.idSubscription(entity.getIdSubscription())
 				.totalCalories(entity.getTotalCalories())
 				.totalDays(entity.getTotalDays())
-				.transaction(transaccion.name())
-				.status(transaccion.getEstado())
+				.transaction(transaction.name())
+				.status(transaction.getEstado())
 				.createdBy("sgp-pln")
 				.createdAt(LocalDateTime.now())
 				.build();

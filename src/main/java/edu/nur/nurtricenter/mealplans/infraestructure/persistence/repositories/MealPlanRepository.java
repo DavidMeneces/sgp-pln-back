@@ -7,13 +7,14 @@ import edu.nur.nurtricenter.mealplans.infraestructure.persistence.persistenceMod
 import edu.nur.nurtricenter.mealplans.infraestructure.persistence.persistenceModel.MealPlanModel;
 import edu.nur.nurtricenter.mealplans.infraestructure.persistence.persistenceModel.TimeFoodModel;
 import edu.nur.nurtricenter.mealplans.infraestructure.persistence.persistenceModel.TimeFoodRecipeModel;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
+
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 import java.util.stream.Collectors;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Repository;
 
 @Repository
 public class MealPlanRepository implements IMealPlanRepository {
@@ -150,7 +151,26 @@ public class MealPlanRepository implements IMealPlanRepository {
 	}
 
 	@Override
-	public void update(MealPlan item) {}
+	public void update(MealPlan entity) {
+		var model = repository.findById(entity.getId()).get();
+		model.setIdNutricionist(entity.getIdNutricionist());
+		model.setIdPatient(entity.getIdPatient());
+		model.setIdAppointment(entity.getIdAppointment());
+		model.setIdSubscription(entity.getIdSubscription());
+		model.setTotalCalories(entity.getTotalCalories());
+		model.setTotalDays(entity.getTotalDays());
+		model.setUpdatedBy("sgp-pln");
+		model.setUpdatedAt(LocalDateTime.now());
+		repository.save(model);
+		deleteMealPlanDay(model.getId());
+		addMealPlanDay(model.getId(), entity.getMealPlanDays());
+	}
+
+	protected void deleteMealPlanDay(UUID id) {
+		timeFoodRecipeModelRepository.deleteAllByIdMealPlan(id);
+		timeFoodModelRepository.deleteAllByIdMealPlan(id);
+		mealPlanDayModelRepository.deleteAllByIdMealPlan(id);
+	}
 
 	@Override
 	public void delete(UUID id) {}
