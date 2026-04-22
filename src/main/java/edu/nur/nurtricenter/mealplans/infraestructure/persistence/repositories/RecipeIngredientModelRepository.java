@@ -15,4 +15,10 @@ public interface RecipeIngredientModelRepository
 			FROM RecipeIngredientModel rim
 			WHERE rim.idRecipe = :idRecipe""")
 	List<RecipeIngredientModel> findAllByIdRecipe(@Param("idRecipe") UUID idRecipe);
+
+	@Query("""
+			SELECT rim
+			FROM RecipeIngredientModel rim
+			WHERE rim.idRecipe in (:idRecipes)""")
+	List<RecipeIngredientModel> findAllByIdRecipe(@Param("idRecipes") List<UUID> idRecipes);
 }
