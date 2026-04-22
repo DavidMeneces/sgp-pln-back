@@ -6,6 +6,7 @@ import lombok.Getter;
 public enum TransaccionEstadoModel {
 	CREAR("CREADO"),
 	CANCELAR("CANCELADO"),
+	COMPLETAR("COMPLETADO"),
 	ELIMINAR("ELIMINADO");
 	private final String estado;
 
