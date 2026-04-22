@@ -220,7 +220,6 @@
 						<endWithNewline/>
 						<encoding>UTF-8</encoding>
 					</java>
-					<lineEndings>UNIX</lineEndings>
 				</configuration>
 				<executions>
 					<execution>
