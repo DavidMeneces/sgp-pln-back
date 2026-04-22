@@ -17,6 +17,11 @@ public class RecipeRepository implements IRecipeRepository {
 	@Autowired private RecipeIngredientModelRepository recipeIngredientModelRepository;
 
 	@Override
+	public List<Recipe> get(Integer page, Integer size) {
+		return null;
+	}
+
+	@Override
 	public Recipe getById(UUID id, boolean readOnly) {
 		RecipeModel model = repository.findById(id).get();
 		List<RecipeIngredientModel> ingredientModel =

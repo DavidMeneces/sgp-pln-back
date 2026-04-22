@@ -25,6 +25,11 @@ public class MealPlanRepository implements IMealPlanRepository {
 	@Autowired TimeFoodRecipeModelRepository timeFoodRecipeModelRepository;
 
 	@Override
+	public List<MealPlan> get(Integer page, Integer size) {
+		return null;
+	}
+
+	@Override
 	public MealPlan getById(UUID id, boolean readOnly) {
 		MealPlanModel mealPlanModel = repository.findById(id).get();
 		List<MealPlanDayModel> mealPlanDayModels =
