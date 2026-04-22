@@ -6,6 +6,7 @@ import edu.nur.nurtricenter.mealplans.core.results.ResultWithValue;
 import edu.nur.nurtricenter.mealplans.domain.mealplan.IMealPlanRepository;
 import edu.nur.nurtricenter.mealplans.domain.mealplan.MealPlan;
 import edu.nur.nurtricenter.mealplans.domain.mealplan.event.MealPlanCancelledEvent;
+import edu.nur.nurtricenter.mealplans.domain.mealplan.event.MealPlanCompletedEvent;
 import edu.nur.nurtricenter.mealplans.infraestructure.UnitOfWork;
 import org.springframework.stereotype.Component;
 
@@ -29,7 +30,7 @@ public class CompleteMealPlanHandler implements Command.Handler<CompleteMealPlan
 		}
 		MealPlan mealPlan = repository.getById(command.id(), true);
 		this.repository.completeById(command.id());
-		mealPlan.addDomainEvent(new MealPlanCancelledEvent(command.id(), LocalDateTime.now()));
+		mealPlan.addDomainEvent(new MealPlanCompletedEvent(command.id(), LocalDateTime.now()));
 		this.unitOfWork.commitAsync(mealPlan);
 		return ResultWithValue.success(Boolean.TRUE);
 	}
