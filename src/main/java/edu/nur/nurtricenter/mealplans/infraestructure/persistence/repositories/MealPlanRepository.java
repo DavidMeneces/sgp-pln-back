@@ -3,10 +3,7 @@ package edu.nur.nurtricenter.mealplans.infraestructure.persistence.repositories;
 import edu.nur.nurtricenter.mealplans.domain.mealplan.*;
 import edu.nur.nurtricenter.mealplans.domain.shared.TimeFoodEnum;
 import edu.nur.nurtricenter.mealplans.infraestructure.persistence.domainModel.TransaccionEstadoModel;
-import edu.nur.nurtricenter.mealplans.infraestructure.persistence.persistenceModel.MealPlanDayModel;
-import edu.nur.nurtricenter.mealplans.infraestructure.persistence.persistenceModel.MealPlanModel;
-import edu.nur.nurtricenter.mealplans.infraestructure.persistence.persistenceModel.TimeFoodModel;
-import edu.nur.nurtricenter.mealplans.infraestructure.persistence.persistenceModel.TimeFoodRecipeModel;
+import edu.nur.nurtricenter.mealplans.infraestructure.persistence.persistenceModel.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -19,88 +16,126 @@ import java.util.stream.Collectors;
 @Repository
 public class MealPlanRepository implements IMealPlanRepository {
 
-	@Autowired MealPlanModelRepository repository;
-	@Autowired MealPlanDayModelRepository mealPlanDayModelRepository;
-	@Autowired TimeFoodModelRepository timeFoodModelRepository;
-	@Autowired TimeFoodRecipeModelRepository timeFoodRecipeModelRepository;
+	@Autowired
+	MealPlanModelRepository repository;
+	@Autowired
+	MealPlanDayModelRepository mealPlanDayModelRepository;
+	@Autowired
+	TimeFoodModelRepository timeFoodModelRepository;
+	@Autowired
+	TimeFoodRecipeModelRepository timeFoodRecipeModelRepository;
 
 	@Override
 	public List<MealPlan> get(Integer page, Integer size) {
-		return null;
+		var models = repository.findAll(size, page);
+		var mealPlanDayModels = mealPlanDayModelRepository.findAllByIdMealPlan(
+			models.stream().map(MealPlanModel::getId).toList());
+		var timeFoodModels = timeFoodModelRepository.findAllByIdMealPlanDay(
+			mealPlanDayModels.stream().map(MealPlanDayModel::getId).toList());
+		var timeFoodRecipeModels = timeFoodRecipeModelRepository.findAllByIdTimeFood(
+			timeFoodModels.stream().map(TimeFoodModel::getId).toList());
+		Map<UUID, List<TimeFoodModel>> timeFoodModelMap = timeFoodModels.stream()
+			.collect(Collectors.groupingBy(TimeFoodModel::getIdMealPlanDay));
+		Map<UUID, List<TimeFoodRecipeModel>> timeFoodRecipeModelMap = timeFoodRecipeModels.stream()
+			.collect(Collectors.groupingBy(TimeFoodRecipeModel::getIdTimeFood));
+		Map<UUID, List<MealPlanDay>> mealPlanDaysByMealPlanId = mealPlanDayModels.stream()
+			.collect(Collectors.groupingBy(
+				MealPlanDayModel::getIdMealPlan,
+				Collectors.mapping(
+					model -> new MealPlanDay(
+						model.getId(),
+						model.getDay(),
+						toTimeFood(timeFoodModelMap.get(model.getId()), timeFoodRecipeModelMap)),
+					Collectors.toList()
+				)
+			));
+		return models.stream()
+			.map(model -> new MealPlan(
+				model.getId(),
+				model.getIdNutricionist(),
+				model.getIdPatient(),
+				model.getIdAppointment(),
+				model.getIdSubscription(),
+				model.getTotalDays(),
+				model.getStarDate(),
+				model.getEndDate(),
+				model.getTotalCalories(),
+				mealPlanDaysByMealPlanId.getOrDefault(model.getId(), List.of())))
+			.toList();
 	}
 
 	@Override
 	public MealPlan getById(UUID id, boolean readOnly) {
 		MealPlanModel mealPlanModel = repository.findById(id).get();
 		List<MealPlanDayModel> mealPlanDayModels =
-				mealPlanDayModelRepository.findAllByIdMealPlan(id);
+			mealPlanDayModelRepository.findAllByIdMealPlan(id);
 		List<TimeFoodModel> timeFoodModels =
-				timeFoodModelRepository.findAllByIdMealPlanDay(
-						mealPlanDayModels.stream().map(MealPlanDayModel::getId).toList());
+			timeFoodModelRepository.findAllByIdMealPlanDay(
+				mealPlanDayModels.stream().map(MealPlanDayModel::getId).toList());
 		List<TimeFoodRecipeModel> timeFoodRecipeModels =
-				timeFoodRecipeModelRepository.findAllByIdTimeFood(
-						timeFoodModels.stream().map(TimeFoodModel::getId).toList());
+			timeFoodRecipeModelRepository.findAllByIdTimeFood(
+				timeFoodModels.stream().map(TimeFoodModel::getId).toList());
 		// Mapper By IdMealPlanDay
 		Map<UUID, List<TimeFoodModel>> timeFoodModelMap =
-				timeFoodModels.stream()
-						.collect(Collectors.groupingBy(TimeFoodModel::getIdMealPlanDay));
+			timeFoodModels.stream()
+				.collect(Collectors.groupingBy(TimeFoodModel::getIdMealPlanDay));
 		// Mapper By IdTimeFood
 		Map<UUID, List<TimeFoodRecipeModel>> timeFoodRecipeModelMap =
-				timeFoodRecipeModels.stream()
-						.collect(Collectors.groupingBy(TimeFoodRecipeModel::getIdTimeFood));
+			timeFoodRecipeModels.stream()
+				.collect(Collectors.groupingBy(TimeFoodRecipeModel::getIdTimeFood));
 		// Builder MealPlanDays
 		List<MealPlanDay> mealPlanDays =
-				mealPlanDayModels.stream()
-						.map(
-								model ->
-										new MealPlanDay(
-												model.getId(),
-												model.getDay(),
-												toTimeFood(
-														timeFoodModelMap.get(model.getId()),
-														timeFoodRecipeModelMap)))
-						.toList();
+			mealPlanDayModels.stream()
+				.map(
+					model ->
+						new MealPlanDay(
+							model.getId(),
+							model.getDay(),
+							toTimeFood(
+								timeFoodModelMap.get(model.getId()),
+								timeFoodRecipeModelMap)))
+				.toList();
 		return new MealPlan(
-				mealPlanModel.getId(),
-				mealPlanModel.getIdNutricionist(),
-				mealPlanModel.getIdPatient(),
-				mealPlanModel.getIdAppointment(),
-				mealPlanModel.getIdSubscription(),
-				mealPlanModel.getTotalDays(),
-				mealPlanModel.getStarDate(),
-				mealPlanModel.getEndDate(),
-				mealPlanModel.getTotalCalories(),
-				mealPlanDays);
+			mealPlanModel.getId(),
+			mealPlanModel.getIdNutricionist(),
+			mealPlanModel.getIdPatient(),
+			mealPlanModel.getIdAppointment(),
+			mealPlanModel.getIdSubscription(),
+			mealPlanModel.getTotalDays(),
+			mealPlanModel.getStarDate(),
+			mealPlanModel.getEndDate(),
+			mealPlanModel.getTotalCalories(),
+			mealPlanDays);
 	}
 
 	private List<TimeFood> toTimeFood(
-			List<TimeFoodModel> timeFoodModels,
-			Map<UUID, List<TimeFoodRecipeModel>> timeFoodRecipeModelMap) {
+		List<TimeFoodModel> timeFoodModels,
+		Map<UUID, List<TimeFoodRecipeModel>> timeFoodRecipeModelMap) {
 		return timeFoodModels != null
-				? timeFoodModels.stream()
-						.map(
-								model ->
-										new TimeFood(
-												model.getId(),
-												TimeFoodEnum.valueOf(model.getType()),
-												model.getOrder(),
-												toTimeFoodRecipe(
-														timeFoodRecipeModelMap.get(model.getId()))))
-						.toList()
-				: null;
+			? timeFoodModels.stream()
+			.map(
+				model ->
+					new TimeFood(
+						model.getId(),
+						TimeFoodEnum.valueOf(model.getType()),
+						model.getOrder(),
+						toTimeFoodRecipe(
+							timeFoodRecipeModelMap.get(model.getId()))))
+			.toList()
+			: null;
 	}
 
 	private List<TimeFoodRecipe> toTimeFoodRecipe(List<TimeFoodRecipeModel> timeFoodRecipeModels) {
 		return timeFoodRecipeModels != null
-				? timeFoodRecipeModels.stream()
-						.map(
-								model ->
-										new TimeFoodRecipe(
-												model.getId(),
-												model.getIdRecipe(),
-												model.getPortion()))
-						.toList()
-				: null;
+			? timeFoodRecipeModels.stream()
+			.map(
+				model ->
+					new TimeFoodRecipe(
+						model.getId(),
+						model.getIdRecipe(),
+						model.getPortion()))
+			.toList()
+			: null;
 	}
 
 	@Override
@@ -189,5 +224,6 @@ public class MealPlanRepository implements IMealPlanRepository {
 	}
 
 	@Override
-	public void delete(UUID id) {}
+	public void delete(UUID id) {
+	}
 }
