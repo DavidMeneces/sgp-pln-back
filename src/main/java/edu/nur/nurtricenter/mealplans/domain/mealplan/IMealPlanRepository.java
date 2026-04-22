@@ -7,6 +7,7 @@ public interface IMealPlanRepository extends IRepository<MealPlan> {
 	boolean existById(UUID id, String status);
 
 	void cancelById(UUID id);
+	void completeById(UUID id);
 
 	void update(MealPlan item);
 
