@@ -4,4 +4,4 @@ import an.awesome.pipelinr.Command;
 import edu.nur.nurtricenter.mealplans.core.results.ResultWithValue;
 import java.util.UUID;
 
-public record GetIngredientCommand(UUID id) implements Command<ResultWithValue<IngredientDto>> {}
+public record GetIngredientByIdCommand(UUID id) implements Command<ResultWithValue<IngredientDto>> {}

@@ -9,17 +9,17 @@ import edu.nur.nurtricenter.mealplans.domain.ingredient.Ingredient;
 import org.springframework.stereotype.Component;
 
 @Component
-public class GetIngredientHandler
-		implements Command.Handler<GetIngredientCommand, ResultWithValue<IngredientDto>> {
+public class GetIngredientByIdHandler
+		implements Command.Handler<GetIngredientByIdCommand, ResultWithValue<IngredientDto>> {
 
 	private final IIngredientRepository repository;
 
-	public GetIngredientHandler(IIngredientRepository repository) {
+	public GetIngredientByIdHandler(IIngredientRepository repository) {
 		this.repository = repository;
 	}
 
 	@Override
-	public ResultWithValue<IngredientDto> handle(GetIngredientCommand command) {
+	public ResultWithValue<IngredientDto> handle(GetIngredientByIdCommand command) {
 		if (!repository.existById(command.id())) {
 			return ResultWithValue.validationFailure(
 					Error.notFound("NotFound", "Not found ingredient", command.id().toString()));

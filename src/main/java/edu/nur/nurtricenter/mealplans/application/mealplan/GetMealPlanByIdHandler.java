@@ -9,17 +9,17 @@ import edu.nur.nurtricenter.mealplans.domain.mealplan.MealPlan;
 import org.springframework.stereotype.Component;
 
 @Component
-public class GetMealPlanHandler
-	implements Command.Handler<GetMealPlanCommand, ResultWithValue<MealPlanDto>> {
+public class GetMealPlanByIdHandler
+	implements Command.Handler<GetMealPlanByIdCommand, ResultWithValue<MealPlanDto>> {
 
 	private IMealPlanRepository repository;
 
-	public GetMealPlanHandler(IMealPlanRepository repository) {
+	public GetMealPlanByIdHandler(IMealPlanRepository repository) {
 		this.repository = repository;
 	}
 
 	@Override
-	public ResultWithValue<MealPlanDto> handle(GetMealPlanCommand command) {
+	public ResultWithValue<MealPlanDto> handle(GetMealPlanByIdCommand command) {
 		if (!repository.existById(command.id())) {
 			return ResultWithValue.validationFailure(
 				Error.notFound("NotFound", "Not found meal plan", command.id().toString()));

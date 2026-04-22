@@ -2,7 +2,7 @@ package edu.nur.nurtricenter.mealplans.presentation.controller;
 
 import an.awesome.pipelinr.Pipeline;
 import edu.nur.nurtricenter.mealplans.application.recipe.CreateRecipeCommand;
-import edu.nur.nurtricenter.mealplans.application.recipe.GetRecipeCommand;
+import edu.nur.nurtricenter.mealplans.application.recipe.GetRecipeByIdCommand;
 import edu.nur.nurtricenter.mealplans.application.recipe.RecipeDto;
 import edu.nur.nurtricenter.mealplans.core.results.ResultWithValue;
 import java.util.UUID;
@@ -28,7 +28,7 @@ public class RecipeController {
 
 	@GetMapping("/{id}")
 	public ResultWithValue<RecipeDto> getById(@PathVariable UUID id) {
-		GetRecipeCommand command = new GetRecipeCommand(id);
+		GetRecipeByIdCommand command = new GetRecipeByIdCommand(id);
 		log.info("[GET] getById {}", command);
 		return command.execute(pipeline);
 	}

@@ -28,7 +28,7 @@ public class MealPlanController {
 
 	@GetMapping("/{id}")
 	public ResultWithValue<MealPlanDto> getById(@PathVariable UUID id) {
-		GetMealPlanCommand command = new GetMealPlanCommand(id);
+		GetMealPlanByIdCommand command = new GetMealPlanByIdCommand(id);
 		log.info("[GET] getById {}", command);
 		return command.execute(pipeline);
 	}
