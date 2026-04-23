@@ -10,19 +10,19 @@ import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class GetIngredientHandlerTest {
+class GetIngredientByIdHandlerTest {
 
 	private final Pipeline pipeline;
 
 	@Inject
-	public GetIngredientHandlerTest(Pipeline pipeline) {
+	public GetIngredientByIdHandlerTest(Pipeline pipeline) {
 		this.pipeline = pipeline;
 	}
 
 	@Test
 	void fundSuccessful() {
 		var id = createIngredient();
-		var request = new GetIngredientCommand(id);
+		var request = new GetIngredientByIdCommand(id);
 		var response = request.execute(pipeline);
 		Assertions.assertNotNull(response.getValue());
 	}
@@ -40,7 +40,7 @@ class GetIngredientHandlerTest {
 	@Test
 	void notFound() {
 		var id = UUID.fromString("d855d236-b493-4c4a-8795-ce031296f342");
-		var request = new GetIngredientCommand(id);
+		var request = new GetIngredientByIdCommand(id);
 		var response = request.execute(pipeline);
 		Assertions.assertEquals("Not found ingredient", response.getError().getDescription());
 	}

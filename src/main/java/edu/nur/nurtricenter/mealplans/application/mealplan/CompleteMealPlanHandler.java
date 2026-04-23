@@ -5,7 +5,6 @@ import edu.nur.nurtricenter.mealplans.core.results.Error;
 import edu.nur.nurtricenter.mealplans.core.results.ResultWithValue;
 import edu.nur.nurtricenter.mealplans.domain.mealplan.IMealPlanRepository;
 import edu.nur.nurtricenter.mealplans.domain.mealplan.MealPlan;
-import edu.nur.nurtricenter.mealplans.domain.mealplan.event.MealPlanCancelledEvent;
 import edu.nur.nurtricenter.mealplans.domain.mealplan.event.MealPlanCompletedEvent;
 import edu.nur.nurtricenter.mealplans.infraestructure.UnitOfWork;
 import org.springframework.stereotype.Component;
