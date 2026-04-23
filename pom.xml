@@ -5,7 +5,7 @@
 
     <groupId>edu.nur.nurtricenter</groupId>
     <artifactId>mealplans-api</artifactId>
-    <version>0.0.7-SNAPSHOT</version>
+    <version>0.0.8-SNAPSHOT</version>
 
     <parent>
         <groupId>org.springframework.boot</groupId>
@@ -220,7 +220,6 @@
 						<endWithNewline/>
 						<encoding>UTF-8</encoding>
 					</java>
-					<lineEndings>UNIX</lineEndings>
 				</configuration>
 				<executions>
 					<execution>

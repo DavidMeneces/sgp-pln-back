@@ -18,6 +18,12 @@ public interface MealPlanDayModelRepository extends CrudRepository<MealPlanDayMo
 		WHERE mpd.idMealPlan = :idMealPlan""")
 	List<MealPlanDayModel> findAllByIdMealPlan(@Param("idMealPlan") UUID idMealPlan);
 
+	@Query("""
+		SELECT mpd
+		FROM MealPlanDayModel mpd
+		WHERE mpd.idMealPlan in (:idMealPlans)""")
+	List<MealPlanDayModel> findAllByIdMealPlan(@Param("idMealPlans") List<UUID> idMealPlans);
+
 	@Transactional
 	@Modifying
 	@Query(value = """

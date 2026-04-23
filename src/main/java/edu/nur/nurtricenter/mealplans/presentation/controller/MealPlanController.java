@@ -4,6 +4,7 @@ import an.awesome.pipelinr.Pipeline;
 import edu.nur.nurtricenter.mealplans.application.mealplan.*;
 import edu.nur.nurtricenter.mealplans.core.results.ResultWithValue;
 
+import java.util.List;
 import java.util.UUID;
 
 import lombok.extern.slf4j.Slf4j;
@@ -26,9 +27,17 @@ public class MealPlanController {
 		return command.execute(pipeline);
 	}
 
+	@GetMapping("")
+	public ResultWithValue<List<MealPlanDto>> get(@RequestParam(required = false, defaultValue = "0") int page,
+												@RequestParam(required = false, defaultValue = "10") int size) {
+		GetMealPlansCommand command = new GetMealPlansCommand(page, size);
+		log.info("[GET] get {}", command);
+		return command.execute(pipeline);
+	}
+
 	@GetMapping("/{id}")
 	public ResultWithValue<MealPlanDto> getById(@PathVariable UUID id) {
-		GetMealPlanCommand command = new GetMealPlanCommand(id);
+		GetMealPlanByIdCommand command = new GetMealPlanByIdCommand(id);
 		log.info("[GET] getById {}", command);
 		return command.execute(pipeline);
 	}
@@ -83,6 +92,13 @@ public class MealPlanController {
 	public ResultWithValue<Boolean> cancelById(@PathVariable UUID id) {
 		CancelMealPlanCommand command = new CancelMealPlanCommand(id);
 		log.info("[PATCH] cancelById {}", command);
+		return command.execute(pipeline);
+	}
+
+	@PatchMapping("/{id}/complete")
+	public ResultWithValue<Boolean> completeById(@PathVariable UUID id) {
+		CompleteMealPlanCommand command = new CompleteMealPlanCommand(id);
+		log.info("[PATCH] completeById {}", command);
 		return command.execute(pipeline);
 	}
 }

@@ -4,23 +4,23 @@ package edu.nur.nurtricenter.mealplans.domain.mealplan.event;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
-public class MealPlanCancelledEvent extends MealPlanIdEvent {
+public class MealPlanCompletedEvent extends MealPlanIdEvent {
 
-	private final LocalDateTime vCancelledAt;
+	private final LocalDateTime vCompleteAt;
 
-	public MealPlanCancelledEvent(UUID vId, LocalDateTime vCancelledAt) {
+	public MealPlanCompletedEvent(UUID vId, LocalDateTime vCompleteAt) {
 		super(vId);
-		this.vCancelledAt = vCancelledAt;
+		this.vCompleteAt = vCompleteAt;
 	}
 
 	@Override
 	public String getEventName() {
-		return "planes.plan-alimetario.cancelado";
+		return "planes.plan-alimetario.completado";
 	}
 
 	@Override
 	public Object getPayload() {
-		return new Payload(vId, vCancelledAt);
+		return new Payload(vId, vCompleteAt);
 	}
 
 	private record Payload(
