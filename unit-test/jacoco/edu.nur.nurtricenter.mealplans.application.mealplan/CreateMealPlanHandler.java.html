@@ -11,7 +11,7 @@ import edu.nur.nurtricenter.mealplans.infraestructure.UnitOfWork;
 import edu.nur.nurtricenter.mealplans.infraestructure.persistence.repositories.AppointmentModelRepository;
 import edu.nur.nurtricenter.mealplans.infraestructure.persistence.repositories.NutricionistModelRepository;
 import edu.nur.nurtricenter.mealplans.infraestructure.persistence.repositories.PatientModelRepository;
-import edu.nur.nurtricenter.mealplans.infraestructure.persistence.repositories.SuscriptionTypeModelRepository;
+import edu.nur.nurtricenter.mealplans.infraestructure.persistence.repositories.SubscriptionTypeModelRepository;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -25,7 +25,7 @@ public class CreateMealPlanHandler
 	private final IRecipeRepository recipeRepository;
 	private final PatientModelRepository patientModelRepository;
 	private final NutricionistModelRepository nutricionistModelRepository;
-	private final SuscriptionTypeModelRepository suscriptionTypeModelRepository;
+	private final SuscriptionTypeModelRepository subscriptionTypeModelRepository;
 	private final AppointmentModelRepository appointmentModelRepository;
 	private final UnitOfWork unitOfWork;
 
@@ -34,14 +34,14 @@ public class CreateMealPlanHandler
 			IRecipeRepository recipeRepository,
 			PatientModelRepository patientModelRepository,
 			NutricionistModelRepository nutricionistModelRepository,
-			SuscriptionTypeModelRepository suscriptionTypeModelRepository,
+			SuscriptionTypeModelRepository subscriptionTypeModelRepository,
 			AppointmentModelRepository appointmentModelRepository,
 <span class="fc" id="L39">			UnitOfWork unitOfWork) {</span>
 <span class="fc" id="L40">		this.repository = repository;</span>
 <span class="fc" id="L41">		this.recipeRepository = recipeRepository;</span>
 <span class="fc" id="L42">		this.patientModelRepository = patientModelRepository;</span>
 <span class="fc" id="L43">		this.nutricionistModelRepository = nutricionistModelRepository;</span>
-<span class="fc" id="L44">		this.suscriptionTypeModelRepository = suscriptionTypeModelRepository;</span>
+<span class="fc" id="L44">		this.subscriptionTypeModelRepository = subscriptionTypeModelRepository;</span>
 <span class="fc" id="L45">		this.appointmentModelRepository = appointmentModelRepository;</span>
 <span class="fc" id="L46">		this.unitOfWork = unitOfWork;</span>
 <span class="fc" id="L47">	}</span>
@@ -69,7 +69,7 @@ public class CreateMealPlanHandler
 								&quot;Not found appoitment&quot;,
 <span class="fc" id="L70">								command.idPatient().toString()));</span>
 			}
-<span class="fc bfc" id="L72" title="All 2 branches covered.">			if (!suscriptionTypeModelRepository.existsById(command.idSubscription())) {</span>
+<span class="fc bfc" id="L72" title="All 2 branches covered.">			if (!subscriptionTypeModelRepository.existsById(command.idSubscription())) {</span>
 <span class="fc" id="L73">				return ResultWithValue.validationFailure(</span>
 <span class="fc" id="L74">						Error.notFound(</span>
 								&quot;NotFound&quot;,
