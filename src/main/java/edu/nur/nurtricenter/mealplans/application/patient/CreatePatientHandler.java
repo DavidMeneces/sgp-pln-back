@@ -20,7 +20,11 @@ public class CreatePatientHandler
 	@Override
 	@Transactional
 	public ResultWithValue<Boolean> handle(CreatePatientCommand command) {
-		PatientModel model = PatientModel.builder().id(command.id()).name(command.name()).build();
+		PatientModel model = PatientModel.builder()
+			.id(command.id())
+			.name(command.name())
+			.status("HABILITADO")
+			.build();
 		repository.save(model);
 		return ResultWithValue.success(Boolean.TRUE);
 	}
