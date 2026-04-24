@@ -6,5 +6,5 @@ import edu.nur.nurtricenter.mealplans.core.results.ResultWithValue;
 import java.util.UUID;
 
 public record CreateAppointmentCommand(
-		@JsonProperty("citaId") UUID id, @JsonProperty("pacienteId") UUID idPatient)
+		@JsonProperty("citaId") UUID id, @JsonProperty("pacienteId") UUID idPatient, @JsonProperty("horarioAgendado") String schedule)
 		implements Command<ResultWithValue<Boolean>> {}

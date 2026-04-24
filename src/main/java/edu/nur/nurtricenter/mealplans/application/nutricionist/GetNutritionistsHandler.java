@@ -22,7 +22,7 @@ public class GetNutritionistsHandler
 	@Override
 	@Transactional
 	public ResultWithValue<List<NutricionistModel>> handle(GetNutritionistsCommand command) {
-		var models = (List<NutricionistModel>) repository.findAll(command.size(), command.page());
+		var models = repository.findAll(command.size(), command.page());
 		return ResultWithValue.success(models);
 	}
 }

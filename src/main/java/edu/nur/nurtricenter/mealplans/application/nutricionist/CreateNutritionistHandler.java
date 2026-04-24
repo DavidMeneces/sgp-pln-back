@@ -19,7 +19,11 @@ public class CreateNutritionistHandler implements Command.Handler<CreateNutritio
 	@Override
 	@Transactional
 	public ResultWithValue<Boolean> handle(CreateNutritionistCommand command) {
-		NutricionistModel model = NutricionistModel.builder().id(command.id()).name(command.name() + " " + command.lastName()).build();
+		NutricionistModel model = NutricionistModel.builder()
+			.id(command.id())
+			.name(command.name() + " " + command.lastName())
+			.status("HABILITADO")
+			.build();
 		repository.save(model);
 		return ResultWithValue.success(Boolean.TRUE);
 	}

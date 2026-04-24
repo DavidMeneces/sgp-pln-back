@@ -21,10 +21,10 @@ public class PatientModel {
 	@Id
 	@Column(name = "id")
 	private UUID id;
-
 	@Column(name = "name")
 	private String name;
-
 	@Column(name = "phone")
 	private String phone;
+	@Column(name = "status")
+	private String status;
 }

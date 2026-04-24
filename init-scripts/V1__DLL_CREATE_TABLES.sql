@@ -4,6 +4,7 @@
 CREATE TABLE public.nutricionist (
 	id uuid NOT NULL,
 	"name" varchar(255) NULL,
+	status VARCHAR(255),
 	CONSTRAINT nutricionist_pkey PRIMARY KEY (id)
 );
 
@@ -14,6 +15,7 @@ CREATE TABLE public.patient (
 	id uuid NOT NULL,
 	"name" varchar(255) NULL,
 	phone varchar(255) NULL,
+	status VARCHAR(255),
 	CONSTRAINT patient_pkey PRIMARY KEY (id)
 );
 
@@ -23,6 +25,8 @@ CREATE TABLE public.patient (
 CREATE TABLE public.subscription_type (
     id uuid NOT NULL,
     name VARCHAR(255),
+    days int4 NULL,
+    status VARCHAR(255),
     CONSTRAINT subscription_type_pkey PRIMARY KEY (id)
 );
 
@@ -32,6 +36,7 @@ CREATE TABLE public.subscription_type (
 CREATE TABLE public.appointment (
     id uuid NOT NULL,
     id_patient uuid NOT NULL,
+    schedule VARCHAR(255),
     status VARCHAR(255),
     CONSTRAINT appointment_pkey PRIMARY KEY (id)
 );
