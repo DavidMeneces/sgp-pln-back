@@ -37,7 +37,6 @@ public class IngredientRepository implements IIngredientRepository {
 	@Override
 	public UUID add(Ingredient entity) {
 		IngredientModel model = IngredientModel.buildModel(entity);
-		System.out.println("model = " + model);
 		repository.save(model);
 		return entity.getId();
 	}
@@ -48,6 +47,10 @@ public class IngredientRepository implements IIngredientRepository {
 			model.getName(),
 			model.getDescription(),
 			UnitMeasureEnum.valueOf(model.getUnitMeasure()),
-			model.getCaloriesPerGram());
+			model.getCaloriesPerGram(),
+			model.getTransaction(),
+			model.getStatus(),
+			model.getCreatedBy(),
+			model.getCreatedAt());
 	}
 }

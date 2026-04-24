@@ -2,6 +2,7 @@ package edu.nur.nurtricenter.mealplans.application.mealplan;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 import lombok.AllArgsConstructor;
@@ -25,4 +26,8 @@ public class MealPlanDto {
 	private LocalDate endDate;
 	private BigDecimal totalCalories;
 	private List<MealPlanDayDto> mealPlanDays;
+	private String transaction;
+	private String status;
+	private String createBy;
+	private LocalDateTime createAt;
 }

@@ -1,7 +1,10 @@
 package edu.nur.nurtricenter.mealplans.domain.recipe;
 
 import edu.nur.nurtricenter.mealplans.core.abstractions.AggregateRoot;
+import edu.nur.nurtricenter.mealplans.domain.shared.TransactionAggregateEnum;
+
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
@@ -22,13 +25,18 @@ public class Recipe extends AggregateRoot {
 			String description,
 			String instructions,
 			BigDecimal totalCalories,
-			List<RecipeIngredient> ingredients) {
+			List<RecipeIngredient> ingredients,
+			String transaction, String status, String createBy, LocalDateTime createAt) {
 		super(id);
 		this.name = name;
 		this.description = description;
 		this.instructions = instructions;
 		this.totalCalories = totalCalories;
 		this.ingredients = ingredients;
+		this.transaction = transaction;
+		this.status = status;
+		this.createBy = createBy;
+		this.createAt = createAt;
 	}
 
 	public static Recipe create(
@@ -57,7 +65,11 @@ public class Recipe extends AggregateRoot {
 		if (ingredients == null || ingredients.isEmpty()) {
 			throw new IllegalArgumentException("ingredients cannot be null or empty");
 		}
-		return new Recipe(id, name, description, instructions, totalCalories, ingredients);
+		var transaction = TransactionAggregateEnum.CREAR;
+		var status = transaction.getStatus();
+		var createBy = "sgp-pln";
+		var createAt = LocalDateTime.now();
+		return new Recipe(id, name, description, instructions, totalCalories, ingredients, transaction.name(), status, createBy, createAt);
 	}
 
 	public String getName() {
