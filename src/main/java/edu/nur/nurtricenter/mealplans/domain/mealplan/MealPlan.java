@@ -1,8 +1,11 @@
 package edu.nur.nurtricenter.mealplans.domain.mealplan;
 
 import edu.nur.nurtricenter.mealplans.core.abstractions.AggregateRoot;
+import edu.nur.nurtricenter.mealplans.domain.shared.TransactionAggregateEnum;
+
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.UUID;
@@ -23,17 +26,7 @@ public class MealPlan extends AggregateRoot {
 		super(UUID.randomUUID());
 	}
 
-	public MealPlan(
-			UUID id,
-			UUID idNutricionist,
-			UUID idPatient,
-			UUID idAppointment,
-			UUID idSubscription,
-			Integer totalDays,
-			LocalDate starDate,
-			LocalDate endDate,
-			BigDecimal totalCalories,
-			List<MealPlanDay> mealPlanDays) {
+	public MealPlan(UUID id, UUID idNutricionist, UUID idPatient, UUID idAppointment, UUID idSubscription, Integer totalDays, LocalDate starDate, LocalDate endDate, BigDecimal totalCalories, List<MealPlanDay> mealPlanDays, String transaction, String status, String createBy, LocalDateTime createAt) {
 		super(id);
 		this.idNutricionist = idNutricionist;
 		this.idPatient = idPatient;
@@ -44,19 +37,13 @@ public class MealPlan extends AggregateRoot {
 		this.endDate = endDate;
 		this.totalCalories = totalCalories;
 		this.mealPlanDays = mealPlanDays;
+		this.transaction = transaction;
+		this.status = status;
+		this.createBy = createBy;
+		this.createAt = createAt;
 	}
 
-	public static MealPlan create(
-			UUID id,
-			UUID idNutricionist,
-			UUID idPatient,
-			UUID idAppointment,
-			UUID idSubscription,
-			Integer totalDays,
-			LocalDate starDate,
-			LocalDate endDate,
-			BigDecimal totalCalories,
-			List<MealPlanDay> mealPlanDays) {
+	public static MealPlan create(UUID id, UUID idNutricionist, UUID idPatient, UUID idAppointment, UUID idSubscription, Integer totalDays, LocalDate starDate, LocalDate endDate, BigDecimal totalCalories, List<MealPlanDay> mealPlanDays) {
 		if (id == null) {
 			throw new IllegalArgumentException("id cannot be null");
 		}
@@ -73,8 +60,7 @@ public class MealPlan extends AggregateRoot {
 			throw new IllegalArgumentException("idSubscription cannot be null");
 		}
 		if (totalDays == null || !(totalDays == 15 || totalDays == 30)) {
-			throw new IllegalArgumentException(
-					"totalDays value must not be zero and must be 15 or 30");
+			throw new IllegalArgumentException("totalDays value must not be zero and must be 15 or 30");
 		}
 		if (starDate == null) {
 			throw new IllegalArgumentException("starDate cannot be null");
@@ -90,20 +76,13 @@ public class MealPlan extends AggregateRoot {
 			throw new IllegalArgumentException("difDays value must be 15 or 30");
 		}
 		if (mealPlanDays == null || mealPlanDays.size() != totalDays) {
-			throw new IllegalArgumentException(
-					"mealPlanDays cannot be null and must be same size to totalDays");
+			throw new IllegalArgumentException("mealPlanDays cannot be null and must be same size to totalDays");
 		}
-		return new MealPlan(
-				id,
-				idNutricionist,
-				idPatient,
-				idAppointment,
-				idSubscription,
-				totalDays,
-				starDate,
-				endDate,
-				totalCalories,
-				mealPlanDays);
+		var transaction = TransactionAggregateEnum.CREAR;
+		var status = transaction.getStatus();
+		var createBy = "sgp-pln";
+		var createAt = LocalDateTime.now();
+		return new MealPlan(id, idNutricionist, idPatient, idAppointment, idSubscription, totalDays, starDate, endDate, totalCalories, mealPlanDays, transaction.name(), status, createBy, createAt);
 	}
 
 	public UUID getIdNutricionist() {

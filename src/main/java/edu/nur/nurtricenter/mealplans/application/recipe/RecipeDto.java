@@ -1,6 +1,7 @@
 package edu.nur.nurtricenter.mealplans.application.recipe;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 import lombok.AllArgsConstructor;
@@ -20,4 +21,8 @@ public class RecipeDto {
 	private String instructions;
 	private BigDecimal totalCalories;
 	private List<RecipeIngredientDto> ingredients;
+	private String transaction;
+	private String status;
+	private String createBy;
+	private LocalDateTime createAt;
 }

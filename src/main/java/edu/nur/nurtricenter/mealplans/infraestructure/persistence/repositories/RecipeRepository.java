@@ -75,7 +75,11 @@ public class RecipeRepository implements IRecipeRepository {
 							ingredient.getId(),
 							ingredient.getIdIngredient(),
 							ingredient.getQuantity()))
-				.toList());
+				.toList(),
+			model.getTransaction(),
+			model.getStatus(),
+			model.getCreatedBy(),
+			model.getCreatedAt());
 	}
 
 }

@@ -7,11 +7,15 @@ public final class IngredientDtoMapper {
 
 	public static IngredientDto mapper(Ingredient ingredient) {
 		return IngredientDto.builder()
-				.id(ingredient.getId())
-				.name(ingredient.getName())
-				.description(ingredient.getDescription())
-				.unitMeasure(ingredient.getUnitMeasure())
-				.caloriesPerGram(ingredient.getCaloriesPerGram())
-				.build();
+			.id(ingredient.getId())
+			.name(ingredient.getName())
+			.description(ingredient.getDescription())
+			.unitMeasure(ingredient.getUnitMeasure())
+			.caloriesPerGram(ingredient.getCaloriesPerGram())
+			.transaction(ingredient.getTransaction())
+			.status(ingredient.getStatus())
+			.createBy(ingredient.getCreateBy())
+			.createAt(ingredient.getCreateAt())
+			.build();
 	}
 }
