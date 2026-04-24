@@ -20,10 +20,10 @@ public class AppointmentModel {
 	@Id
 	@Column(name = "id")
 	private UUID id;
-
 	@Column(name = "id_patient")
 	private UUID idPatient;
-
+	@Column(name = "schedule")
+	private String schedule;
 	@Column(name = "status")
 	private String status;
 }

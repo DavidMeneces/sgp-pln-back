@@ -20,8 +20,12 @@ public class CreateAppointmentHandler
 	@Override
 	@Transactional
 	public ResultWithValue<Boolean> handle(CreateAppointmentCommand command) {
-		AppointmentModel model =
-				AppointmentModel.builder().id(command.id()).idPatient(command.idPatient()).build();
+		AppointmentModel model = AppointmentModel.builder()
+			.id(command.id())
+			.idPatient(command.idPatient())
+			.schedule(command.schedule())
+			.status("HABILITADO")
+			.build();
 		repository.save(model);
 		return ResultWithValue.success(Boolean.TRUE);
 	}

@@ -22,7 +22,7 @@ public class GetPatientAppointmentsHandler
 	@Override
 	@Transactional
 	public ResultWithValue<List<AppointmentModel>> handle(GetPatientAppointmentsCommand command) {
-		var models = (List<AppointmentModel>) repository.findAllByPatient(command.idPatient(), command.status(), command.size(), command.page());
+		var models = repository.findAllByPatient(command.idPatient(), command.status(), command.size(), command.page());
 		return ResultWithValue.success(models);
 	}
 }

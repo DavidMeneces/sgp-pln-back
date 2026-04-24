@@ -1,8 +1,8 @@
 -- CREATE EVENT VALUES
-INSERT INTO public.subscription_type (id, name) VALUES('e7070f4e-47ba-4a86-8a78-ebdc5bbb9c32'::uuid, 's1');
-INSERT INTO public.nutricionist (id, name) VALUES('e7070f4e-47ba-4a86-8a78-ebdc5bbb9c32'::uuid, 'David Meneces');
-INSERT INTO public.patient (id, name, phone) VALUES('e7070f4e-47ba-4a86-8a78-ebdc5bbb9c32'::uuid, 'David Meneces', '61120416');
-INSERT INTO public.appointment (id, status, id_patient) VALUES('e7070f4e-47ba-4a86-8a78-ebdc5bbb9c32'::uuid, 'ATENDIDO', 'e7070f4e-47ba-4a86-8a78-ebdc5bbb9c32'::uuid);
+INSERT INTO public.subscription_type (id, name, days, status) VALUES('e7070f4e-47ba-4a86-8a78-ebdc5bbb9c32'::uuid, 'Quincenal', 15, 'HABILITADO');
+INSERT INTO public.nutricionist (id, name, status) VALUES('e7070f4e-47ba-4a86-8a78-ebdc5bbb9c32'::uuid, 'David Meneces', 'HABILITADO');
+INSERT INTO public.patient (id, name, phone, status) VALUES('e7070f4e-47ba-4a86-8a78-ebdc5bbb9c32'::uuid, 'David Meneces', '61120416', 'HABILITADO');
+INSERT INTO public.appointment (id, id_patient, schedule, status) VALUES('e7070f4e-47ba-4a86-8a78-ebdc5bbb9c32'::uuid, 'e7070f4e-47ba-4a86-8a78-ebdc5bbb9c32'::uuid, '2026-04-24 16:30:00.000', 'ATENDIDO');
 -- CREATE INIT VALUES
 -- create ingredients
 INSERT INTO public.ingredient (id, name, description, unit_measure, calories_per_gram, transaction, status, created_by, created_at) VALUES('e7070f4e-47ba-4a86-8a78-ebdc5bbb9c32'::uuid, 'Plátano', 'Fruta', 'GRAM', 100.00, 'CREAR', 'CREADO', 'sgp-pln', now());

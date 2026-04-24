@@ -21,7 +21,8 @@ class CreateAppointmentHandlerTest {
 	void createSuccessful() {
 		UUID id = UUID.randomUUID();
 		UUID idPatient = UUID.randomUUID();
-		var request = new CreateAppointmentCommand(id, idPatient);
+		String schedule = "2026-04-24 16:30:00.000";
+		var request = new CreateAppointmentCommand(id, idPatient, schedule);
 		var response = request.execute(pipeline);
 		Assertions.assertNotNull(response.getValue());
 	}
