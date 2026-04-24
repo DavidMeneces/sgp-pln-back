@@ -1,14 +1,15 @@
 package edu.nur.nurtricenter.mealplans.infraestructure.persistence.persistenceModel;
 
 import edu.nur.nurtricenter.mealplans.domain.recipe.Recipe;
-import edu.nur.nurtricenter.mealplans.infraestructure.persistence.domainModel.TransaccionEstadoModel;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.UUID;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -58,17 +59,16 @@ public class RecipeModel {
 	private LocalDateTime updatedAt;
 
 	public static RecipeModel buildModel(Recipe entity) {
-		var transaction = TransaccionEstadoModel.CREAR;
 		return RecipeModel.builder()
-				.id(entity.getId())
-				.name(entity.getName())
-				.description(entity.getDescription())
-				.instructions(entity.getInstructions())
-				.totalCalories(entity.getTotalCalories())
-				.transaction(transaction.name())
-				.status(transaction.getEstado())
-				.createdBy("sgp-pln")
-				.createdAt(LocalDateTime.now())
-				.build();
+			.id(entity.getId())
+			.name(entity.getName())
+			.description(entity.getDescription())
+			.instructions(entity.getInstructions())
+			.totalCalories(entity.getTotalCalories())
+			.transaction(entity.getTransaction())
+			.status(entity.getStatus())
+			.createdBy(entity.getCreateBy())
+			.createdAt(entity.getCreateAt())
+			.build();
 	}
 }

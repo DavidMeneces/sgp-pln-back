@@ -60,7 +60,11 @@ public class MealPlanRepository implements IMealPlanRepository {
 				model.getStarDate(),
 				model.getEndDate(),
 				model.getTotalCalories(),
-				mealPlanDaysByMealPlanId.getOrDefault(model.getId(), List.of())))
+				mealPlanDaysByMealPlanId.getOrDefault(model.getId(), List.of()),
+				model.getTransaction(),
+				model.getStatus(),
+				model.getCreatedBy(),
+				model.getCreatedAt()))
 			.toList();
 	}
 
@@ -105,7 +109,11 @@ public class MealPlanRepository implements IMealPlanRepository {
 			mealPlanModel.getStarDate(),
 			mealPlanModel.getEndDate(),
 			mealPlanModel.getTotalCalories(),
-			mealPlanDays);
+			mealPlanDays,
+			mealPlanModel.getTransaction(),
+			mealPlanModel.getStatus(),
+			mealPlanModel.getCreatedBy(),
+			mealPlanModel.getCreatedAt());
 	}
 
 	private List<TimeFood> toTimeFood(

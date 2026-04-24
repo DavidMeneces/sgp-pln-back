@@ -1,7 +1,6 @@
 package edu.nur.nurtricenter.mealplans.infraestructure.persistence.persistenceModel;
 
 import edu.nur.nurtricenter.mealplans.domain.mealplan.MealPlan;
-import edu.nur.nurtricenter.mealplans.infraestructure.persistence.domainModel.TransaccionEstadoModel;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
@@ -72,7 +71,6 @@ public class MealPlanModel {
 	private LocalDateTime updatedAt;
 
 	public static MealPlanModel buildModel(MealPlan entity) {
-		var transaction = TransaccionEstadoModel.CREAR;
 		return MealPlanModel.builder()
 			.id(entity.getId())
 			.idNutricionist(entity.getIdNutricionist())
@@ -83,10 +81,10 @@ public class MealPlanModel {
 			.starDate(entity.getStarDate())
 			.endDate(entity.getEndDate())
 			.totalDays(entity.getTotalDays())
-			.transaction(transaction.name())
-			.status(transaction.getEstado())
-			.createdBy("sgp-pln")
-			.createdAt(LocalDateTime.now())
+			.transaction(entity.getTransaction())
+			.status(entity.getStatus())
+			.createdBy(entity.getCreateBy())
+			.createdAt(entity.getCreateAt())
 			.build();
 	}
 }
