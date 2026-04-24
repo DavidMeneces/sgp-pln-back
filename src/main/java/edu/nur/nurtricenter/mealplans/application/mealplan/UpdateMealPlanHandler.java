@@ -11,7 +11,7 @@ import edu.nur.nurtricenter.mealplans.infraestructure.UnitOfWork;
 import edu.nur.nurtricenter.mealplans.infraestructure.persistence.repositories.AppointmentModelRepository;
 import edu.nur.nurtricenter.mealplans.infraestructure.persistence.repositories.NutricionistModelRepository;
 import edu.nur.nurtricenter.mealplans.infraestructure.persistence.repositories.PatientModelRepository;
-import edu.nur.nurtricenter.mealplans.infraestructure.persistence.repositories.SuscriptionTypeModelRepository;
+import edu.nur.nurtricenter.mealplans.infraestructure.persistence.repositories.SubscriptionTypeModelRepository;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,7 +27,7 @@ public class UpdateMealPlanHandler
 	private final IRecipeRepository recipeRepository;
 	private final PatientModelRepository patientModelRepository;
 	private final NutricionistModelRepository nutricionistModelRepository;
-	private final SuscriptionTypeModelRepository suscriptionTypeModelRepository;
+	private final SubscriptionTypeModelRepository subscriptionTypeModelRepository;
 	private final AppointmentModelRepository appointmentModelRepository;
 	private final UnitOfWork unitOfWork;
 
@@ -36,14 +36,14 @@ public class UpdateMealPlanHandler
 		IRecipeRepository recipeRepository,
 		PatientModelRepository patientModelRepository,
 		NutricionistModelRepository nutricionistModelRepository,
-		SuscriptionTypeModelRepository suscriptionTypeModelRepository,
+		SubscriptionTypeModelRepository subscriptionTypeModelRepository,
 		AppointmentModelRepository appointmentModelRepository,
 		UnitOfWork unitOfWork) {
 		this.repository = repository;
 		this.recipeRepository = recipeRepository;
 		this.patientModelRepository = patientModelRepository;
 		this.nutricionistModelRepository = nutricionistModelRepository;
-		this.suscriptionTypeModelRepository = suscriptionTypeModelRepository;
+		this.subscriptionTypeModelRepository = subscriptionTypeModelRepository;
 		this.appointmentModelRepository = appointmentModelRepository;
 		this.unitOfWork = unitOfWork;
 	}
@@ -75,7 +75,7 @@ public class UpdateMealPlanHandler
 						"Not found appointment",
 						command.idPatient().toString()));
 			}
-			if (!suscriptionTypeModelRepository.existsById(command.idSubscription())) {
+			if (!subscriptionTypeModelRepository.existsById(command.idSubscription())) {
 				return ResultWithValue.validationFailure(
 					Error.notFound(
 						"NotFound",
