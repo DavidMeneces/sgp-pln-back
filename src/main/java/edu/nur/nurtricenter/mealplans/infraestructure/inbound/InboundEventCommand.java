@@ -3,6 +3,7 @@ package edu.nur.nurtricenter.mealplans.infraestructure.inbound;
 import an.awesome.pipelinr.Command;
 import edu.nur.nurtricenter.mealplans.application.appointment.AttendAppointmentCommand;
 import edu.nur.nurtricenter.mealplans.application.appointment.CreateAppointmentCommand;
+import edu.nur.nurtricenter.mealplans.application.nutricionist.CreateNutritionistCommand;
 import edu.nur.nurtricenter.mealplans.application.patient.CreatePatientCommand;
 import java.util.HashMap;
 
@@ -17,6 +18,8 @@ public final class InboundEventCommand {
 		// Events Appointment-Evaluation
 		eventCommand.put("citas-evaluaciones.cita.agendada", CreateAppointmentCommand.class);
 		eventCommand.put("citas-evaluaciones.cita.atendida", AttendAppointmentCommand.class);
+		// Events Appointment-Evaluation Nutritionist
+		eventCommand.put("citas-evaluaciones.nutricionista.creado", CreateNutritionistCommand.class);
 	}
 
 	public static Class<? extends Command> findByEventName(String eventName) {
