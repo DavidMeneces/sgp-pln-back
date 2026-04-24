@@ -16,7 +16,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Entity
 @Table(schema = "public", name = "subscription_type")
-public class SuscriptionTypeModel {
+public class SubscriptionTypeModel {
 	@Id
 	@Column(name = "id")
 	private UUID id;
