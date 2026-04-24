@@ -78,6 +78,8 @@ public class MealPlanModel {
 			.idAppointment(entity.getIdAppointment())
 			.idSubscription(entity.getIdSubscription())
 			.totalCalories(entity.getTotalCalories())
+			.starDate(entity.getStarDate())
+			.endDate(entity.getEndDate())
 			.totalDays(entity.getTotalDays())
 			.transaction(entity.getTransaction())
 			.status(entity.getStatus())
