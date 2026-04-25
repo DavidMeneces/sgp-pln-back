@@ -94,11 +94,4 @@ public class MealPlanController {
 		log.info("[PATCH] cancelById {}", command);
 		return command.execute(pipeline);
 	}
-
-	@PatchMapping("/{id}/complete")
-	public ResultWithValue<Boolean> completeById(@PathVariable UUID id) {
-		CompleteMealPlanCommand command = new CompleteMealPlanCommand(id);
-		log.info("[PATCH] completeById {}", command);
-		return command.execute(pipeline);
-	}
 }
