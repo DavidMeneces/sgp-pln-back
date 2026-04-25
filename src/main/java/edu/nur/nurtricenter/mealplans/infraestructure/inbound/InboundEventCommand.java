@@ -5,6 +5,8 @@ import edu.nur.nurtricenter.mealplans.application.appointment.AttendAppointmentC
 import edu.nur.nurtricenter.mealplans.application.appointment.CreateAppointmentCommand;
 import edu.nur.nurtricenter.mealplans.application.nutricionist.CreateNutritionistCommand;
 import edu.nur.nurtricenter.mealplans.application.patient.CreatePatientCommand;
+import edu.nur.nurtricenter.mealplans.application.subscription.CreateSubscriptionTypeCommand;
+
 import java.util.HashMap;
 
 public final class InboundEventCommand {
@@ -13,6 +15,8 @@ public final class InboundEventCommand {
 
 	static {
 		eventCommand = new HashMap<>();
+		// Events Patient
+		eventCommand.put("suscripcion.creada", CreateSubscriptionTypeCommand.class);
 		// Events Patient
 		eventCommand.put("paciente.paciente-creado", CreatePatientCommand.class);
 		// Events Appointment-Evaluation
