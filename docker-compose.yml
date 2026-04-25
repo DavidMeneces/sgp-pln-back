@@ -15,7 +15,7 @@ services:
     networks:
       - mealplans-network
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      test: [ "CMD-SHELL", "pg_isready -U postgres" ]
       interval: 30s
       timeout: 10s
       retries: 3
@@ -28,6 +28,17 @@ services:
       DATASOURCE_USERNAME: postgres
       DATASOURCE_PASSWORD: admin
       LOKI_URL: http://loki:3100
+      CONSUL_ENABLED: ${CONSUL_ENABLED:-true}
+      CONSUL_HOST: ${CONSUL_HOST:-154.38.180.80}
+      CONSUL_PORT: ${CONSUL_PORT:-8500}
+      SERVICE_ID: ${SERVICE_ID:-nur-tricenter-mealplans}
+      SERVICE_NAME: ${SERVICE_NAME:-nur-tricenter-mealplans}
+      SERVICE_ADDRESS: ${SERVICE_ADDRESS:-142.93.120.239}
+      SERVICE_PORT: ${SERVICE_PORT:-8081}
+      HEALTH_CHECK_PATH: ${HEALTH_CHECK_PATH:-/actuator/health}
+      HEALTH_CHECK_INTERVAL: ${HEALTH_CHECK_INTERVAL:-15s}
+      HEALTH_CHECK_TIMEOUT: ${HEALTH_CHECK_TIMEOUT:-5s}
+      CONSUL_DEREGISTER_AFTER: ${CONSUL_DEREGISTER_AFTER:-1m}
     ports:
       - "8081:8081"
     depends_on:
