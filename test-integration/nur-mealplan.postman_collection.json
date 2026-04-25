@@ -1,243 +1,1425 @@
 {
-	"info": {
-		"_postman_id": "071207e7-7bbe-4ab3-b831-225bfecf27e8",
-		"name": "nur-mealplan",
-		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "29388406"
-	},
-	"item": [
-		{
-			"name": "mealplans",
-			"item": [
-				{
-					"name": "ingredient",
-					"item": [
-						{
-							"name": "Create",
-							"event": [
-								{
-									"listen": "prerequest",
-									"script": {
-										"exec": [
-											"const list = JSON.parse(pm.collectionVariables.get(\"ingredient_list\"));\r",
-											"let index = parseInt(pm.collectionVariables.get(\"ingredient_index\"));\r",
-											"const item = list[index];\r",
-											"console.log(\"item\", item);\r",
-											"pm.collectionVariables.set(\"ingredient_name\", item.name);\r",
-											"pm.collectionVariables.set(\"ingredient_description\", item.description);\r",
-											"pm.collectionVariables.set(\"ingredient_unit_measure\", item.unitMeasure);\r",
-											"pm.collectionVariables.set(\"ingredient_calories_per_gram\", item.caloriesPerGram);"
-										],
-										"type": "text/javascript",
-										"packages": {},
-										"requests": {}
-									}
-								},
-								{
-									"listen": "test",
-									"script": {
-										"exec": [
-											"pm.test(\"Status Success\", () => {\r",
-											"    pm.expect(pm.response.json()).to.have.property('value')\r",
-											"    pm.expect(pm.response.json().value).to.be.a('string')\r",
-											"    pm.collectionVariables.set('id_ingredient', pm.response.json().value)\r",
-											"});\r",
-											"pm.test(\"Create ingredient\", () => {\r",
-											"    pm.expect(pm.response.json()).to.have.property('value')\r",
-											"    pm.expect(pm.response.json().value).to.be.a('string')\r",
-											"    pm.collectionVariables.set('id_ingredient', pm.response.json().value)\r",
-											"});\r",
-											"//update index\r",
-											"let index = parseInt(pm.collectionVariables.get(\"ingredient_index\"));\r",
-											"pm.collectionVariables.set(\"ingredient_index\", index + 1);"
-										],
-										"type": "text/javascript",
-										"packages": {},
-										"requests": {}
-									}
-								}
-							],
-							"request": {
-								"method": "POST",
-								"header": [],
-								"body": {
-									"mode": "raw",
-									"raw": "{\r\n    \"name\": \"{{ingredient_name}}\",\r\n    \"description\": \"{{ingredient_description}}\",\r\n    \"unitMeasure\": \"{{ingredient_unit_measure}}\",\r\n    \"caloriesPerGram\": {{ingredient_calories_per_gram}}\r\n}",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
-								"url": {
-									"raw": "{{url_base}}/ingredient",
-									"host": [
-										"{{url_base}}"
-									],
-									"path": [
-										"ingredient"
-									]
-								}
-							},
-							"response": []
-						}
-					]
-				},
-				{
-					"name": "recipe",
-					"item": [
-						{
-							"name": "Create",
-							"event": [
-								{
-									"listen": "test",
-									"script": {
-										"exec": [
-											"const body = JSON.parse(pm.request.body);\r",
-											"pm.test(\"Create Recipe\", () => {\r",
-											"    pm.expect(pm.response.json()).to.have.property('value')\r",
-											"    pm.expect(pm.response.json().value).to.be.a('string')\r",
-											"    pm.collectionVariables.set('id_ingredient', pm.response.json().value)\r",
-											"});"
-										],
-										"type": "text/javascript",
-										"packages": {},
-										"requests": {}
-									}
-								}
-							],
-							"request": {
-								"method": "POST",
-								"header": [],
-								"body": {
-									"mode": "raw",
-									"raw": "{\r\n    \"name\": \"{{recipe_name}}\",\r\n    \"description\": \"{{recipe_description}}\",\r\n    \"instructions\": \"{{recipe_instructions}}\",\r\n    \"totalCalories\": {{recipe_total_calories}},\r\n    \"ingredients\": [\r\n        {\r\n            \"idIngredient\": \"{{id_ingredient}}\",\r\n            \"quantity\": {{quantity_ingredient}}\r\n        }\r\n    ]\r\n}",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
-								"url": {
-									"raw": "{{url_base}}/recipe",
-									"host": [
-										"{{url_base}}"
-									],
-									"path": [
-										"recipe"
-									]
-								}
-							},
-							"response": []
-						}
-					]
-				},
-				{
-					"name": "meal-plan",
-					"item": [
-						{
-							"name": "Create",
-							"event": [
-								{
-									"listen": "test",
-									"script": {
-										"exec": [
-											"const body = JSON.parse(pm.request.body);\r",
-											"pm.test(\"Create Meal Plan\", () => {\r",
-											"    pm.expect(pm.response.json()).to.have.property('value')\r",
-											"    pm.expect(pm.response.json().value).to.be.a('string')\r",
-											"    pm.collectionVariables.set('id_ingredient', pm.response.json().value)\r",
-											"});"
-										],
-										"type": "text/javascript",
-										"packages": {},
-										"requests": {}
-									}
-								}
-							],
-							"request": {
-								"method": "POST",
-								"header": [],
-								"body": {
-									"mode": "raw",
-									"raw": "{\r\n    \"idNutricionist\": \"{{id_nutricionist}}\",\r\n    \"idPatient\": \"{{id_patient}}\",\r\n    \"totalDays\": {{total_days}},\r\n    \"starDate\":\"{{star_date}}\",\r\n    \"endDate\":\"{{end_date}}\",\r\n    \"totalCalories\": {{total_calories}},\r\n    \"mealPlanDays\": [\r\n        {\r\n            \"day\": 1,\r\n            \"timeFoods\": [\r\n                {\r\n                    \"type\": \"{{time_food_type}}\",\r\n                    \"order\": {{time_food_order}},\r\n                    \"recipes\": [\r\n                        {\r\n                            \"idRecipe\": \"{{id_recipe}}\",\r\n                            \"portion\": {{portion_recipe}}\r\n                        }\r\n                    ]\r\n                }\r\n            ]\r\n        },\r\n        {\r\n            \"day\": 2,\r\n            \"timeFoods\": [\r\n                {\r\n                    \"type\": \"{{time_food_type}}\",\r\n                    \"order\": {{time_food_order}},\r\n                    \"recipes\": [\r\n                        {\r\n                            \"idRecipe\": \"{{id_recipe}}\",\r\n                            \"portion\": {{portion_recipe}}\r\n                        }\r\n                    ]\r\n                }\r\n            ]\r\n        },\r\n        {\r\n            \"day\": 3,\r\n            \"timeFoods\": [\r\n                {\r\n                    \"type\": \"{{time_food_type}}\",\r\n                    \"order\": {{time_food_order}},\r\n                    \"recipes\": [\r\n                        {\r\n                            \"idRecipe\": \"{{id_recipe}}\",\r\n                            \"portion\": {{portion_recipe}}\r\n                        }\r\n                    ]\r\n                }\r\n            ]\r\n        },\r\n        {\r\n            \"day\": 4,\r\n            \"timeFoods\": [\r\n                {\r\n                    \"type\": \"{{time_food_type}}\",\r\n                    \"order\": {{time_food_order}},\r\n                    \"recipes\": [\r\n                        {\r\n                            \"idRecipe\": \"{{id_recipe}}\",\r\n                            \"portion\": {{portion_recipe}}\r\n                        }\r\n                    ]\r\n                }\r\n            ]\r\n        },\r\n        {\r\n            \"day\": 5,\r\n            \"timeFoods\": [\r\n                {\r\n                    \"type\": \"{{time_food_type}}\",\r\n                    \"order\": {{time_food_order}},\r\n                    \"recipes\": [\r\n                        {\r\n                            \"idRecipe\": \"{{id_recipe}}\",\r\n                            \"portion\": {{portion_recipe}}\r\n                        }\r\n                    ]\r\n                }\r\n            ]\r\n        },\r\n        {\r\n            \"day\": 6,\r\n            \"timeFoods\": [\r\n                {\r\n                    \"type\": \"{{time_food_type}}\",\r\n                    \"order\": {{time_food_order}},\r\n                    \"recipes\": [\r\n                        {\r\n                            \"idRecipe\": \"{{id_recipe}}\",\r\n                            \"portion\": {{portion_recipe}}\r\n                        }\r\n                    ]\r\n                }\r\n            ]\r\n        },\r\n        {\r\n            \"day\": 7,\r\n            \"timeFoods\": [\r\n                {\r\n                    \"type\": \"{{time_food_type}}\",\r\n                    \"order\": {{time_food_order}},\r\n                    \"recipes\": [\r\n                        {\r\n                            \"idRecipe\": \"{{id_recipe}}\",\r\n                            \"portion\": {{portion_recipe}}\r\n                        }\r\n                    ]\r\n                }\r\n            ]\r\n        },\r\n        {\r\n            \"day\": 8,\r\n            \"timeFoods\": [\r\n                {\r\n                    \"type\": \"{{time_food_type}}\",\r\n                    \"order\": {{time_food_order}},\r\n                    \"recipes\": [\r\n                        {\r\n                            \"idRecipe\": \"{{id_recipe}}\",\r\n                            \"portion\": {{portion_recipe}}\r\n                        }\r\n                    ]\r\n                }\r\n            ]\r\n        },\r\n        {\r\n            \"day\": 9,\r\n            \"timeFoods\": [\r\n                {\r\n                    \"type\": \"{{time_food_type}}\",\r\n                    \"order\": {{time_food_order}},\r\n                    \"recipes\": [\r\n                        {\r\n                            \"idRecipe\": \"{{id_recipe}}\",\r\n                            \"portion\": {{portion_recipe}}\r\n                        }\r\n                    ]\r\n                }\r\n            ]\r\n        },\r\n        {\r\n            \"day\": 10,\r\n            \"timeFoods\": [\r\n                {\r\n                    \"type\": \"{{time_food_type}}\",\r\n                    \"order\": {{time_food_order}},\r\n                    \"recipes\": [\r\n                        {\r\n                            \"idRecipe\": \"{{id_recipe}}\",\r\n                            \"portion\": {{portion_recipe}}\r\n                        }\r\n                    ]\r\n                }\r\n            ]\r\n        },\r\n        {\r\n            \"day\": 11,\r\n            \"timeFoods\": [\r\n                {\r\n                    \"type\": \"{{time_food_type}}\",\r\n                    \"order\": {{time_food_order}},\r\n                    \"recipes\": [\r\n                        {\r\n                            \"idRecipe\": \"{{id_recipe}}\",\r\n                            \"portion\": {{portion_recipe}}\r\n                        }\r\n                    ]\r\n                }\r\n            ]\r\n        },\r\n        {\r\n            \"day\": 12,\r\n            \"timeFoods\": [\r\n                {\r\n                    \"type\": \"{{time_food_type}}\",\r\n                    \"order\": {{time_food_order}},\r\n                    \"recipes\": [\r\n                        {\r\n                            \"idRecipe\": \"{{id_recipe}}\",\r\n                            \"portion\": {{portion_recipe}}\r\n                        }\r\n                    ]\r\n                }\r\n            ]\r\n        },\r\n        {\r\n            \"day\": 13,\r\n            \"timeFoods\": [\r\n                {\r\n                    \"type\": \"{{time_food_type}}\",\r\n                    \"order\": {{time_food_order}},\r\n                    \"recipes\": [\r\n                        {\r\n                            \"idRecipe\": \"{{id_recipe}}\",\r\n                            \"portion\": {{portion_recipe}}\r\n                        }\r\n                    ]\r\n                }\r\n            ]\r\n        },\r\n        {\r\n            \"day\": 14,\r\n            \"timeFoods\": [\r\n                {\r\n                    \"type\": \"{{time_food_type}}\",\r\n                    \"order\": {{time_food_order}},\r\n                    \"recipes\": [\r\n                        {\r\n                            \"idRecipe\": \"{{id_recipe}}\",\r\n                            \"portion\": {{portion_recipe}}\r\n                        }\r\n                    ]\r\n                }\r\n            ]\r\n        },\r\n        {\r\n            \"day\": 15,\r\n            \"timeFoods\": [\r\n                {\r\n                    \"type\": \"{{time_food_type}}\",\r\n                    \"order\": {{time_food_order}},\r\n                    \"recipes\": [\r\n                        {\r\n                            \"idRecipe\": \"{{id_recipe}}\",\r\n                            \"portion\": {{portion_recipe}}\r\n                        }\r\n                    ]\r\n                }\r\n            ]\r\n        }\r\n    ]\r\n}",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
-								"url": {
-									"raw": "{{url_base}}/meal-plan",
-									"host": [
-										"{{url_base}}"
-									],
-									"path": [
-										"meal-plan"
-									]
-								}
-							},
-							"response": []
-						}
-					]
-				}
-			]
-		}
-	],
-	"event": [
-		{
-			"listen": "prerequest",
-			"script": {
-				"type": "text/javascript",
-				"requests": {},
-				"exec": [
-					""
-				]
-			}
-		},
-		{
-			"listen": "test",
-			"script": {
-				"type": "text/javascript",
-				"requests": {},
-				"exec": [
-					""
-				]
-			}
-		}
-	],
-	"variable": [
-		{
-			"key": "url_base",
-			"value": "http://localhost:8080"
-		},
-		{
-			"key": "id_ingredient",
-			"value": ""
-		},
-		{
-			"key": "ingredient_list",
-			"value": ""
-		},
-		{
-			"key": "ingredient_index",
-			"value": ""
-		},
-		{
-			"key": "ingredient_name",
-			"value": ""
-		},
-		{
-			"key": "ingredient_description",
-			"value": ""
-		},
-		{
-			"key": "ingredient_unit_measure",
-			"value": ""
-		},
-		{
-			"key": "ingredient_calories_per_gram",
-			"value": ""
-		}
-	]
+  "info": {
+    "_postman_id": "071207e7-7bbe-4ab3-b831-225bfecf27e8",
+    "name": "nur-mealplan",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "29388406"
+  },
+  "item": [
+    {
+      "name": "authentication",
+      "item": [
+        {
+          "name": "login-token",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const body = pm.response.json();\r",
+                  "pm.collectionVariables.set(\"access_token\", body.access_token);"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                {
+                  "key": "grant_type",
+                  "value": "password",
+                  "type": "text"
+                },
+                {
+                  "key": "client_id",
+                  "value": "group3app",
+                  "type": "text"
+                },
+                {
+                  "key": "client_secret",
+                  "value": "pS9x84Qm0FkOJVrueg5OTtNYCWCAGtEp",
+                  "type": "text"
+                },
+                {
+                  "key": "username",
+                  "value": "dmeneces",
+                  "type": "text"
+                },
+                {
+                  "key": "password",
+                  "value": "acb123",
+                  "type": "text"
+                }
+              ]
+            },
+            "url": {
+              "raw": "http://154.38.180.80:8080/realms/group3realm/protocol/openid-connect/token",
+              "protocol": "http",
+              "host": [
+                "154",
+                "38",
+                "180",
+                "80"
+              ],
+              "port": "8080",
+              "path": [
+                "realms",
+                "group3realm",
+                "protocol",
+                "openid-connect",
+                "token"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "mealplans",
+      "item": [
+        {
+          "name": "ingredients",
+          "item": [
+            {
+              "name": "0.0. Create Ingredient",
+              "event": [
+                {
+                  "listen": "prerequest",
+                  "script": {
+                    "exec": [
+                      "const list = JSON.parse(pm.collectionVariables.get(\"ingredient_list\"));\r",
+                      "let index = parseInt(pm.collectionVariables.get(\"ingredient_index\"));\r",
+                      "const item = list[index];\r",
+                      "pm.collectionVariables.set(\"ingredient_name\", item.name ? `\"${item.name}\"`: null);\r",
+                      "pm.collectionVariables.set(\"ingredient_description\", item.description ? `\"${item.description}\"`: null);\r",
+                      "pm.collectionVariables.set(\"ingredient_unit_measure\", item.unitMeasure ? `\"${item.unitMeasure}\"`: null);\r",
+                      "pm.collectionVariables.set(\"ingredient_calories_per_gram\", item.caloriesPerGram);"
+                    ],
+                    "type": "text/javascript",
+                    "packages": {},
+                    "requests": {}
+                  }
+                },
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "const res = pm.response.json();\r",
+                      "pm.test(\"Root structure is correct\", () => {\r",
+                      "    pm.expect(res).to.have.property('value');\r",
+                      "    pm.expect(res).to.have.property('error');\r",
+                      "    pm.expect(res).to.have.property('success');\r",
+                      "    pm.expect(res).to.have.property('failure');\r",
+                      "});\r",
+                      "pm.test(\"Success flags are correct\", () => {\r",
+                      "    pm.expect(res.success).to.be.true;\r",
+                      "    pm.expect(res.failure).to.be.false;\r",
+                      "});\r",
+                      "pm.test(\"Value is a valid UUID\", () => {\r",
+                      "    pm.expect(res.value).to.be.a('string');\r",
+                      "    const uuidRegex = /^[0-9a-fA-F-]{36}$/;\r",
+                      "    pm.expect(res.value).to.match(uuidRegex);\r",
+                      "    pm.collectionVariables.set(\"id_ingredient\", res.value);\r",
+                      "});\r",
+                      "pm.test(\"Error structure is valid\", () => {\r",
+                      "    const error = res.error;\r",
+                      "    pm.expect(error).to.be.an('object');\r",
+                      "    pm.expect(error).to.have.property('code').that.is.a('string');\r",
+                      "    pm.expect(error).to.have.property('structuredMessage').that.is.a('string');\r",
+                      "    pm.expect(error).to.have.property('type').that.is.a('string');\r",
+                      "    pm.expect(error).to.have.property('description').that.is.a('string');\r",
+                      "});\r",
+                      "pm.test(\"Error should be empty on success\", () => {\r",
+                      "    const error = res.error;\r",
+                      "    pm.expect(error.code).to.eql(\"\");\r",
+                      "    pm.expect(error.description).to.eql(\"\");\r",
+                      "});\r",
+                      "pm.test(\"Request body has required fields\", () => {\r",
+                      "    const req = JSON.parse(pm.request.body.raw);\r",
+                      "    pm.expect(req.name).to.exist;\r",
+                      "    pm.expect(req.description).to.exist;\r",
+                      "    pm.expect(req.unitMeasure).to.exist;\r",
+                      "    pm.expect(req.caloriesPerGram).to.exist;\r",
+                      "});\r",
+                      "pm.test(\"UnitMeasure is valid\", () => {\r",
+                      "    const req = JSON.parse(pm.request.body.raw);\r",
+                      "    const allowed = [\"GRAM\", \"ML\", \"UNIT\"];\r",
+                      "    pm.expect(allowed).to.include(req.unitMeasure);\r",
+                      "});\r",
+                      "pm.test(\"Calories is positive\", () => {\r",
+                      "    const req = JSON.parse(pm.request.body.raw);\r",
+                      "    pm.expect(req.caloriesPerGram).to.be.a('number');\r",
+                      "    pm.expect(req.caloriesPerGram).to.be.above(0);\r",
+                      "});\r",
+                      "let index = parseInt(pm.collectionVariables.get(\"ingredient_index\"));\r",
+                      "pm.collectionVariables.set(\"ingredient_index\", index + 1);"
+                    ],
+                    "type": "text/javascript",
+                    "packages": {},
+                    "requests": {}
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{access_token}}",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"name\": {{ingredient_name}},\r\n    \"description\": {{ingredient_description}},\r\n    \"unitMeasure\": {{ingredient_unit_measure}},\r\n    \"caloriesPerGram\": {{ingredient_calories_per_gram}}\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{url_base}}/ingredients",
+                  "host": [
+                    "{{url_base}}"
+                  ],
+                  "path": [
+                    "ingredients"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "0.1. Get Ingredient By Id",
+              "event": [
+                {
+                  "listen": "prerequest",
+                  "script": {
+                    "exec": [
+                      ""
+                    ],
+                    "type": "text/javascript",
+                    "packages": {},
+                    "requests": {}
+                  }
+                },
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "const res = pm.response.json();",
+                      "pm.test(\"Response has correct root structure\", () => {",
+                      "    pm.expect(res).to.have.property('value');",
+                      "    pm.expect(res).to.have.property('error');",
+                      "    pm.expect(res).to.have.property('success');",
+                      "    pm.expect(res).to.have.property('failure');",
+                      "});",
+                      "pm.test(\"Success/failure flags are consistent\", () => {",
+                      "    pm.expect(res.success).to.be.true;",
+                      "    pm.expect(res.failure).to.be.false;",
+                      "});",
+                      "pm.test(\"Value structure is correct\", () => {",
+                      "    const value = res.value;",
+                      "    pm.expect(value).to.be.an('object');",
+                      "    pm.expect(value).to.have.property('id').that.is.a('string');",
+                      "    pm.expect(value).to.have.property('name').that.is.a('string');",
+                      "    pm.expect(value).to.have.property('description').that.is.a('string');",
+                      "    pm.expect(value).to.have.property('unitMeasure').that.is.a('string');",
+                      "    pm.expect(value).to.have.property('caloriesPerGram').that.is.a('number');",
+                      "    pm.expect(value).to.have.property('transaction').that.is.a('string');",
+                      "    pm.expect(value).to.have.property('status').that.is.a('string');",
+                      "    pm.expect(value).to.have.property('createBy').that.is.a('string');",
+                      "    pm.expect(value).to.have.property('createAt').that.is.a('string');",
+                      "});",
+                      "pm.test(\"UnitMeasure is valid enum\", () => {",
+                      "    const allowed = [\"GRAM\", \"ML\", \"UNIT\"];",
+                      "    pm.expect(allowed).to.include(res.value.unitMeasure);",
+                      "});",
+                      "pm.test(\"Calories is positive\", () => {",
+                      "    pm.expect(res.value.caloriesPerGram).to.be.above(0);",
+                      "});",
+                      "pm.test(\"ID is valid UUID\", () => {",
+                      "    const uuidRegex = /^[0-9a-fA-F-]{36}$/;",
+                      "    pm.expect(res.value.id).to.match(uuidRegex);",
+                      "});",
+                      "pm.test(\"createAt is valid ISO date\", () => {",
+                      "    const date = new Date(res.value.createAt);",
+                      "    pm.expect(date.toString()).to.not.equal(\"Invalid Date\");",
+                      "});",
+                      "pm.test(\"Error object structure\", () => {",
+                      "    const error = res.error;",
+                      "    pm.expect(error).to.be.an('object');",
+                      "    pm.expect(error).to.have.property('code').that.is.a('string');",
+                      "    pm.expect(error).to.have.property('structuredMessage').that.is.a('string');",
+                      "    pm.expect(error).to.have.property('type').that.is.a('string');",
+                      "    pm.expect(error).to.have.property('description').that.is.a('string');",
+                      "});",
+                      "pm.test(\"Error should be empty on success\", () => {",
+                      "    const error = res.error;",
+                      "    pm.expect(error.code).to.eql(\"\");",
+                      "    pm.expect(error.description).to.eql(\"\");",
+                      "});"
+                    ],
+                    "type": "text/javascript",
+                    "packages": {},
+                    "requests": {}
+                  }
+                }
+              ],
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{access_token}}",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "{{url_base}}/ingredients/{{id_ingredient}}",
+                  "host": [
+                    "{{url_base}}"
+                  ],
+                  "path": [
+                    "ingredients",
+                    "{{id_ingredient}}"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "0.2. Get Ingredients",
+              "event": [
+                {
+                  "listen": "prerequest",
+                  "script": {
+                    "exec": [
+                      ""
+                    ],
+                    "type": "text/javascript",
+                    "packages": {},
+                    "requests": {}
+                  }
+                },
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "const res = pm.response.json();",
+                      "pm.test(\"Root structure is correct\", () => {",
+                      "    pm.expect(res).to.have.property('value').that.is.an('array');",
+                      "    pm.expect(res).to.have.property('error');",
+                      "    pm.expect(res).to.have.property('success');",
+                      "    pm.expect(res).to.have.property('failure');",
+                      "});",
+                      "pm.test(\"Flags are correct\", () => {",
+                      "    pm.expect(res.success).to.be.true;",
+                      "    pm.expect(res.failure).to.be.false;",
+                      "});",
+                      "pm.test(\"Value array is not empty\", () => {",
+                      "    pm.expect(res.value.length).to.be.above(0);",
+                      "});",
+                      "pm.test(\"All items have correct structure\", () => {",
+                      "    const uuidRegex = /^[0-9a-fA-F-]{36}$/;",
+                      "    const allowedUnits = [\"GRAM\", \"ML\", \"UNIT\"];",
+                      "    res.value.forEach((item, index) => {",
+                      "        pm.expect(item, `Item ${index} should be object`).to.be.an('object');",
+                      "        pm.expect(item).to.have.property('id').that.is.a('string');",
+                      "        pm.expect(item.id, `Invalid UUID at index ${index}`).to.match(uuidRegex);",
+                      "        pm.expect(item).to.have.property('name').that.is.a('string');",
+                      "        pm.expect(item).to.have.property('description').that.is.a('string');",
+                      "        pm.expect(item).to.have.property('unitMeasure').that.is.a('string');",
+                      "        pm.expect(allowedUnits, `Invalid unit at index ${index}`).to.include(item.unitMeasure);",
+                      "        pm.expect(item).to.have.property('caloriesPerGram').that.is.a('number');",
+                      "        pm.expect(item.caloriesPerGram, `Calories must be > 0 at index ${index}`).to.be.above(0);",
+                      "        pm.expect(item).to.have.property('transaction').that.is.a('string');",
+                      "        pm.expect(item).to.have.property('status').that.is.a('string');",
+                      "        pm.expect(item).to.have.property('createBy').that.is.a('string');",
+                      "        pm.expect(item).to.have.property('createAt').that.is.a('string');",
+                      "        const date = new Date(item.createAt);",
+                      "        pm.expect(date.toString(), `Invalid date at index ${index}`).to.not.equal(\"Invalid Date\");",
+                      "    });",
+                      "});",
+                      "pm.test(\"Error object is valid\", () => {",
+                      "    const error = res.error;",
+                      "    pm.expect(error).to.be.an('object');",
+                      "    pm.expect(error).to.have.property('code').that.is.a('string');",
+                      "    pm.expect(error).to.have.property('structuredMessage').that.is.a('string');",
+                      "    pm.expect(error).to.have.property('type').that.is.a('string');",
+                      "    pm.expect(error).to.have.property('description').that.is.a('string');",
+                      "});",
+                      "pm.test(\"Error should be empty on success\", () => {",
+                      "    pm.expect(res.error.code).to.eql(\"\");",
+                      "    pm.expect(res.error.description).to.eql(\"\");",
+                      "});"
+                    ],
+                    "type": "text/javascript",
+                    "packages": {},
+                    "requests": {}
+                  }
+                }
+              ],
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{access_token}}",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "{{url_base}}/ingredients",
+                  "host": [
+                    "{{url_base}}"
+                  ],
+                  "path": [
+                    "ingredients"
+                  ]
+                }
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "recipes",
+          "item": [
+            {
+              "name": "1.0. Create Recipe",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "const res = pm.response.json();\r",
+                      "pm.test(\"Root structure is correct\", () => {\r",
+                      "    pm.expect(res).to.have.property('value');\r",
+                      "    pm.expect(res).to.have.property('error');\r",
+                      "    pm.expect(res).to.have.property('success');\r",
+                      "    pm.expect(res).to.have.property('failure');\r",
+                      "});\r",
+                      "pm.test(\"Flags are correct\", () => {\r",
+                      "    pm.expect(res.success).to.be.true;\r",
+                      "    pm.expect(res.failure).to.be.false;\r",
+                      "});\r",
+                      "pm.test(\"Value is valid UUID\", () => {\r",
+                      "    pm.expect(res.value).to.be.a('string');\r",
+                      "    const uuidRegex = /^[0-9a-fA-F-]{36}$/;\r",
+                      "    pm.expect(res.value).to.match(uuidRegex);\r",
+                      "    pm.collectionVariables.set(\"id_recipe\", res.value);\r",
+                      "});\r",
+                      "pm.test(\"Error structure is valid\", () => {\r",
+                      "    const error = res.error;\r",
+                      "    pm.expect(error).to.be.an('object');\r",
+                      "    pm.expect(error).to.have.property('code').that.is.a('string');\r",
+                      "    pm.expect(error).to.have.property('structuredMessage').that.is.a('string');\r",
+                      "    pm.expect(error).to.have.property('type').that.is.a('string');\r",
+                      "    pm.expect(error).to.have.property('description').that.is.a('string');\r",
+                      "});\r",
+                      "pm.test(\"Error should be empty on success\", () => {\r",
+                      "    pm.expect(res.error.code).to.eql(\"\");\r",
+                      "    pm.expect(res.error.description).to.eql(\"\");\r",
+                      "});\r",
+                      "let index = parseInt(pm.collectionVariables.get(\"recipe_index\"));\r",
+                      "pm.collectionVariables.set(\"recipe_index\", index + 1);"
+                    ],
+                    "type": "text/javascript",
+                    "packages": {},
+                    "requests": {}
+                  }
+                },
+                {
+                  "listen": "prerequest",
+                  "script": {
+                    "exec": [
+                      "const list = JSON.parse(pm.collectionVariables.get(\"recipe_list\"));\r",
+                      "let index = parseInt(pm.collectionVariables.get(\"recipe_index\")) || 0;\r",
+                      "const item = list[index];\r",
+                      "pm.collectionVariables.set(\"recipe_name\", `\"${item.name}\"` || \"\");\r",
+                      "pm.collectionVariables.set(\"recipe_description\", `\"${item.description}\"` || \"\");\r",
+                      "pm.collectionVariables.set(\"recipe_instructions\", `\"${item.instructions}\"` || \"\");\r",
+                      "pm.collectionVariables.set(\"recipe_total_calories\", item.totalCalories || 0);\r",
+                      "pm.collectionVariables.set(\"recipe_ingredients\", JSON.stringify(item.ingredients || []));"
+                    ],
+                    "type": "text/javascript",
+                    "packages": {},
+                    "requests": {}
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{access_token}}",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"name\": {{recipe_name}},\r\n    \"description\": {{recipe_description}},\r\n    \"instructions\": {{recipe_instructions}},\r\n    \"totalCalories\": {{recipe_total_calories}},\r\n    \"ingredients\": {{recipe_ingredients}}\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{url_base}}/recipes",
+                  "host": [
+                    "{{url_base}}"
+                  ],
+                  "path": [
+                    "recipes"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "1.1. Get Recipe By Id",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "const res = pm.response.json();\r",
+                      "pm.test(\"Root structure is correct\", () => {\r",
+                      "    pm.expect(res).to.have.property('value').that.is.an('object');\r",
+                      "    pm.expect(res).to.have.property('error');\r",
+                      "    pm.expect(res).to.have.property('success');\r",
+                      "    pm.expect(res).to.have.property('failure');\r",
+                      "});\r",
+                      "pm.test(\"Flags are correct\", () => {\r",
+                      "    pm.expect(res.success).to.be.true;\r",
+                      "    pm.expect(res.failure).to.be.false;\r",
+                      "});\r",
+                      "pm.test(\"Value structure is valid\", () => {\r",
+                      "    const v = res.value;\r",
+                      "    const uuidRegex = /^[0-9a-fA-F-]{36}$/;\r",
+                      "    pm.expect(v.id).to.be.a('string').and.match(uuidRegex);\r",
+                      "    pm.expect(v.name).to.be.a('string');\r",
+                      "    pm.expect(v.description).to.be.a('string');\r",
+                      "    pm.expect(v.instructions).to.be.a('string');\r",
+                      "    pm.expect(v.totalCalories).to.be.a('number');\r",
+                      "    pm.expect(v.totalCalories).to.be.above(0);\r",
+                      "    pm.expect(v.ingredients).to.be.an('array').that.is.not.empty;\r",
+                      "    pm.expect(v.transaction).to.be.a('string');\r",
+                      "    pm.expect(v.status).to.be.a('string');\r",
+                      "    pm.expect(v.createBy).to.be.a('string');\r",
+                      "    pm.expect(v.createAt).to.be.a('string');\r",
+                      "    const date = new Date(v.createAt);\r",
+                      "    pm.expect(date.toString()).to.not.equal(\"Invalid Date\");\r",
+                      "});"
+                    ],
+                    "type": "text/javascript",
+                    "packages": {},
+                    "requests": {}
+                  }
+                },
+                {
+                  "listen": "prerequest",
+                  "script": {
+                    "exec": [
+                      ""
+                    ],
+                    "type": "text/javascript",
+                    "packages": {},
+                    "requests": {}
+                  }
+                }
+              ],
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{access_token}}",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "{{url_base}}/recipes/{{id_recipe}}",
+                  "host": [
+                    "{{url_base}}"
+                  ],
+                  "path": [
+                    "recipes",
+                    "{{id_recipe}}"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "1.2. Get Recipes",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "const res = pm.response.json();\r",
+                      "pm.test(\"Root structure is correct\", () => {\r",
+                      "    pm.expect(res).to.have.property('value').that.is.an('array');\r",
+                      "    pm.expect(res).to.have.property('error');\r",
+                      "    pm.expect(res).to.have.property('success');\r",
+                      "    pm.expect(res).to.have.property('failure');\r",
+                      "});\r",
+                      "pm.test(\"Flags are correct\", () => {\r",
+                      "    pm.expect(res.success).to.be.true;\r",
+                      "    pm.expect(res.failure).to.be.false;\r",
+                      "});\r",
+                      "pm.test(\"Value array is not empty\", () => {\r",
+                      "    pm.expect(res.value.length).to.be.above(0);\r",
+                      "});\r",
+                      "pm.test(\"All recipes have correct structure\", () => {\r",
+                      "    const uuidRegex = /^[0-9a-fA-F-]{36}$/;\r",
+                      "    res.value.forEach((item, index) => {\r",
+                      "        pm.expect(item, `Item ${index} should be object`).to.be.an('object');\r",
+                      "        pm.expect(item).to.have.property('id').that.is.a('string');\r",
+                      "        pm.expect(item.id, `Invalid UUID at index ${index}`).to.match(uuidRegex);\r",
+                      "        pm.expect(item).to.have.property('name').that.is.a('string');\r",
+                      "        pm.expect(item).to.have.property('description').that.is.a('string');\r",
+                      "        pm.expect(item).to.have.property('instructions').that.is.a('string');\r",
+                      "        pm.expect(item).to.have.property('totalCalories').that.is.a('number');\r",
+                      "        pm.expect(item.totalCalories, `Calories must be > 0 at index ${index}`).to.be.above(0);\r",
+                      "        pm.expect(item).to.have.property('ingredients').that.is.an('array').that.is.not.empty;\r",
+                      "        item.ingredients.forEach((ing, i) => {\r",
+                      "            pm.expect(ing, `Ingredient ${i} in recipe ${index}`).to.be.an('object');\r",
+                      "            pm.expect(ing).to.have.property('idIngredient').that.is.a('string');\r",
+                      "            pm.expect(ing.idIngredient, `Invalid ingredient UUID at recipe ${index}, ingredient ${i}`)\r",
+                      "                .to.match(uuidRegex);\r",
+                      "            pm.expect(ing).to.have.property('quantity').that.is.a('number');\r",
+                      "            pm.expect(ing.quantity, `Quantity must be > 0 at recipe ${index}, ingredient ${i}`)\r",
+                      "                .to.be.above(0);\r",
+                      "        });\r",
+                      "        pm.expect(item).to.have.property('transaction').that.is.a('string');\r",
+                      "        pm.expect(item).to.have.property('status').that.is.a('string');\r",
+                      "        pm.expect(item).to.have.property('createBy').that.is.a('string');\r",
+                      "        pm.expect(item).to.have.property('createAt').that.is.a('string');\r",
+                      "        const date = new Date(item.createAt);\r",
+                      "        pm.expect(date.toString(), `Invalid date at index ${index}`).to.not.equal(\"Invalid Date\");\r",
+                      "    });\r",
+                      "});\r",
+                      "pm.test(\"No duplicated recipe IDs\", () => {\r",
+                      "    const ids = res.value.map(r => r.id);\r",
+                      "    const unique = new Set(ids);\r",
+                      "    pm.expect(ids.length).to.eql(unique.size);\r",
+                      "});\r",
+                      "pm.test(\"Recipes use valid ingredient from previous flow\", () => {\r",
+                      "    const ingredientId = pm.collectionVariables.get(\"id_ingredient\");\r",
+                      "    const exists = res.value.some(r =>\r",
+                      "        r.ingredients.some(i => i.idIngredient === ingredientId)\r",
+                      "    );\r",
+                      "    pm.expect(exists).to.be.true;\r",
+                      "});\r",
+                      "pm.test(\"Error object is valid\", () => {\r",
+                      "    const error = res.error;\r",
+                      "    pm.expect(error).to.be.an('object');\r",
+                      "    pm.expect(error).to.have.property('code').that.is.a('string');\r",
+                      "    pm.expect(error).to.have.property('structuredMessage').that.is.a('string');\r",
+                      "    pm.expect(error).to.have.property('type').that.is.a('string');\r",
+                      "    pm.expect(error).to.have.property('description').that.is.a('string');\r",
+                      "});\r",
+                      "pm.test(\"Error should be empty on success\", () => {\r",
+                      "    pm.expect(res.error.code).to.eql(\"\");\r",
+                      "    pm.expect(res.error.description).to.eql(\"\");\r",
+                      "});"
+                    ],
+                    "type": "text/javascript",
+                    "packages": {},
+                    "requests": {}
+                  }
+                },
+                {
+                  "listen": "prerequest",
+                  "script": {
+                    "exec": [
+                      ""
+                    ],
+                    "type": "text/javascript",
+                    "packages": {},
+                    "requests": {}
+                  }
+                }
+              ],
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{access_token}}",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "{{url_base}}/recipes",
+                  "host": [
+                    "{{url_base}}"
+                  ],
+                  "path": [
+                    "recipes"
+                  ]
+                }
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "meal-plans",
+          "item": [
+            {
+              "name": "2.0. Create Meal Plan",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "const res = pm.response.json();\r",
+                      "pm.test(\"Root structure is correct\", () => {\r",
+                      "    pm.expect(res).to.have.property('value');\r",
+                      "    pm.expect(res).to.have.property('error');\r",
+                      "    pm.expect(res).to.have.property('success');\r",
+                      "    pm.expect(res).to.have.property('failure');\r",
+                      "});\r",
+                      "pm.test(\"Flags are correct\", () => {\r",
+                      "    pm.expect(res.success).to.be.true;\r",
+                      "    pm.expect(res.failure).to.be.false;\r",
+                      "});\r",
+                      "pm.test(\"Value is valid UUID\", () => {\r",
+                      "    pm.expect(res.value).to.be.a('string');\r",
+                      "    const uuidRegex = /^[0-9a-fA-F-]{36}$/;\r",
+                      "    pm.expect(res.value).to.match(uuidRegex);\r",
+                      "    pm.collectionVariables.set(\"id_meal_plan\", res.value);\r",
+                      "});\r",
+                      "pm.test(\"Error structure is valid\", () => {\r",
+                      "    const error = res.error;\r",
+                      "    pm.expect(error).to.be.an('object');\r",
+                      "    pm.expect(error).to.have.property('code').that.is.a('string');\r",
+                      "    pm.expect(error).to.have.property('structuredMessage').that.is.a('string');\r",
+                      "    pm.expect(error).to.have.property('type').that.is.a('string');\r",
+                      "    pm.expect(error).to.have.property('description').that.is.a('string');\r",
+                      "});\r",
+                      "pm.test(\"Error should be empty on success\", () => {\r",
+                      "    pm.expect(res.error.code).to.eql(\"\");\r",
+                      "    pm.expect(res.error.description).to.eql(\"\");\r",
+                      "});\r",
+                      "let index = parseInt(pm.collectionVariables.get(\"meal_plan_index\"));\r",
+                      "pm.collectionVariables.set(\"meal_plan_index\", index + 1);"
+                    ],
+                    "type": "text/javascript",
+                    "packages": {},
+                    "requests": {}
+                  }
+                },
+                {
+                  "listen": "prerequest",
+                  "script": {
+                    "exec": [
+                      "const list = JSON.parse(pm.collectionVariables.get(\"meal_plan_list\"));\r",
+                      "let index = parseInt(pm.collectionVariables.get(\"meal_plan_index\"));\r",
+                      "const item = list[index];\r",
+                      "console.log(item);\r",
+                      "pm.collectionVariables.set(\"meal_plan_total_days\", item.totalDays ? item.totalDays : null);\r",
+                      "pm.collectionVariables.set(\"meal_plan_star_date\", item.starDate ? `\"${item.starDate}\"`: null);\r",
+                      "pm.collectionVariables.set(\"meal_plan_end_date\", item.endDate ? `\"${item.endDate}\"`: null);\r",
+                      "pm.collectionVariables.set(\"meal_plan_total_calories\", item.totalCalories ? item.totalCalories: null);\r",
+                      "pm.collectionVariables.set(\"meal_plan_days\", JSON.stringify(item.mealPlanDays || []));"
+                    ],
+                    "type": "text/javascript",
+                    "packages": {},
+                    "requests": {}
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{access_token}}",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"idNutricionist\": \"{{id_nutricionist}}\",\r\n    \"idPatient\": \"{{id_patient}}\",\r\n    \"idAppointment\": \"{{id_appointment}}\",\r\n    \"idSubscription\": \"{{id_subscription_type}}\",\r\n    \"totalDays\": {{meal_plan_total_days}},\r\n    \"starDate\": {{meal_plan_star_date}},\r\n    \"endDate\": {{meal_plan_end_date}},\r\n    \"totalCalories\": {{meal_plan_total_calories}},\r\n    \"mealPlanDays\": {{meal_plan_days}}\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{url_base}}/meal-plans",
+                  "host": [
+                    "{{url_base}}"
+                  ],
+                  "path": [
+                    "meal-plans"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "2.1 Get Meal Plan By Id",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "const res = pm.response.json();\r",
+                      "pm.test(\"Root structure is correct\", () => {\r",
+                      "    pm.expect(res).to.have.property('value').that.is.an('object');\r",
+                      "    pm.expect(res).to.have.property('error');\r",
+                      "    pm.expect(res).to.have.property('success');\r",
+                      "    pm.expect(res).to.have.property('failure');\r",
+                      "});\r",
+                      "pm.test(\"Flags are correct\", () => {\r",
+                      "    pm.expect(res.success).to.be.true;\r",
+                      "    pm.expect(res.failure).to.be.false;\r",
+                      "});\r",
+                      "pm.test(\"MealPlan structure is valid\", () => {\r",
+                      "    const v = res.value;\r",
+                      "    const uuidRegex = /^[0-9a-fA-F-]{36}$/;\r",
+                      "    pm.expect(v.id).to.match(uuidRegex);\r",
+                      "    pm.expect(v.idNutricionist).to.match(uuidRegex);\r",
+                      "    pm.expect(v.idPatient).to.match(uuidRegex);\r",
+                      "    pm.expect(v.idAppointment).to.match(uuidRegex);\r",
+                      "    pm.expect(v.idSubscription).to.match(uuidRegex);\r",
+                      "    pm.expect(v.totalDays).to.be.a('number').and.to.be.above(0);\r",
+                      "    pm.expect(v.totalCalories).to.be.a('number').and.to.be.above(0);\r",
+                      "    pm.expect(v.starDate).to.be.a('string');\r",
+                      "    pm.expect(v.endDate).to.be.a('string');\r",
+                      "    pm.expect(v.mealPlanDays).to.be.an('array').that.is.not.empty;\r",
+                      "    pm.expect(v.transaction).to.be.a('string');\r",
+                      "    pm.expect(v.status).to.be.a('string');\r",
+                      "    pm.expect(v.createBy).to.be.a('string');\r",
+                      "    const date = new Date(v.createAt);\r",
+                      "    pm.expect(date.toString()).to.not.equal(\"Invalid Date\");\r",
+                      "});"
+                    ],
+                    "type": "text/javascript",
+                    "packages": {},
+                    "requests": {}
+                  }
+                }
+              ],
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{access_token}}",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "{{url_base}}/meal-plans/{{id_meal_plan}}",
+                  "host": [
+                    "{{url_base}}"
+                  ],
+                  "path": [
+                    "meal-plans",
+                    "{{id_meal_plan}}"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "2.2 Get Meal Plans",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "const res = pm.response.json();\r",
+                      "pm.test(\"Root structure is correct\", () => {\r",
+                      "    pm.expect(res).to.have.property('value').that.is.an('array');\r",
+                      "    pm.expect(res).to.have.property('error');\r",
+                      "    pm.expect(res).to.have.property('success');\r",
+                      "    pm.expect(res).to.have.property('failure');\r",
+                      "});\r",
+                      "pm.test(\"Flags are correct\", () => {\r",
+                      "    pm.expect(res.success).to.be.true;\r",
+                      "    pm.expect(res.failure).to.be.false;\r",
+                      "});\r",
+                      "pm.test(\"Value array is not empty\", () => {\r",
+                      "    pm.expect(res.value.length).to.be.above(0);\r",
+                      "});\r",
+                      "pm.test(\"All meal plans have correct structure\", () => {\r",
+                      "    const uuidRegex = /^[0-9a-fA-F-]{36}$/;\r",
+                      "    res.value.forEach((item, index) => {\r",
+                      "        pm.expect(item, `Item ${index} should be object`).to.be.an('object');\r",
+                      "        pm.expect(item).to.have.property('id').that.is.a('string');\r",
+                      "        pm.expect(item.id, `Invalid UUID at index ${index}`).to.match(uuidRegex);\r",
+                      "        pm.expect(item.idNutricionist).to.match(uuidRegex);\r",
+                      "        pm.expect(item.idPatient).to.match(uuidRegex);\r",
+                      "        pm.expect(item.idAppointment).to.match(uuidRegex);\r",
+                      "        pm.expect(item.idSubscription).to.match(uuidRegex);\r",
+                      "        pm.expect(item.totalDays).to.be.a('number').and.to.be.above(0);\r",
+                      "        pm.expect(item.totalCalories).to.be.a('number').and.to.be.above(0);\r",
+                      "        pm.expect(item.starDate).to.be.a('string');\r",
+                      "        pm.expect(item.endDate).to.be.a('string');\r",
+                      "        pm.expect(item.mealPlanDays).to.be.an('array').that.is.not.empty;\r",
+                      "        item.mealPlanDays.forEach((day, dIndex) => {\r",
+                      "            pm.expect(day.id).to.match(uuidRegex);\r",
+                      "            pm.expect(day.day).to.be.a('number');\r",
+                      "            pm.expect(day.day, `Invalid day at ${index}-${dIndex}`).to.be.above(0);\r",
+                      "            pm.expect(day.timeFoods).to.be.an('array').that.is.not.empty;\r",
+                      "            day.timeFoods.forEach((tf, tIndex) => {\r",
+                      "                pm.expect(tf.id).to.match(uuidRegex);\r",
+                      "                pm.expect(tf.type).to.be.a('string');\r",
+                      "                pm.expect(tf.order).to.be.a('number');\r",
+                      "                pm.expect(tf.recipes).to.be.an('array').that.is.not.empty;\r",
+                      "                tf.recipes.forEach((r, rIndex) => {\r",
+                      "                    pm.expect(r.id).to.match(uuidRegex);\r",
+                      "                    pm.expect(r.idRecipe).to.match(uuidRegex);\r",
+                      "                    pm.expect(r.portion).to.be.a('number');\r",
+                      "                    pm.expect(r.portion, `Invalid portion at ${index}-${dIndex}-${tIndex}-${rIndex}`)\r",
+                      "                        .to.be.above(0);\r",
+                      "                });\r",
+                      "            });\r",
+                      "        });\r",
+                      "        pm.expect(item).to.have.property('transaction').that.is.a('string');\r",
+                      "        pm.expect(item).to.have.property('status').that.is.a('string');\r",
+                      "        pm.expect(item).to.have.property('createBy').that.is.a('string');\r",
+                      "        pm.expect(item).to.have.property('createAt').that.is.a('string');\r",
+                      "        const date = new Date(item.createAt);\r",
+                      "        pm.expect(date.toString(), `Invalid date at index ${index}`).to.not.equal(\"Invalid Date\");\r",
+                      "    });\r",
+                      "});"
+                    ],
+                    "type": "text/javascript",
+                    "packages": {},
+                    "requests": {}
+                  }
+                }
+              ],
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{access_token}}",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "{{url_base}}/meal-plans",
+                  "host": [
+                    "{{url_base}}"
+                  ],
+                  "path": [
+                    "meal-plans"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "2.3.1. Create Recipe To Update Meal Plan",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "const res = pm.response.json();\r",
+                      "pm.test(\"Root structure is correct\", () => {\r",
+                      "    pm.expect(res).to.have.property('value');\r",
+                      "    pm.expect(res).to.have.property('error');\r",
+                      "    pm.expect(res).to.have.property('success');\r",
+                      "    pm.expect(res).to.have.property('failure');\r",
+                      "});\r",
+                      "pm.test(\"Flags are correct\", () => {\r",
+                      "    pm.expect(res.success).to.be.true;\r",
+                      "    pm.expect(res.failure).to.be.false;\r",
+                      "});\r",
+                      "pm.test(\"Value is valid UUID\", () => {\r",
+                      "    pm.expect(res.value).to.be.a('string');\r",
+                      "    const uuidRegex = /^[0-9a-fA-F-]{36}$/;\r",
+                      "    pm.expect(res.value).to.match(uuidRegex);\r",
+                      "    pm.collectionVariables.set(\"id_recipe\", res.value);\r",
+                      "});\r",
+                      "pm.test(\"Error structure is valid\", () => {\r",
+                      "    const error = res.error;\r",
+                      "    pm.expect(error).to.be.an('object');\r",
+                      "    pm.expect(error).to.have.property('code').that.is.a('string');\r",
+                      "    pm.expect(error).to.have.property('structuredMessage').that.is.a('string');\r",
+                      "    pm.expect(error).to.have.property('type').that.is.a('string');\r",
+                      "    pm.expect(error).to.have.property('description').that.is.a('string');\r",
+                      "});\r",
+                      "pm.test(\"Error should be empty on success\", () => {\r",
+                      "    pm.expect(res.error.code).to.eql(\"\");\r",
+                      "    pm.expect(res.error.description).to.eql(\"\");\r",
+                      "});\r",
+                      "let index = parseInt(pm.collectionVariables.get(\"recipe_index\"));\r",
+                      "pm.collectionVariables.set(\"recipe_index\", index + 1);"
+                    ],
+                    "type": "text/javascript",
+                    "packages": {},
+                    "requests": {}
+                  }
+                },
+                {
+                  "listen": "prerequest",
+                  "script": {
+                    "exec": [
+                      "const list = JSON.parse(pm.collectionVariables.get(\"recipe_list\"));\r",
+                      "let index = parseInt(pm.collectionVariables.get(\"recipe_index\")) || 0;\r",
+                      "const item = list[index];\r",
+                      "pm.collectionVariables.set(\"recipe_name\", `\"${item.name}\"` || \"\");\r",
+                      "pm.collectionVariables.set(\"recipe_description\", `\"${item.description}\"` || \"\");\r",
+                      "pm.collectionVariables.set(\"recipe_instructions\", `\"${item.instructions}\"` || \"\");\r",
+                      "pm.collectionVariables.set(\"recipe_total_calories\", item.totalCalories || 0);\r",
+                      "pm.collectionVariables.set(\"recipe_ingredients\", JSON.stringify(item.ingredients || []));"
+                    ],
+                    "type": "text/javascript",
+                    "packages": {},
+                    "requests": {}
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{access_token}}",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"name\": {{recipe_name}},\r\n    \"description\": {{recipe_description}},\r\n    \"instructions\": {{recipe_instructions}},\r\n    \"totalCalories\": {{recipe_total_calories}},\r\n    \"ingredients\": {{recipe_ingredients}}\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{url_base}}/recipes",
+                  "host": [
+                    "{{url_base}}"
+                  ],
+                  "path": [
+                    "recipes"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "2.3.2. Update Meal Plan",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "const res = pm.response.json();\r",
+                      "pm.test(\"Root structure is correct\", () => {\r",
+                      "    pm.expect(res).to.have.property('value');\r",
+                      "    pm.expect(res).to.have.property('error');\r",
+                      "    pm.expect(res).to.have.property('success');\r",
+                      "    pm.expect(res).to.have.property('failure');\r",
+                      "});\r",
+                      "pm.test(\"Flags are correct\", () => {\r",
+                      "    pm.expect(res.success).to.be.true;\r",
+                      "    pm.expect(res.failure).to.be.false;\r",
+                      "});\r",
+                      "pm.test(\"Update result should be true\", () => {\r",
+                      "    pm.expect(res.value).to.be.a('boolean');\r",
+                      "    pm.expect(res.value).to.be.true;\r",
+                      "});\r",
+                      "pm.test(\"Error structure is valid\", () => {\r",
+                      "    const error = res.error;\r",
+                      "    pm.expect(error).to.be.an('object');\r",
+                      "    pm.expect(error).to.have.property('code').that.is.a('string');\r",
+                      "    pm.expect(error).to.have.property('structuredMessage').that.is.a('string');\r",
+                      "    pm.expect(error).to.have.property('type').that.is.a('string');\r",
+                      "    pm.expect(error).to.have.property('description').that.is.a('string');\r",
+                      "});\r",
+                      "pm.test(\"Error should be empty on success\", () => {\r",
+                      "    pm.expect(res.error.code).to.eql(\"\");\r",
+                      "    pm.expect(res.error.description).to.eql(\"\");\r",
+                      "});\r",
+                      "pm.test(\"Updated meal plan ID exists\", () => {\r",
+                      "    const id = pm.collectionVariables.get(\"id_meal_plan\");\r",
+                      "    pm.expect(id).to.be.a('string');\r",
+                      "});\r",
+                      "let index = parseInt(pm.collectionVariables.get(\"meal_plan_index\")) || 0;\r",
+                      "pm.collectionVariables.set(\"meal_plan_index\", index + 1);"
+                    ],
+                    "type": "text/javascript",
+                    "packages": {},
+                    "requests": {}
+                  }
+                },
+                {
+                  "listen": "prerequest",
+                  "script": {
+                    "exec": [
+                      "const list = JSON.parse(pm.collectionVariables.get(\"meal_plan_list\"));\r",
+                      "let index = parseInt(pm.collectionVariables.get(\"meal_plan_index\"));\r",
+                      "const item = list[index];\r",
+                      "pm.collectionVariables.set(\"meal_plan_total_days\", item.totalDays ? item.totalDays : null);\r",
+                      "pm.collectionVariables.set(\"meal_plan_star_date\", item.starDate ? `\"${item.starDate}\"`: null);\r",
+                      "pm.collectionVariables.set(\"meal_plan_end_date\", item.endDate ? `\"${item.endDate}\"`: null);\r",
+                      "pm.collectionVariables.set(\"meal_plan_total_calories\", item.totalCalories ? item.totalCalories: null);\r",
+                      "pm.collectionVariables.set(\"meal_plan_days\", JSON.stringify(item.mealPlanDays || []));"
+                    ],
+                    "type": "text/javascript",
+                    "packages": {},
+                    "requests": {}
+                  }
+                }
+              ],
+              "request": {
+                "method": "PUT",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{access_token}}",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"idNutricionist\": \"{{id_nutricionist}}\",\r\n    \"idPatient\": \"{{id_patient}}\",\r\n    \"idAppointment\": \"{{id_appointment}}\",\r\n    \"idSubscription\": \"{{id_subscription_type}}\",\r\n    \"totalDays\": {{meal_plan_total_days}},\r\n    \"starDate\": {{meal_plan_star_date}},\r\n    \"endDate\": {{meal_plan_end_date}},\r\n    \"totalCalories\": {{meal_plan_total_calories}},\r\n    \"mealPlanDays\": {{meal_plan_days}}\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{url_base}}/meal-plans/{{id_meal_plan}}",
+                  "host": [
+                    "{{url_base}}"
+                  ],
+                  "path": [
+                    "meal-plans",
+                    "{{id_meal_plan}}"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "2.3.3 Get Meal Plan Updated",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "const res = pm.response.json();\r",
+                      "pm.test(\"Root structure is correct\", () => {\r",
+                      "    pm.expect(res).to.have.property('value').that.is.an('object');\r",
+                      "    pm.expect(res).to.have.property('error');\r",
+                      "    pm.expect(res).to.have.property('success');\r",
+                      "    pm.expect(res).to.have.property('failure');\r",
+                      "});\r",
+                      "pm.test(\"Flags are correct\", () => {\r",
+                      "    pm.expect(res.success).to.be.true;\r",
+                      "    pm.expect(res.failure).to.be.false;\r",
+                      "});\r",
+                      "pm.test(\"MealPlan structure is valid\", () => {\r",
+                      "    const v = res.value;\r",
+                      "    const uuidRegex = /^[0-9a-fA-F-]{36}$/;\r",
+                      "    pm.expect(v.id).to.match(uuidRegex);\r",
+                      "    pm.expect(v.idNutricionist).to.match(uuidRegex);\r",
+                      "    pm.expect(v.idPatient).to.match(uuidRegex);\r",
+                      "    pm.expect(v.idAppointment).to.match(uuidRegex);\r",
+                      "    pm.expect(v.idSubscription).to.match(uuidRegex);\r",
+                      "    pm.expect(v.totalDays).to.be.a('number').and.to.be.above(0);\r",
+                      "    pm.expect(v.totalCalories).to.be.a('number').and.to.be.above(0);\r",
+                      "    pm.expect(v.starDate).to.be.a('string');\r",
+                      "    pm.expect(v.endDate).to.be.a('string');\r",
+                      "    pm.expect(v.mealPlanDays).to.be.an('array').that.is.not.empty;\r",
+                      "    pm.expect(v.transaction).to.be.a('string');\r",
+                      "    pm.expect(v.status).to.be.a('string');\r",
+                      "    pm.expect(v.createBy).to.be.a('string');\r",
+                      "    const date = new Date(v.createAt);\r",
+                      "    pm.expect(date.toString()).to.not.equal(\"Invalid Date\");\r",
+                      "});\r",
+                      "pm.test(\"All idRecipe match collection variable id_recipe\", () => {\r",
+                      "    const v = res.value;\r",
+                      "    const expectedRecipeId = pm.collectionVariables.get(\"id_recipe\");\r",
+                      "    pm.expect(expectedRecipeId, \"id_recipe should exist\").to.be.a('string');\r",
+                      "    v.mealPlanDays.forEach((day, dIndex) => {\r",
+                      "        day.timeFoods.forEach((tf, tIndex) => {\r",
+                      "            tf.recipes.forEach((r, rIndex) => {\r",
+                      "\r",
+                      "                pm.expect(r.idRecipe, \r",
+                      "                    `Mismatch at day ${dIndex}, timeFood ${tIndex}, recipe ${rIndex}`\r",
+                      "                ).to.eql(expectedRecipeId);\r",
+                      "\r",
+                      "            });\r",
+                      "        });\r",
+                      "    });\r",
+                      "});"
+                    ],
+                    "type": "text/javascript",
+                    "packages": {},
+                    "requests": {}
+                  }
+                }
+              ],
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{access_token}}",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "{{url_base}}/meal-plans/{{id_meal_plan}}",
+                  "host": [
+                    "{{url_base}}"
+                  ],
+                  "path": [
+                    "meal-plans",
+                    "{{id_meal_plan}}"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "2.4. Cancel Meal Plan",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "const res = pm.response.json();\r",
+                      "pm.test(\"Root structure is correct\", () => {\r",
+                      "    pm.expect(res).to.have.property('value');\r",
+                      "    pm.expect(res).to.have.property('error');\r",
+                      "    pm.expect(res).to.have.property('success');\r",
+                      "    pm.expect(res).to.have.property('failure');\r",
+                      "});\r",
+                      "pm.test(\"Flags are correct\", () => {\r",
+                      "    pm.expect(res.success).to.be.true;\r",
+                      "    pm.expect(res.failure).to.be.false;\r",
+                      "});\r",
+                      "pm.test(\"Cancel operation should return true\", () => {\r",
+                      "    pm.expect(res.value).to.be.a('boolean');\r",
+                      "    pm.expect(res.value).to.be.true;\r",
+                      "});\r",
+                      "pm.test(\"Error structure is valid\", () => {\r",
+                      "    const error = res.error;\r",
+                      "    pm.expect(error).to.be.an('object');\r",
+                      "    pm.expect(error).to.have.property('code').that.is.a('string');\r",
+                      "    pm.expect(error).to.have.property('structuredMessage').that.is.a('string');\r",
+                      "    pm.expect(error).to.have.property('type').that.is.a('string');\r",
+                      "    pm.expect(error).to.have.property('description').that.is.a('string');\r",
+                      "});\r",
+                      "pm.test(\"Error should be empty on success\", () => {\r",
+                      "    pm.expect(res.error.code).to.eql(\"\");\r",
+                      "    pm.expect(res.error.description).to.eql(\"\");\r",
+                      "});\r",
+                      "pm.test(\"Meal plan id exists in variables\", () => {\r",
+                      "    const id = pm.collectionVariables.get(\"id_meal_plan\");\r",
+                      "    pm.expect(id).to.be.a('string');\r",
+                      "});"
+                    ],
+                    "type": "text/javascript",
+                    "packages": {},
+                    "requests": {}
+                  }
+                }
+              ],
+              "request": {
+                "method": "PATCH",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{access_token}}",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "{{url_base}}/meal-plans/{{id_meal_plan}}/cancel",
+                  "host": [
+                    "{{url_base}}"
+                  ],
+                  "path": [
+                    "meal-plans",
+                    "{{id_meal_plan}}",
+                    "cancel"
+                  ]
+                }
+              },
+              "response": []
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "type": "text/javascript",
+        "requests": {},
+        "exec": [
+          ""
+        ]
+      }
+    },
+    {
+      "listen": "test",
+      "script": {
+        "type": "text/javascript",
+        "requests": {},
+        "exec": [
+          ""
+        ]
+      }
+    }
+  ],
+  "variable": [
+    {
+      "key": "url_base",
+      "value": "http://localhost:8081"
+    },
+    {
+      "key": "url_base_apigateway",
+      "value": "http://localhost:5000/api"
+    },
+    {
+      "key": "id_subscription_type",
+      "value": "e7070f4e-47ba-4a86-8a78-ebdc5bbb9c32"
+    },
+    {
+      "key": "id_nutricionist",
+      "value": "e7070f4e-47ba-4a86-8a78-ebdc5bbb9c32"
+    },
+    {
+      "key": "id_patient",
+      "value": "e7070f4e-47ba-4a86-8a78-ebdc5bbb9c32"
+    },
+    {
+      "key": "id_appointment",
+      "value": "e7070f4e-47ba-4a86-8a78-ebdc5bbb9c32"
+    },
+    {
+      "key": "id_ingredient",
+      "value": ""
+    },
+    {
+      "key": "id_recipe",
+      "value": ""
+    },
+    {
+      "key": "id_meal_plan",
+      "value": ""
+    },
+    {
+      "key": "ingredient_list",
+      "value": "[{\"name\": \"i1\",\"description\": \"id1\",\"unitMeasure\": \"GRAM\",\"caloriesPerGram\": 100},\n{\"name\": null,\"description\": \"id1\",\"unitMeasure\": \"GRAM\",\"caloriesPerGram\": 100},\n{\"name\": \"i2\",\"description\": \"id1\",\"unitMeasure\": null,\"caloriesPerGram\": 100},\n{\"name\": \"i3\",\"description\": \"id1\",\"unitMeasure\": \"GRAM\",\"caloriesPerGram\": null}]"
+    },
+    {
+      "key": "ingredient_index",
+      "value": "0"
+    },
+    {
+      "key": "ingredient_name",
+      "value": ""
+    },
+    {
+      "key": "ingredient_description",
+      "value": ""
+    },
+    {
+      "key": "ingredient_unit_measure",
+      "value": ""
+    },
+    {
+      "key": "ingredient_calories_per_gram",
+      "value": ""
+    },
+    {
+      "key": "recipe_list",
+      "value": "[{ \"name\": \"r1\", \"description\": \"rd1\", \"instructions\": \"ri1\", \"totalCalories\": 100, \"ingredients\": [ { \"idIngredient\": \"331a6eed-fa94-4137-a4e1-0c60b186f338\", \"quantity\": 1 }, { \"idIngredient\": \"e10f27c5-0b2e-4b06-abfd-604bce7105d9\", \"quantity\": 2 }]}]"
+    },
+    {
+      "key": "recipe_index",
+      "value": "0"
+    },
+    {
+      "key": "recipe_name",
+      "value": ""
+    },
+    {
+      "key": "recipe_description",
+      "value": ""
+    },
+    {
+      "key": "recipe_instructions",
+      "value": ""
+    },
+    {
+      "key": "recipe_total_calories",
+      "value": ""
+    },
+    {
+      "key": "recipe_ingredients",
+      "value": ""
+    },
+    {
+      "key": "meal_plan_list",
+      "value": "[{ \"idNutricionist\": \"0063b8fd-4e81-464c-be6a-8c4fcac2c6bd\", \"idPatient\": \"a172809f-4259-4d8f-82ed-5f2eea93f828\", \"totalDays\": 15, \"starDate\": \"2026-01-20\", \"endDate\": \"2026-02-03\", \"totalCalories\": 0, \"mealPlanDays\": [{ \"day\": 1, \"timeFoods\": [{ \"type\": \"BREAKFAST\", \"order\": 1, \"recipes\": [{ \"idRecipe\": \"331a6eed-fa94-4137-a4e1-0c60b186f338\", \"portion\": 1 }] }] }, { \"day\": 2, \"timeFoods\": [{ \"type\": \"BREAKFAST\", \"order\": 1, \"recipes\": [{ \"idRecipe\": \"331a6eed-fa94-4137-a4e1-0c60b186f338\", \"portion\": 1 }] }] }, { \"day\": 3, \"timeFoods\": [{ \"type\": \"BREAKFAST\", \"order\": 1, \"recipes\": [{ \"idRecipe\": \"331a6eed-fa94-4137-a4e1-0c60b186f338\", \"portion\": 1 }] }] }, { \"day\": 4, \"timeFoods\": [{ \"type\": \"BREAKFAST\", \"order\": 1, \"recipes\": [{ \"idRecipe\": \"331a6eed-fa94-4137-a4e1-0c60b186f338\", \"portion\": 1 }] }] }, { \"day\": 5, \"timeFoods\": [{ \"type\": \"BREAKFAST\", \"order\": 1, \"recipes\": [{ \"idRecipe\": \"331a6eed-fa94-4137-a4e1-0c60b186f338\", \"portion\": 1 }] }] }, { \"day\": 6, \"timeFoods\": [{ \"type\": \"BREAKFAST\", \"order\": 1, \"recipes\": [{ \"idRecipe\": \"331a6eed-fa94-4137-a4e1-0c60b186f338\", \"portion\": 1 }] }] }, { \"day\": 7, \"timeFoods\": [{ \"type\": \"BREAKFAST\", \"order\": 1, \"recipes\": [{ \"idRecipe\": \"331a6eed-fa94-4137-a4e1-0c60b186f338\", \"portion\": 1 }] }] }, { \"day\": 8, \"timeFoods\": [{ \"type\": \"BREAKFAST\", \"order\": 1, \"recipes\": [{ \"idRecipe\": \"331a6eed-fa94-4137-a4e1-0c60b186f338\", \"portion\": 1 }] }] }, { \"day\": 9, \"timeFoods\": [{ \"type\": \"BREAKFAST\", \"order\": 1, \"recipes\": [{ \"idRecipe\": \"331a6eed-fa94-4137-a4e1-0c60b186f338\", \"portion\": 1 }] }] }, { \"day\": 10, \"timeFoods\": [{ \"type\": \"BREAKFAST\", \"order\": 1, \"recipes\": [{ \"idRecipe\": \"331a6eed-fa94-4137-a4e1-0c60b186f338\", \"portion\": 1 }] }] }, { \"day\": 11, \"timeFoods\": [{ \"type\": \"BREAKFAST\", \"order\": 1, \"recipes\": [{ \"idRecipe\": \"331a6eed-fa94-4137-a4e1-0c60b186f338\", \"portion\": 1 }] }] }, { \"day\": 12, \"timeFoods\": [{ \"type\": \"BREAKFAST\", \"order\": 1, \"recipes\": [{ \"idRecipe\": \"331a6eed-fa94-4137-a4e1-0c60b186f338\", \"portion\": 1 }] }] }, { \"day\": 13, \"timeFoods\": [{ \"type\": \"BREAKFAST\", \"order\": 1, \"recipes\": [{ \"idRecipe\": \"331a6eed-fa94-4137-a4e1-0c60b186f338\", \"portion\": 1 }] }] }, { \"day\": 14, \"timeFoods\": [{ \"type\": \"BREAKFAST\", \"order\": 1, \"recipes\": [{ \"idRecipe\": \"331a6eed-fa94-4137-a4e1-0c60b186f338\", \"portion\": 1 }] }] }, { \"day\": 15, \"timeFoods\": [{ \"type\": \"BREAKFAST\", \"order\": 1, \"recipes\": [{ \"idRecipe\": \"331a6eed-fa94-4137-a4e1-0c60b186f338\", \"portion\": 1 }] }] }] }]\n"
+    },
+    {
+      "key": "meal_plan_index",
+      "value": "0"
+    },
+    {
+      "key": "meal_plan_total_days",
+      "value": ""
+    },
+    {
+      "key": "meal_plan_star_date",
+      "value": ""
+    },
+    {
+      "key": "meal_plan_end_date",
+      "value": ""
+    },
+    {
+      "key": "meal_plan_total_calories",
+      "value": ""
+    },
+    {
+      "key": "meal_plan_days",
+      "value": ""
+    },
+    {
+      "key": "access_token",
+      "value": ""
+    }
+  ]
 }
