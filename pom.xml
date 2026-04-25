@@ -23,10 +23,10 @@
 		</sonar.coverage.jacoco.xmlReportPaths>
 		<sonar.language>java</sonar.language>
 		<sonar.exclusions>
-			**/discovery/**,**/inbound/**,**/outbox/**,**/domainModel/**,**/persistenceModel/**,**/controller/**,**/core/**,**/config/**,**/model/**,**/entity/**,**/dto/**
+			**/discovery/**,**/inbound/**,**/outbox/**,**/domainModel/**,**/persistenceModel/**,**/controller/**,**/core/**,**/config/**,**/model/**,**/entity/**,**/dto/**,**/test/**
 		</sonar.exclusions>
 		<sonar.coverage.exclusions>
-			**/discovery/**,**/inbound/**,**/outbox/**,**/domainModel/**,**/persistenceModel/**,**/controller/**,**/core/**,**/config/**,**/model/**,**/entity/**,**/dto/**
+			**/discovery/**,**/inbound/**,**/outbox/**,**/domainModel/**,**/persistenceModel/**,**/controller/**,**/core/**,**/config/**,**/model/**,**/entity/**,**/dto/**,**/test/**
 		</sonar.coverage.exclusions>
 		<git.build.hook.skip>false</git.build.hook.skip>
 	</properties>
@@ -117,6 +117,7 @@
 						<exclude>**/config/**/*</exclude>
 						<exclude>**/model/**/*</exclude>
 						<exclude>**/entity/**/*</exclude>
+						<exclude>**/dto/**/*</exclude>
 						<exclude>**/dto/**/*</exclude>
 					</excludes>
 				</configuration>
