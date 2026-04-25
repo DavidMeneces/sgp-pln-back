@@ -6,12 +6,14 @@ import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import edu.nur.nurtricenter.mealplans.core.results.ErrorType;
 import edu.nur.nurtricenter.mealplans.core.results.ResultWithValue;
+
 import java.nio.charset.StandardCharsets;
 import java.time.OffsetDateTime;
 import java.time.format.DateTimeParseException;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.slf4j.MDC;
@@ -29,14 +31,9 @@ public class SubscriptionInboundListener {
 	private final InboundSubscriptionProperties props;
 	private final InboundEventMetrics metrics;
 
-	public SubscriptionInboundListener(
-			Pipeline pipeline,
-			ObjectMapper objectMapper,
-			InboundSubscriptionProperties props,
-			InboundEventMetrics metrics) {
+	public SubscriptionInboundListener(Pipeline pipeline, ObjectMapper objectMapper, InboundSubscriptionProperties props, InboundEventMetrics metrics) {
 		this.pipeline = pipeline;
-		this.objectMapper =
-				objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+		this.objectMapper = objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
 		this.props = props;
 		this.metrics = metrics;
 	}
@@ -46,52 +43,45 @@ public class SubscriptionInboundListener {
 		log.info("Message received: {}", message);
 		try {
 			String body = new String(message.getBody(), StandardCharsets.UTF_8);
-			Map<String, Object> bodyMessage =
-					objectMapper.readValue(body, new TypeReference<Map<String, Object>>() {});
+			Map<String, Object> bodyMessage = objectMapper.readValue(body, new TypeReference<Map<String, Object>>() {
+			});
 			log.info("Body message received {}", bodyMessage);
 
-			String routingKey =
-					message.getMessageProperties() != null
-							? message.getMessageProperties().getReceivedRoutingKey()
-							: null;
+			String routingKey = message.getMessageProperties() != null ? message.getMessageProperties().getReceivedRoutingKey() : null;
 			log.info("Routing key received {}", routingKey);
 
 			String eventName = readString(bodyMessage, "event", "event_name", "eventName");
+			Map<String, Object> payload;
+			UUID eventId = null;
+			UUID correlationId = null;
+			if (eventName == null || eventName.isBlank()) {
+				eventName = routingKey;
+				payload = bodyMessage;
+			} else {
+				payload = extractPayloadRequired(bodyMessage);
+				eventId = readRequiredUuid(bodyMessage, "event_id", "eventId");
+				correlationId = readRequiredUuid(bodyMessage, "correlation_id", "correlationId");
+				Integer schemaVersion = readRequiredInt(bodyMessage, "schema_version", "schemaVersion");
+				validateSchemaVersion(schemaVersion);
+			}
 			if (eventName == null || eventName.isBlank()) {
 				throw new AmqpRejectAndDontRequeueException("Missing event field");
 			}
-
-			Map<String, Object> payload = extractPayloadRequired(bodyMessage);
 			log.info("Payload received: {}", payload);
-
-			UUID eventId = readRequiredUuid(bodyMessage, "event_id", "eventId");
-			UUID correlationId = readRequiredUuid(bodyMessage, "correlation_id", "correlationId");
-			Integer schemaVersion = readRequiredInt(bodyMessage, "schema_version", "schemaVersion");
-			validateSchemaVersion(schemaVersion);
 			String occurredOn = readRequiredString(bodyMessage, "occurred_on", "occurredOn");
 			validateOccurredOn(occurredOn);
 			metrics.incrementReceived(eventName);
-			try (MDC.MDCCloseable ignoredCorrelation =
-							putMdc(
-									"correlation_id",
-									correlationId != null ? correlationId.toString() : null);
-					MDC.MDCCloseable ignoredEventId =
-							putMdc("event_id", eventId != null ? eventId.toString() : null)) {
+			try (MDC.MDCCloseable ignoredCorrelation = putMdc("correlation_id", correlationId != null ? correlationId.toString() : null);
+				MDC.MDCCloseable ignoredEventId = putMdc("event_id", eventId != null ? eventId.toString() : null)) {
 				var commandEvent = InboundEventCommand.findByEventName(eventName);
 				if (commandEvent != null) {
 					log.info("Command event founded {}", commandEvent);
 					var command = objectMapper.convertValue(payload, commandEvent);
 					var result = (ResultWithValue<?>) pipeline.send(command);
 					if (result.isFailure()) {
-						log.warn(
-								"Inbound subscription event failed: event={} error={}",
-								eventName,
-								result.getError().getDescription());
-						if (result.getError().getType() == ErrorType.VALIDATION
-								|| result.getError().getType() == ErrorType.CONFLICT
-								|| result.getError().getType() == ErrorType.NOT_FOUND) {
-							throw new AmqpRejectAndDontRequeueException(
-									result.getError().getDescription());
+						log.warn("Inbound subscription event failed: event={} error={}", eventName, result.getError().getDescription());
+						if (result.getError().getType() == ErrorType.VALIDATION || result.getError().getType() == ErrorType.CONFLICT || result.getError().getType() == ErrorType.NOT_FOUND) {
+							throw new AmqpRejectAndDontRequeueException(result.getError().getDescription());
 						}
 						throw new IllegalStateException(result.getError().getDescription());
 					}
@@ -121,8 +111,7 @@ public class SubscriptionInboundListener {
 			return;
 		}
 		if (!allowed.contains(schemaVersion)) {
-			throw new AmqpRejectAndDontRequeueException(
-					"Unsupported schema_version: " + schemaVersion);
+			throw new AmqpRejectAndDontRequeueException("Unsupported schema_version: " + schemaVersion);
 		}
 	}
 
