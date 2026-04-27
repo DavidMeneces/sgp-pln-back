@@ -28,6 +28,7 @@ services:
       DATASOURCE_USERNAME: postgres
       DATASOURCE_PASSWORD: admin
       LOKI_URL: http://loki:3100
+      MANAGEMENT_OTLP_TRACING_ENDPOINT: http://jaeger:4318/v1/traces
       CONSUL_ENABLED: ${CONSUL_ENABLED:-true}
       CONSUL_HOST: ${CONSUL_HOST:-154.38.180.80}
       CONSUL_PORT: ${CONSUL_PORT:-8500}
@@ -75,12 +76,23 @@ services:
     networks:
       - mealplans-network
 
+  jaeger:
+    image: jaegertracing/all-in-one:1.57
+    container_name: jaeger
+    ports:
+      - "16686:16686"
+      - "4317:4317"
+      - "4318:4318"
+    networks:
+      - mealplans-network
+
   grafana:
     image: grafana/grafana:11.4.0
     container_name: grupo3-grafana
     depends_on:
       - prometheus
       - loki
+      - jaeger
     environment:
       - GF_SECURITY_ADMIN_USER=admin
       - GF_SECURITY_ADMIN_PASSWORD=admin
