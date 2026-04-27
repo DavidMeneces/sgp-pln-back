@@ -114,6 +114,19 @@
         "wrapLogMessage": true,
         "sortOrder": "Descending"
       }
+    },
+    {
+      "id": 7,
+      "title": "Jaeger Traces",
+      "type": "traces",
+      "gridPos": { "x": 0, "y": 34, "w": 24, "h": 10 },
+      "datasource": { "type": "jaeger", "uid": "jaeger" },
+      "targets": [
+        {
+          "queryType": "traceSearch",
+          "service": "mealplans-api"
+        }
+      ]
     }
   ]
 }
